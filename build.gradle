@@ -1,4 +1,3 @@
-
 plugins {
     id 'dev.architectury.loom' version '1.9-SNAPSHOT' apply false
     id 'architectury-plugin' version '3.4-SNAPSHOT'
@@ -23,12 +22,25 @@ subprojects {
         silentMojangMappingsLicense()
     }
 
+    test {
+        // Enable support for Junit5 unit tests
+        useJUnitPlatform()
+
+        // Add  argument for test runs to avoid IllegalAccessException when using reflection
+        jvmArgs '--add-opens', 'java.base/java.lang=ALL-UNNAMED'
+    }
+
     dependencies {
         minecraft "net.minecraft:minecraft:$rootProject.minecraft_version"
         mappings loom.layered() {
             officialMojangMappings()
             parchment("org.parchmentmc.data:parchment-${rootProject.minecraft_version}:2024.06.16@zip")
         }
+
+        // Add testing support using fabric-junit
+        testImplementation "net.fabricmc:fabric-loader:$rootProject.fabric_loader_version"
+        testImplementation "net.fabricmc:fabric-loader-junit:${project.fabric_loader_version}"
+        testImplementation "org.mockito:mockito-core:1.+"
     }
 
     java {
