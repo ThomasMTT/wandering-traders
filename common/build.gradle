@@ -8,6 +8,8 @@ repositories {
     }
 }
 
+sourceSets.main.java.srcDirs += 'src/gametest/java'
+sourceSets.main.resources.srcDirs += 'src/gametest/resources'
 
 dependencies {
     // We depend on Fabric Loader here to use the Fabric @Environment annotations,

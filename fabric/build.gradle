@@ -24,6 +24,31 @@ configurations {
     }
 }
 
+sourceSets {
+    gametest {
+        java {
+            srcDirs = ['src/gametest/java']
+        }
+        resources {}
+    }
+}
+
+sourceSets.gametest.compileClasspath += sourceSets.main.compileClasspath
+sourceSets.gametest.runtimeClasspath += sourceSets.main.runtimeClasspath
+
+loom {
+    runs {
+        gameTest {
+            inherit server
+            name "Game Test"
+            vmArg "-Dfabric-api.gametest"
+            vmArg "-Dfabric-api.gametest.report-file=${project.buildDir}/junit.xml"
+            runDir "build/gametest"
+            source sourceSets.gametest
+        }
+    }
+}
+
 dependencies {
     modImplementation "net.fabricmc:fabric-loader:$rootProject.fabric_loader_version"
     modImplementation "net.fabricmc.fabric-api:fabric-api:$rootProject.fabric_api_version"
@@ -31,6 +56,19 @@ dependencies {
 
     common(project(path: ':common', configuration: 'namedElements')) { transitive = false }
     shadowBundle project(path: ':common', configuration: 'transformProductionFabric')
+}
+
+processGametestResources {
+    def tests = fileTree("src/gametest/java").filter { it.isFile() }.files.name
+    def testClasses = tests.collect { "life.thoms.wandering_traders." + it.replace(".java", "") }
+
+    filesMatching('fabric.mod.json') {
+        expand mod_id: project.mod_id, displayname: project.mod_displayname, authors: project.mod_authors,
+                description: project.mod_description.replace("\n", "\\n"), logo: project.mod_logo, github_url: project.mod_github_url,
+                license: project.mod_license, version: project.mod_version, minecraft_version: project.minecraft_version,
+                classname: project.mod_classname, fabric_loader_version: project.fabric_loader_version,
+                mod_group: project.mod_group, java_version: project.java_version, tests: testClasses.join("\",\n      \"")
+    }
 }
 
 processResources {
