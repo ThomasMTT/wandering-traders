@@ -28,13 +28,13 @@ sourceSets {
     gametest {
         java {
             srcDirs = ['src/gametest/java']
+            //srcDirs += 'src/main/java'
+            compileClasspath += sourceSets.main.compileClasspath
+            runtimeClasspath += sourceSets.main.runtimeClasspath
         }
         resources {}
     }
 }
-
-sourceSets.gametest.compileClasspath += sourceSets.main.compileClasspath
-sourceSets.gametest.runtimeClasspath += sourceSets.main.runtimeClasspath
 
 loom {
     runs {
@@ -52,6 +52,7 @@ loom {
 dependencies {
     modImplementation "net.fabricmc:fabric-loader:$rootProject.fabric_loader_version"
     modImplementation "net.fabricmc.fabric-api:fabric-api:$rootProject.fabric_api_version"
+    gametestImplementation sourceSets.main.output
 
 
     common(project(path: ':common', configuration: 'namedElements')) { transitive = false }
