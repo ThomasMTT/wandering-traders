@@ -1,0 +1,54 @@
+package life.thoms.wandering_traders.util.trader;
+
+import life.thoms.wandering_traders.server.data.LostLootData;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.trading.ItemCost;
+import net.minecraft.world.item.trading.MerchantOffer;
+import net.minecraft.world.item.trading.MerchantOffers;
+
+import java.util.*;
+
+public class EndTraderUtil {
+
+    public static final List<Item> PRICE_ITEMS = List.of(
+            Items.PHANTOM_MEMBRANE,
+            Items.SPIDER_EYE,
+            Items.BLAZE_ROD,
+            Items.RABBIT_FOOT,
+            Items.TURTLE_SCUTE
+    );
+
+    private static final Random RANDOM = new Random();
+
+    public static MerchantOffer createOffer(ItemStack stack) {
+        ItemCost firstCost = new ItemCost(PRICE_ITEMS.get(RANDOM.nextInt(PRICE_ITEMS.size())),
+                RANDOM.nextInt(5, 20));
+        Optional<ItemCost> secondCost = Optional.empty();
+
+        if (RANDOM.nextBoolean()) {
+            Item costItem;
+            secondCost = Optional.of(new ItemCost(PRICE_ITEMS.get(RANDOM.nextInt(PRICE_ITEMS.size())),
+                    RANDOM.nextInt(RANDOM.nextInt(1, 21 - firstCost.count()))));
+        }
+        return new MerchantOffer(firstCost, secondCost, stack, 0, 1, 1, 1);
+    }
+
+    public static MerchantOffers createOffersFromLostLoot(UUID playerUUID, MerchantOffers existingOffers) {
+        List<ItemStack> playerLostLoot = LostLootData.PLAYER_LOST_LOOT.get(playerUUID);
+        if (playerLostLoot == null || playerLostLoot.isEmpty()) {
+            return existingOffers;
+        }
+
+        for (ItemStack stack : playerLostLoot) {
+            MerchantOffer offer = createOffer(stack);
+            existingOffers.add(offer);
+        }
+
+        LostLootData.PLAYER_LOST_LOOT.put(playerUUID, new ArrayList<>());
+        LostLootData.INSTANCE.setDirty();
+        return existingOffers;
+    }
+
+}
