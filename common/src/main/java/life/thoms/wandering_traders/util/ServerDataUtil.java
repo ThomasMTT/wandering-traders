@@ -40,7 +40,7 @@ public class ServerDataUtil {
         CompoundTag compound = new CompoundTag();
         for (UUID playerUUID : LostLootData.PLAYER_LOST_LOOT.keySet()) {
             CompoundTag playerLootUUIDCompound = new CompoundTag();
-            List<ItemStack> playerLoot = LostLootData.PLAYER_LOST_LOOT.get(playerUUID);
+            List<ItemStack> playerLoot = LostLootData.PLAYER_LOST_LOOT.getOrDefault(playerUUID, new ArrayList<>());
             for (ItemStack stack : playerLoot) {
                 CompoundTag playerLootCompound = new CompoundTag();
                 DataResult<JsonElement> encodedStack = ItemStack.CODEC.encodeStart(JsonOps.INSTANCE, stack);

@@ -3,6 +3,7 @@ package life.thoms.wandering_traders.util;
 import life.thoms.wandering_traders.server.data.LostLootData;
 import net.minecraft.world.item.ItemStack;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -12,7 +13,7 @@ public class LostLootUtil {
         if (stack.getCount() <= 0) return;
         int maxStackSize = 16;
 
-        List<ItemStack> playerLoot = LostLootData.PLAYER_LOST_LOOT.get(playerUUID);
+        List<ItemStack> playerLoot = LostLootData.PLAYER_LOST_LOOT.getOrDefault(playerUUID, new ArrayList<>());
 
         // Try to merge with existing stacks
         for (ItemStack existingStack : playerLoot) {

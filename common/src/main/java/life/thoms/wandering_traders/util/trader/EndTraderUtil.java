@@ -39,7 +39,7 @@ public class EndTraderUtil {
     }
 
     public static MerchantOffers createOffersFromLostLoot(UUID playerUUID, MerchantOffers existingOffers) {
-        List<ItemStack> playerLostLoot = LostLootData.PLAYER_LOST_LOOT.get(playerUUID);
+        List<ItemStack> playerLostLoot = LostLootData.PLAYER_LOST_LOOT.getOrDefault(playerUUID, new ArrayList<>());
         if (playerLostLoot == null || playerLostLoot.isEmpty()) {
             return existingOffers;
         }

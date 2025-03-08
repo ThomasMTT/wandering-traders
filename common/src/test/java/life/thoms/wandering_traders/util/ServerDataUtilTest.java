@@ -16,6 +16,7 @@ import net.minecraft.world.item.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -82,7 +83,7 @@ class ServerDataUtilTest {
         assertSame(2, LostLootData.PLAYER_LOST_LOOT.size());
         for (UUID playerUUID : LostLootData.PLAYER_LOST_LOOT.keySet()) {
             assertTrue(LostLootData.PLAYER_LOST_LOOT.containsKey(playerUUID));
-            List<ItemStack> playerStacks = LostLootData.PLAYER_LOST_LOOT.get(playerUUID);
+            List<ItemStack> playerStacks = LostLootData.PLAYER_LOST_LOOT.getOrDefault(playerUUID, new ArrayList<>());
             assertFalse(playerStacks.isEmpty());
             for (ItemStack stack : playerStacks) {
                 if (stack.getItem() instanceof ArmorItem) {
