@@ -3,5 +3,6 @@
   "end_trader_message.no_trades": "I don't have anything for you right now",
   "end_trader_message.only_trade_with": "I only trade with ",
   "end_trader_message.leave_dim": "The End Trader went back to the end",
+  "end_trader_message.leave_dim_lost": "The End Trader lost some of your loot while going back to the end",
   "end_trader_message.leave_dim_angry": "The End Trader has destroyed your loot and went back to the end"
 }

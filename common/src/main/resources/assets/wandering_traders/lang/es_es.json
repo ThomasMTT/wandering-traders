@@ -3,5 +3,6 @@
   "end_trader_message.no_trades": "No tengo nada para ti ahora mismo",
   "end_trader_message.only_trade_with": "Solo comercio con ",
   "end_trader_message.leave_dim": "El Vendedor del End ha regresado al end",
+  "end_trader_message.leave_dim_lost": "El Vendedor del End ha perdido parte de tu botín mientras regresaba al end",
   "end_trader_message.leave_dim_angry": "El Vendedor del End ha destruido tu botín y ha regresado al end"
 }
