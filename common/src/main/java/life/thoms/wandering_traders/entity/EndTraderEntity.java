@@ -2,6 +2,7 @@ package life.thoms.wandering_traders.entity;
 
 import life.thoms.wandering_traders.util.trader.EndTraderUtil;
 import net.minecraft.ChatFormatting;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.InteractionHand;
@@ -46,6 +47,30 @@ public class EndTraderEntity extends AbstractTraderEntity {
             }
         }
         return super.mobInteract(player, hand);
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag compound) {
+        if (linkedPlayerUuid != null) {
+            compound.putUUID("linked_player_uuid", linkedPlayerUuid);
+        }
+        if (linkedPlayerName != null) {
+            compound.putString("linked_player_name", linkedPlayerName);
+        }
+        super.addAdditionalSaveData(compound);
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag compound) {
+        if (!compound.isEmpty()) {
+            if (compound.contains("linked_player_uuid")) {
+                linkedPlayerUuid = compound.getUUID("linked_player_uuid");
+            }
+            if (compound.contains("linked_player_name")) {
+                linkedPlayerName = compound.getString("linked_player_name");
+            }
+        }
+        super.readAdditionalSaveData(compound);
     }
 
 }
