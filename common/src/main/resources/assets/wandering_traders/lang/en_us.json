@@ -4,5 +4,7 @@
   "end_trader_message.only_trade_with": "I only trade with ",
   "end_trader_message.leave_dim": "The End Trader went back to the end",
   "end_trader_message.leave_dim_lost": "The End Trader lost some of your loot while going back to the end",
-  "end_trader_message.leave_dim_angry": "The End Trader has destroyed your loot and went back to the end"
+  "end_trader_message.leave_dim_angry": "The End Trader has destroyed your loot and went back to the end",
+  "creative_tab.wandering_traders_tab": "Wandering Traders",
+  "item.wandering_traders.end_trader_spawn_egg": "End Trader Spawn Egg"
 }

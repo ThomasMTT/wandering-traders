@@ -2,7 +2,9 @@ package life.thoms.wandering_traders.neoforge;
 
 import life.thoms.wandering_traders.WanderingTraders;
 import life.thoms.wandering_traders.entity.EndTraderEntity;
+import life.thoms.wandering_traders.neoforge.registry.TraderCreativeTabNeoForge;
 import life.thoms.wandering_traders.neoforge.registry.TraderEntitiesNeoForge;
+import life.thoms.wandering_traders.neoforge.registry.TraderItemsNeoForge;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
@@ -14,6 +16,8 @@ public final class WanderingTradersNeoForge {
     public WanderingTradersNeoForge(IEventBus eventBus) {
         WanderingTraders.init();
         TraderEntitiesNeoForge.register(eventBus);
+        TraderItemsNeoForge.register(eventBus);
+        TraderCreativeTabNeoForge.register(eventBus);
         eventBus.register(this);
     }
 
