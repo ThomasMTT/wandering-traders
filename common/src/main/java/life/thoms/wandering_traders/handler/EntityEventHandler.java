@@ -33,6 +33,8 @@ public class EntityEventHandler {
                     }
                 }
             }
+        } else if (entity instanceof Player player) {
+
         }
     }
 
