@@ -12,6 +12,9 @@ public class TraderItemsFabric {
     public static final Item END_TRADER_SPAWN_EGG = register("end_trader_spawn_egg",
             new SpawnEggItem(TraderEntitiesFabric.END_TRADER, 0x5e0da5, 0xcea512, new Item.Properties()));
 
+    public static final Item GAMBLING_TRADER_SPAWN_EGG = register("gambling_trader_spawn_egg",
+            new SpawnEggItem(TraderEntitiesFabric.GAMBLING_TRADER, 0xeaeef5, 0xcea512, new Item.Properties()));
+
     private static Item register(String name, Item item) {
         return Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(WanderingTraders.MOD_ID + ":" + name), item);
     }

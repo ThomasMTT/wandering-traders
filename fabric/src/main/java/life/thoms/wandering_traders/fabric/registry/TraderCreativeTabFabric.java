@@ -17,6 +17,7 @@ public class TraderCreativeTabFabric {
             .displayItems(
                     (parameters, output) -> {
                         output.accept(TraderItemsFabric.END_TRADER_SPAWN_EGG);
+                        output.accept(TraderItemsFabric.GAMBLING_TRADER_SPAWN_EGG);
                     })
             .build();
 

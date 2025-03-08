@@ -20,6 +20,7 @@ public class TraderCreativeTabNeoForge {
                     .title(Component.translatable("creative_tab.wandering_traders_tab")).displayItems(
                             (parameters, output) -> {
                                 output.accept(TraderItemsNeoForge.END_TRADER_SPAWN_EGG.get());
+                                output.accept(TraderItemsNeoForge.GAMBLING_TRADER_SPAWN_EGG.get());
                             })
                     .build()
     );

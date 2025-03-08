@@ -6,5 +6,6 @@
   "end_trader_message.leave_dim_lost": "The End Trader lost some of your loot while going back to the end",
   "end_trader_message.leave_dim_angry": "The End Trader has destroyed your loot and went back to the end",
   "creative_tab.wandering_traders_tab": "Wandering Traders",
-  "item.wandering_traders.end_trader_spawn_egg": "End Trader Spawn Egg"
+  "item.wandering_traders.end_trader_spawn_egg": "End Trader Spawn Egg",
+  "item.wandering_traders.gambling_trader_spawn_egg": "Gambling Trader Spawn Egg"
 }

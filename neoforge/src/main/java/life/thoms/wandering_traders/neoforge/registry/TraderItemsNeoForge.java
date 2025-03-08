@@ -21,6 +21,12 @@ public class TraderItemsNeoForge {
                     0x5e0da5, 0xcea512, new Item.Properties())
     );
 
+    public static final DeferredHolder<Item, DeferredSpawnEggItem> GAMBLING_TRADER_SPAWN_EGG = ITEMS.register(
+            "gambling_trader_spawn_egg",
+            () -> new DeferredSpawnEggItem(TraderEntitiesNeoForge.GAMBLING_TRADER,
+                    0xeaeef5, 0xcea512, new Item.Properties())
+    );
+
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }

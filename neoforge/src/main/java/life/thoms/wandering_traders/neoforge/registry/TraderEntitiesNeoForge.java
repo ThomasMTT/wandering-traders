@@ -2,6 +2,7 @@ package life.thoms.wandering_traders.neoforge.registry;
 
 import life.thoms.wandering_traders.WanderingTraders;
 import life.thoms.wandering_traders.entity.EndTraderEntity;
+import life.thoms.wandering_traders.entity.GamblingTraderEntity;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -16,7 +17,12 @@ public class TraderEntitiesNeoForge {
             BuiltInRegistries.ENTITY_TYPE, WanderingTraders.MOD_ID);
 
     public static final Supplier<EntityType<EndTraderEntity>> END_TRADER =
-            ENTITY_TYPES.register("end_trader", () -> EntityType.Builder.of(EndTraderEntity::new, MobCategory.CREATURE).sized(0.6F, 2.0F).build("end_trader"));
+            ENTITY_TYPES.register("end_trader", () -> EntityType.Builder.of(EndTraderEntity::new,
+                    MobCategory.CREATURE).sized(0.6F, 2.0F).build("end_trader"));
+
+    public static final Supplier<EntityType<GamblingTraderEntity>> GAMBLING_TRADER =
+            ENTITY_TYPES.register("gambling_trader", () -> EntityType.Builder.of(GamblingTraderEntity::new,
+                    MobCategory.CREATURE).sized(0.6F, 2.0F).build("gambling_trader"));
 
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);

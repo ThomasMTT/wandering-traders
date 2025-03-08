@@ -24,6 +24,7 @@ public final class WanderingTradersNeoForge {
     @SubscribeEvent
     public void registerAttributes(EntityAttributeCreationEvent event) {
         event.put(TraderEntitiesNeoForge.END_TRADER.get(), EndTraderEntity.createAttributes().build());
+        event.put(TraderEntitiesNeoForge.GAMBLING_TRADER.get(), EndTraderEntity.createAttributes().build());
     }
 
 }
