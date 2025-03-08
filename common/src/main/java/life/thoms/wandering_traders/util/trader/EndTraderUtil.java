@@ -29,8 +29,11 @@ public class EndTraderUtil {
 
         if (RANDOM.nextBoolean()) {
             Item costItem;
-            secondCost = Optional.of(new ItemCost(PRICE_ITEMS.get(RANDOM.nextInt(PRICE_ITEMS.size())),
-                    RANDOM.nextInt(RANDOM.nextInt(1, 21 - firstCost.count()))));
+            do {
+                costItem = PRICE_ITEMS.get(RANDOM.nextInt(PRICE_ITEMS.size()));
+            } while (costItem == firstCost.itemStack().getItem());
+
+            secondCost = Optional.of(new ItemCost(costItem, RANDOM.nextInt(1, 21 - firstCost.count())));
         }
         return new MerchantOffer(firstCost, secondCost, stack, 0, 1, 1, 1);
     }
@@ -42,8 +45,10 @@ public class EndTraderUtil {
         }
 
         for (ItemStack stack : playerLostLoot) {
-            MerchantOffer offer = createOffer(stack);
-            existingOffers.add(offer);
+            if (stack.getItem() != Items.AIR) {
+                MerchantOffer offer = createOffer(stack);
+                existingOffers.add(offer);
+            }
         }
 
         LostLootData.PLAYER_LOST_LOOT.put(playerUUID, new ArrayList<>());

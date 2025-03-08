@@ -35,10 +35,12 @@ public class EndTraderEntity extends AbstractTraderEntity {
             if (linkedPlayerUuid != null) {
                 getOffers();
                 this.offers.removeIf(MerchantOffer::isOutOfStock);
-                if (linkedPlayerUuid == player.getUUID()) {
+                if (linkedPlayerUuid.equals(player.getUUID())) {
                     offers = EndTraderUtil.createOffersFromLostLoot(linkedPlayerUuid, offers);
                     if (offers.isEmpty()) {
                         player.displayClientMessage(Component.translatable("end_trader_message.no_trades"), true);
+                    } else {
+                        super.mobInteract(player, hand);
                     }
                 } else {
                     MutableComponent message = Component.translatable("end_trader_message.only_trade_with");
@@ -46,7 +48,7 @@ public class EndTraderEntity extends AbstractTraderEntity {
                 }
             }
         }
-        return super.mobInteract(player, hand);
+        return InteractionResult.sidedSuccess(true);
     }
 
     @Override
