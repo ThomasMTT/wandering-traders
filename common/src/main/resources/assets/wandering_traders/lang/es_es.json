@@ -1,5 +1,6 @@
 {
   "entity.wandering_traders.end_trader": "Vendedor del End",
+  "entity.wandering_traders.gambling_trader": "Vendedor Ludopata",
   "end_trader_message.no_trades": "No tengo nada para ti ahora mismo",
   "end_trader_message.only_trade_with": "Solo comercio con ",
   "end_trader_message.leave_dim": "El Vendedor del End ha regresado al end",
@@ -7,5 +8,10 @@
   "end_trader_message.leave_dim_angry": "El Vendedor del End ha destruido tu botín y ha regresado al end",
   "creative_tab.wandering_traders_tab": "Vendedores Ambulantes",
   "item.wandering_traders.end_trader_spawn_egg": "Generar Vendedor del End",
-  "item.wandering_traders.gambling_trader_spawn_egg": "Generar Vendedor Ludopata"
+  "item.wandering_traders.gambling_trader_spawn_egg": "Generar Vendedor Ludopata",
+  "item.wandering_traders.armor_loot_box": "Caja de armaduras",
+  "item.wandering_traders.weapon_loot_box": "Caja de armas",
+  "item.wandering_traders.tool_loot_box": "Caja de herramientas",
+  "item.wandering_traders.food_loot_box": "Caja de Comida",
+  "item.wandering_traders.potion_loot_box": "Caja de pociones"
 }

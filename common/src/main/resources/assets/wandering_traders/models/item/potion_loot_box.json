@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "wandering_traders:item/potion_loot_box"
+  }
+}
