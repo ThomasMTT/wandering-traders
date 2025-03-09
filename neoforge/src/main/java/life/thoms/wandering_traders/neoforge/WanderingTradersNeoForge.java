@@ -1,6 +1,7 @@
 package life.thoms.wandering_traders.neoforge;
 
 import life.thoms.wandering_traders.WanderingTraders;
+import life.thoms.wandering_traders.entity.BookTraderEntity;
 import life.thoms.wandering_traders.entity.EndTraderEntity;
 import life.thoms.wandering_traders.neoforge.registry.TraderCreativeTabNeoForge;
 import life.thoms.wandering_traders.neoforge.registry.TraderEntitiesNeoForge;
@@ -25,6 +26,7 @@ public final class WanderingTradersNeoForge {
     public void registerAttributes(EntityAttributeCreationEvent event) {
         event.put(TraderEntitiesNeoForge.END_TRADER.get(), EndTraderEntity.createAttributes().build());
         event.put(TraderEntitiesNeoForge.GAMBLING_TRADER.get(), EndTraderEntity.createAttributes().build());
+        event.put(TraderEntitiesNeoForge.BOOK_TRADER.get(), BookTraderEntity.createAttributes().build());
     }
 
 }

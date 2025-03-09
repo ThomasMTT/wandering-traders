@@ -1,6 +1,7 @@
 {
   "entity.wandering_traders.end_trader": "End Trader",
   "entity.wandering_traders.gambling_trader": "Gambling Trader",
+  "entity.wandering_traders.book_trader": "Book Trader",
   "end_trader_message.no_trades": "I don't have anything for you right now",
   "end_trader_message.only_trade_with": "I only trade with ",
   "end_trader_message.leave_dim": "The End Trader went back to the end",
@@ -8,6 +9,7 @@
   "end_trader_message.leave_dim_angry": "The End Trader has destroyed your loot and went back to the end",
   "creative_tab.wandering_traders_tab": "Wandering Traders",
   "item.wandering_traders.end_trader_spawn_egg": "End Trader Spawn Egg",
+  "item.wandering_traders.book_trader_spawn_egg": "Book Trader Spawn Egg",
   "item.wandering_traders.gambling_trader_spawn_egg": "Gambling Trader Spawn Egg",
   "item.wandering_traders.armor_loot_box": "Armor box",
   "item.wandering_traders.weapon_loot_box": "Weapon box",

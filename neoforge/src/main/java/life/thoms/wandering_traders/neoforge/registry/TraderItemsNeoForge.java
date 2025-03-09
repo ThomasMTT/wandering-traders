@@ -56,6 +56,11 @@ public class TraderItemsNeoForge {
             () -> new PotionLootBoxItem(new Item.Properties())
     );
 
+    public static final DeferredHolder<Item, DeferredSpawnEggItem> BOOK_TRADER_SPAWN_EGG = ITEMS.register(
+            "book_trader_spawn_egg",
+            () -> new DeferredSpawnEggItem(TraderEntitiesNeoForge.BOOK_TRADER,
+                    0x87cefa, 0xff8c00, new Item.Properties())
+    );
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
