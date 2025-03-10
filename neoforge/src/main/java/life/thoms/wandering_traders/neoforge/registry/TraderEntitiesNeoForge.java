@@ -27,7 +27,7 @@ public class TraderEntitiesNeoForge {
 
     public static final Supplier<EntityType<BookTraderEntity>> BOOK_TRADER =
             ENTITY_TYPES.register("book_trader", () -> EntityType.Builder.of(BookTraderEntity::new,
-                    MobCategory.CREATURE).sized(0.6F, 2.0F).build("end_trader"));
+                    MobCategory.CREATURE).sized(0.6F, 2.0F).build("book_trader"));
 
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);
