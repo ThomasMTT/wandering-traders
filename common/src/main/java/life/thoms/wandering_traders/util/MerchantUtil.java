@@ -12,6 +12,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.trading.ItemCost;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.item.trading.MerchantOffers;
+import net.minecraft.world.level.block.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,8 @@ public class MerchantUtil {
     public static final List<Item> ARMOR_ITEMS = new ArrayList<>();
     public static final List<Item> TOOL_ITEMS = new ArrayList<>();
     public static final List<Item> FOOD_ITEMS = new ArrayList<>();
+    public static final List<Item> SAPPLING_ITEMS = new ArrayList<>();
+    public static final List<Item> CROP_ITEMS = new ArrayList<>();
 
     public static final MerchantOffers LOOT_BOX_OFFERS = new MerchantOffers();
 
@@ -61,6 +64,12 @@ public class MerchantUtil {
                 WEAPON_ITEMS.add(item);
             } else if (new ItemStack(item).getComponents().has(DataComponents.FOOD)) {
                 FOOD_ITEMS.add(item);
+            }
+            if (item instanceof BlockItem blockItem) {
+                Block block = blockItem.getBlock();
+                if (block instanceof SaplingBlock) {
+                    SAPPLING_ITEMS.add(item);
+                }
             }
         }
     }

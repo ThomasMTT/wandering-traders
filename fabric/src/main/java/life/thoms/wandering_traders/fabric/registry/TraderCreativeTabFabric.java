@@ -19,6 +19,7 @@ public class TraderCreativeTabFabric {
                         output.accept(TraderItemsFabric.END_TRADER_SPAWN_EGG);
                         output.accept(TraderItemsFabric.GAMBLING_TRADER_SPAWN_EGG);
                         output.accept(TraderItemsFabric.BOOK_TRADER_SPAWN_EGG);
+                        output.accept(TraderItemsFabric.FOREST_TRADER_SPAWN_EGG);
                         output.accept(TraderItemsFabric.ARMOR_LOOT_BOX);
                         output.accept(TraderItemsFabric.WEAPON_LOOT_BOX);
                         output.accept(TraderItemsFabric.TOOL_LOOT_BOX);

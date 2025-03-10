@@ -3,6 +3,7 @@ package life.thoms.wandering_traders.fabric.registry;
 import life.thoms.wandering_traders.WanderingTraders;
 import life.thoms.wandering_traders.entity.BookTraderEntity;
 import life.thoms.wandering_traders.entity.EndTraderEntity;
+import life.thoms.wandering_traders.entity.ForestTraderEntity;
 import life.thoms.wandering_traders.entity.GamblingTraderEntity;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.core.Registry;
@@ -27,10 +28,16 @@ public class TraderEntitiesFabric {
                     BookTraderEntity::new, MobCategory.CREATURE).sized(0.6F, 2.0F).build("book_trader")
     );
 
+    public static final EntityType<ForestTraderEntity> FOREST_TRADER = Registry.register(
+            BuiltInRegistries.ENTITY_TYPE, WanderingTraders.MOD_ID + ":forest_trader", EntityType.Builder.of(
+                    ForestTraderEntity::new, MobCategory.CREATURE).sized(0.6F, 2.0F).build("forest_trader")
+    );
+
     public static void register() {
         FabricDefaultAttributeRegistry.register(TraderEntitiesFabric.END_TRADER, EndTraderEntity.createAttributes());
-        FabricDefaultAttributeRegistry.register(TraderEntitiesFabric.GAMBLING_TRADER, EndTraderEntity.createAttributes());
-        FabricDefaultAttributeRegistry.register(TraderEntitiesFabric.BOOK_TRADER, EndTraderEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(TraderEntitiesFabric.GAMBLING_TRADER, GamblingTraderEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(TraderEntitiesFabric.BOOK_TRADER, BookTraderEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(TraderEntitiesFabric.FOREST_TRADER, ForestTraderEntity.createAttributes());
     }
 
 }

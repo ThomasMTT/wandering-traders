@@ -30,6 +30,18 @@ public class TraderItemsNeoForge {
                     0xeaeef5, 0xcea512, new Item.Properties())
     );
 
+    public static final DeferredHolder<Item, DeferredSpawnEggItem> BOOK_TRADER_SPAWN_EGG = ITEMS.register(
+            "book_trader_spawn_egg",
+            () -> new DeferredSpawnEggItem(TraderEntitiesNeoForge.BOOK_TRADER,
+                    0x435f91, 0xff8c00, new Item.Properties())
+    );
+
+    public static final DeferredHolder<Item, DeferredSpawnEggItem> FOREST_TRADER_SPAWN_EGG = ITEMS.register(
+            "forest_trader_spawn_egg",
+            () -> new DeferredSpawnEggItem(TraderEntitiesNeoForge.FOREST_TRADER,
+                    0x008000, 0xcea512, new Item.Properties())
+    );
+
     // Loot Boxes
     public static final DeferredHolder<Item, Item> ARMOR_LOOT_BOX = ITEMS.register(
             "armor_loot_box",
@@ -54,12 +66,6 @@ public class TraderItemsNeoForge {
     public static final DeferredHolder<Item, Item> POTION_LOOT_BOX = ITEMS.register(
             "potion_loot_box",
             () -> new PotionLootBoxItem(new Item.Properties())
-    );
-
-    public static final DeferredHolder<Item, DeferredSpawnEggItem> BOOK_TRADER_SPAWN_EGG = ITEMS.register(
-            "book_trader_spawn_egg",
-            () -> new DeferredSpawnEggItem(TraderEntitiesNeoForge.BOOK_TRADER,
-                    0x87cefa, 0xff8c00, new Item.Properties())
     );
 
     public static void register(IEventBus eventBus) {

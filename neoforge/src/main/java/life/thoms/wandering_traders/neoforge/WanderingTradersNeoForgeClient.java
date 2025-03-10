@@ -4,6 +4,7 @@ import life.thoms.wandering_traders.WanderingTraders;
 import life.thoms.wandering_traders.neoforge.registry.TraderEntitiesNeoForge;
 import life.thoms.wandering_traders.rendering.BookTraderRenderer;
 import life.thoms.wandering_traders.rendering.EndTraderRenderer;
+import life.thoms.wandering_traders.rendering.ForestTraderRenderer;
 import life.thoms.wandering_traders.rendering.GamblingTraderRenderer;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -24,6 +25,7 @@ public class WanderingTradersNeoForgeClient {
         event.registerEntityRenderer(TraderEntitiesNeoForge.END_TRADER.get(), EndTraderRenderer::new);
         event.registerEntityRenderer(TraderEntitiesNeoForge.GAMBLING_TRADER.get(), GamblingTraderRenderer::new);
         event.registerEntityRenderer(TraderEntitiesNeoForge.BOOK_TRADER.get(), BookTraderRenderer::new);
+        event.registerEntityRenderer(TraderEntitiesNeoForge.FOREST_TRADER.get(), ForestTraderRenderer::new);
     }
 
 }

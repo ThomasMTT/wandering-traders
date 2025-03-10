@@ -19,7 +19,10 @@ public class TraderItemsFabric {
             new SpawnEggItem(TraderEntitiesFabric.GAMBLING_TRADER, 0xeaeef5, 0xcea512, new Item.Properties()));
 
     public static final Item BOOK_TRADER_SPAWN_EGG = register("book_trader_spawn_egg",
-            new SpawnEggItem(TraderEntitiesFabric.BOOK_TRADER, 0x87cefa, 0xff8c00, new Item.Properties()));
+            new SpawnEggItem(TraderEntitiesFabric.BOOK_TRADER, 0x435f91, 0xff8c00, new Item.Properties()));
+
+    public static final Item FOREST_TRADER_SPAWN_EGG = register("forest_trader_spawn_egg",
+            new SpawnEggItem(TraderEntitiesFabric.FOREST_TRADER, 0x008000, 0xcea512, new Item.Properties()));
 
     // Loot Boxes
     public static final Item ARMOR_LOOT_BOX = register("armor_loot_box",
