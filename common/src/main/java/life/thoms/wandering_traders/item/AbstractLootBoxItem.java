@@ -1,14 +1,12 @@
 package life.thoms.wandering_traders.item;
 
-import life.thoms.wandering_traders.util.LootBoxUtil;
-import net.minecraft.network.chat.Component;
+import life.thoms.wandering_traders.util.MerchantUtil;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
@@ -41,7 +39,7 @@ public abstract class AbstractLootBoxItem extends Item {
 
     public ItemStack generateReward() {
         Item randomItem = lootList.get(RANDOM.nextInt(lootList.size()));
-        return LootBoxUtil.generateStackFromItem(RANDOM, randomItem);
+        return MerchantUtil.generateStackFromItem(RANDOM, randomItem);
     }
 
     public abstract List<Item> generateLootList();

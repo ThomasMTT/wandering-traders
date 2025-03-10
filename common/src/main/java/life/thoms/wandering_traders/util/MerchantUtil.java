@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-public class LootBoxUtil {
+public class MerchantUtil {
 
     public static final List<Enchantment> ENCHANTMENTS = new ArrayList<>();
     public static final List<Potion> POTIONS = new ArrayList<>();
@@ -68,7 +68,8 @@ public class LootBoxUtil {
     public static ItemStack generateStackFromItem(Random random, Item item) {
         ItemStack stack = new ItemStack(item);
 
-        if (stack.isEnchantable() && (ARMOR_ITEMS.contains(item) || TOOL_ITEMS.contains(item) || WEAPON_ITEMS.contains(item))) {
+        if (stack.isEnchantable() && (ARMOR_ITEMS.contains(item) || TOOL_ITEMS.contains(item) ||
+                WEAPON_ITEMS.contains(item) || item instanceof EnchantedBookItem)) {
             // Determine if item should be enchanted and how many times
             int enchantmentChance = random.nextInt(100);
             int enchantments = 0;

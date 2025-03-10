@@ -1,6 +1,6 @@
 package life.thoms.wandering_traders.item;
 
-import life.thoms.wandering_traders.util.LootBoxUtil;
+import life.thoms.wandering_traders.util.MerchantUtil;
 import net.minecraft.world.item.Item;
 
 import java.util.List;
@@ -13,7 +13,7 @@ public class FoodLootBoxItem extends AbstractLootBoxItem {
 
     @Override
     public List<Item> generateLootList() {
-        return LootBoxUtil.FOOD_ITEMS;
+        return MerchantUtil.FOOD_ITEMS;
     }
 
 }
