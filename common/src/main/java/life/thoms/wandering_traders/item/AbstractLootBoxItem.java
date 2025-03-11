@@ -5,8 +5,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
@@ -28,9 +27,11 @@ public abstract class AbstractLootBoxItem extends Item {
         ItemStack rewardItem = generateReward();
 
         if (player.getInventory().getFreeSlot() > -1) {
-            player.addItem(rewardItem);
-            if (!player.isCreative()) {
-                lootBoxItem.setCount(lootBoxItem.getCount() - 1);
+            if (!level.isClientSide()) {
+                player.addItem(rewardItem);
+                if (!player.isCreative()) {
+                    lootBoxItem.setCount(lootBoxItem.getCount() - 1);
+                }
             }
             player.playSound(SoundEvents.ITEM_PICKUP);
         }
@@ -39,6 +40,23 @@ public abstract class AbstractLootBoxItem extends Item {
 
     public ItemStack generateReward() {
         Item randomItem = lootList.get(RANDOM.nextInt(lootList.size()));
+
+        // If netherite 50/50 chance of changing to another item
+        if (randomItem instanceof TieredItem tieredItem) {
+            if (tieredItem.getTier().equals(Tiers.NETHERITE)) {
+                if (RANDOM.nextBoolean()) {
+                    randomItem = lootList.get(RANDOM.nextInt(lootList.size()));
+                }
+            }
+
+        }
+        if (randomItem instanceof ArmorItem armorItem) {
+            if (armorItem.getMaterial().equals(ArmorMaterials.NETHERITE)) {
+                if (RANDOM.nextBoolean()) {
+                    randomItem = lootList.get(RANDOM.nextInt(lootList.size()));
+                }
+            }
+        }
         return MerchantUtil.generateStackFromItem(RANDOM, randomItem);
     }
 
