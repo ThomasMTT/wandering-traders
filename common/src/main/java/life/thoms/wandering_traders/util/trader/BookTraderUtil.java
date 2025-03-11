@@ -24,15 +24,7 @@ public class BookTraderUtil {
         for (int i = 0; i < 6; i++) {
             offers.add(createOffer());
         }
-        offers.sort((x, z) -> {
-            if (x.getItemCostA().count() < z.getItemCostA().count()) {
-                return 1;
-            } else if (x.getItemCostA().count() == z.getItemCostA().count()) {
-                return 0;
-            } else {
-                return -1;
-            }
-        });
+        offers.sort((x, z) -> Integer.compare(z.getItemCostA().count(), x.getItemCostA().count()));
         return offers;
     }
 
