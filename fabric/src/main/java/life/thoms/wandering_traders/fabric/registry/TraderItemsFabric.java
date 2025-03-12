@@ -1,6 +1,7 @@
 package life.thoms.wandering_traders.fabric.registry;
 
 import life.thoms.wandering_traders.WanderingTraders;
+import life.thoms.wandering_traders.item.EndBellItem;
 import life.thoms.wandering_traders.item.*;
 import life.thoms.wandering_traders.server.ModRegistryAccess;
 import net.minecraft.core.Registry;
@@ -40,6 +41,9 @@ public class TraderItemsFabric {
     public static final Item POTION_LOOT_BOX = register("potion_loot_box",
             new PotionLootBoxItem(new Item.Properties()));
 
+    public static final Item END_BELL = register("end_bell",
+            new EndBellItem(new Item.Properties()));
+
     private static Item register(String name, Item item) {
         return Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(WanderingTraders.MOD_ID + ":" + name), item);
     }
@@ -56,6 +60,7 @@ public class TraderItemsFabric {
         ModRegistryAccess.addItem("tool_loot_box", TOOL_LOOT_BOX);
         ModRegistryAccess.addItem("food_loot_box", FOOD_LOOT_BOX);
         ModRegistryAccess.addItem("potion_loot_box", POTION_LOOT_BOX);
+        ModRegistryAccess.addItem("end_bell", END_BELL);
     }
 
 }

@@ -4,6 +4,7 @@ import life.thoms.wandering_traders.WanderingTraders;
 import life.thoms.wandering_traders.fabric.event.EntityEventsFabric;
 import life.thoms.wandering_traders.fabric.event.PlayerEventsFabric;
 import life.thoms.wandering_traders.fabric.event.ServerEventsFabric;
+import life.thoms.wandering_traders.fabric.registry.TraderLootTableModifiers;
 import life.thoms.wandering_traders.fabric.registry.TraderCreativeTabFabric;
 import life.thoms.wandering_traders.fabric.registry.TraderEntitiesFabric;
 import life.thoms.wandering_traders.fabric.registry.TraderItemsFabric;
@@ -22,6 +23,7 @@ public final class WanderingTradersFabric implements ModInitializer {
         ServerEventsFabric.register();
         PlayerEventsFabric.register();
         TraderEntitySpawner.register();
+        TraderLootTableModifiers.register();
     }
 
 }

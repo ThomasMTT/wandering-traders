@@ -68,16 +68,22 @@ public class TraderItemsNeoForge {
             () -> new PotionLootBoxItem(new Item.Properties())
     );
 
+    public static final DeferredHolder<Item, Item> END_BELL = ITEMS.register(
+            "end_bell",
+            () -> new EndBellItem(new Item.Properties())
+    );
+
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }
 
     public static void registerCommon() {
-        ModRegistryAccess.addItem("armor_loot_box", TraderItemsNeoForge.ARMOR_LOOT_BOX.get());
-        ModRegistryAccess.addItem("weapon_loot_box", TraderItemsNeoForge.WEAPON_LOOT_BOX.get());
-        ModRegistryAccess.addItem("tool_loot_box", TraderItemsNeoForge.TOOL_LOOT_BOX.get());
-        ModRegistryAccess.addItem("food_loot_box", TraderItemsNeoForge.FOOD_LOOT_BOX.get());
-        ModRegistryAccess.addItem("potion_loot_box", TraderItemsNeoForge.POTION_LOOT_BOX.get());
+        ModRegistryAccess.addItem("armor_loot_box", ARMOR_LOOT_BOX.get());
+        ModRegistryAccess.addItem("weapon_loot_box", WEAPON_LOOT_BOX.get());
+        ModRegistryAccess.addItem("tool_loot_box", TOOL_LOOT_BOX.get());
+        ModRegistryAccess.addItem("food_loot_box", FOOD_LOOT_BOX.get());
+        ModRegistryAccess.addItem("potion_loot_box", POTION_LOOT_BOX.get());
+        ModRegistryAccess.addItem("end_bell", END_BELL.get());
     }
 
 }

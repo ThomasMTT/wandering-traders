@@ -12,7 +12,7 @@ import net.minecraft.world.item.ItemStack;
 public class TraderCreativeTabFabric {
 
     public static final CreativeModeTab CREATIVE_MODE_TABS = FabricItemGroup.builder()
-            .icon(() -> new ItemStack(TraderItemsFabric.END_TRADER_SPAWN_EGG))
+            .icon(() -> new ItemStack(TraderItemsFabric.END_BELL))
             .title(Component.translatable("creative_tab.wandering_traders_tab"))
             .displayItems(
                     (parameters, output) -> {
@@ -25,6 +25,7 @@ public class TraderCreativeTabFabric {
                         output.accept(TraderItemsFabric.TOOL_LOOT_BOX);
                         output.accept(TraderItemsFabric.FOOD_LOOT_BOX);
                         output.accept(TraderItemsFabric.POTION_LOOT_BOX);
+                        output.accept(TraderItemsFabric.END_BELL);
                     })
             .build();
 

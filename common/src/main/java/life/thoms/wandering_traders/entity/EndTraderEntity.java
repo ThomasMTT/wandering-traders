@@ -25,6 +25,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 public class EndTraderEntity extends AbstractTraderEntity {
@@ -36,12 +37,32 @@ public class EndTraderEntity extends AbstractTraderEntity {
         super(entityType, level);
     }
 
+    public void addLinkedPlayer(Player player) {
+        this.linkedPlayerUuid = player.getUUID();
+        this.linkedPlayerName = player.getName().getString();
+        player.addTag("linked_with_end_trader");
+    }
+
     @Override
     public @NotNull InteractionResult mobInteract(Player player, InteractionHand hand) {
-        if (!isClientSide()) {
+        if (isClientSide()) {
             if (linkedPlayerUuid == null) {
-                linkedPlayerUuid = player.getUUID();
-                linkedPlayerName = player.getName().getString();
+                if (!player.getTags().contains("linked_with_end_trader")) {
+                    if (!LostLootData.PLAYER_LOST_LOOT.getOrDefault(player.getUUID(), new ArrayList<>()).isEmpty()) {
+                        player.addTag("linked_with_end_trader");
+                    }
+                }
+            }
+        } else  {
+            if (linkedPlayerUuid == null) {
+                if (!player.getTags().contains("linked_with_end_trader")) {
+                    if (!LostLootData.PLAYER_LOST_LOOT.getOrDefault(player.getUUID(), new ArrayList<>()).isEmpty()) {
+                        addLinkedPlayer(player);
+                    }
+                } else {
+                    player.displayClientMessage(Component.translatable("end_trader_message.other_still_around"), true);
+                    return InteractionResult.sidedSuccess(true);
+                }
             }
 
             if (linkedPlayerUuid != null) {
@@ -58,6 +79,8 @@ public class EndTraderEntity extends AbstractTraderEntity {
                     MutableComponent message = Component.translatable("end_trader_message.only_trade_with");
                     player.displayClientMessage(message.append(linkedPlayerName).withStyle(ChatFormatting.ITALIC), true);
                 }
+            } else {
+                player.displayClientMessage(Component.translatable("end_trader_message.no_trades"), true);
             }
         }
         return InteractionResult.sidedSuccess(true);
@@ -89,49 +112,68 @@ public class EndTraderEntity extends AbstractTraderEntity {
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        if (source.getEntity() instanceof Player player) {
-            if (player.isCreative() && player.isCrouching()) {
-                return super.hurt(source, getMaxHealth());
-            }
-            if (linkedPlayerUuid == player.getUUID()) {
-                if (offers != null && !offers.isEmpty()) {
-                    player.displayClientMessage(Component.translatable("end_trader_message.leave_dim_angry"), true);
-                    goBackToTheEnd();
+        if (!isClientSide()) {
+            if (source.getEntity() instanceof Player player) {
+                if (player.isCreative() && player.isCrouching()) {
+                    removePlayerTag();
+                    return super.hurt(source, getMaxHealth());
                 }
-                return false;
+                if (linkedPlayerUuid != null) {
+                    if (linkedPlayerUuid.equals(player.getUUID())) {
+                        if (offers != null && !offers.isEmpty()) {
+                            player.displayClientMessage(Component.translatable("end_trader_message.leave_dim_angry"), true);
+                        } else {
+                            player.displayClientMessage(Component.translatable("end_trader_message.leave_dim"), true);
+                        }
+                        goBackToTheEnd();
+                        return false;
+                    }
+                }
             }
         }
         if (source.is(DamageTypes.GENERIC_KILL)) {
+            removePlayerTag();
             return super.hurt(source, getMaxHealth());
-        } else {
-            randomTeleport();
         }
+        randomTeleport();
+
         return false;
     }
 
     @Override
     public void aiStep() {
         super.aiStep();
-        if (!isClientSide() && isRemoved()) {
-            if (linkedPlayerUuid != null) {
-                Player player = level().getPlayerByUUID(linkedPlayerUuid);
-                if (player != null) {
-                    List<ItemStack> merchantLoot = new ArrayList<>();
-                    boolean lostSomeLoot = random.nextInt(0, 100) > 33;
-                    for (MerchantOffer offer : offers.stream().toList()) {
-                        if (!lostSomeLoot || random.nextBoolean()) {
-                            ItemStack stack = offer.getResult();
-                            merchantLoot.add(stack);
+        if (isRemoved()) {
+            if (isClientSide()) {
+                if (linkedPlayerUuid != null) {
+                    Player player = level().getPlayerByUUID(linkedPlayerUuid);
+                    if (player != null) {
+                        player.removeTag("linked_with_end_trader");
+                    }
+                }
+            } else {
+                if (linkedPlayerUuid != null) {
+                    Player player = level().getPlayerByUUID(linkedPlayerUuid);
+                    if (player != null) {
+                        player.removeTag("linked_with_end_trader");
+
+                        List<ItemStack> merchantLoot = new ArrayList<>();
+                        boolean lostSomeLoot = random.nextInt(0, 100) > 33;
+                        for (MerchantOffer offer : offers.stream().toList()) {
+                            if (!lostSomeLoot || random.nextBoolean()) {
+                                ItemStack stack = offer.getResult();
+                                merchantLoot.add(stack);
+                            }
                         }
-                    }
 
-                    if (lostSomeLoot) {
-                        player.displayClientMessage(Component.translatable("end_trader_message.leave_dim_lost"), true);
-                    } else {
-                        player.displayClientMessage(Component.translatable("end_trader_message.leave_dim"), true);
-                    }
+                        if (lostSomeLoot) {
+                            player.displayClientMessage(Component.translatable("end_trader_message.leave_dim_lost"), true);
+                        } else {
+                            player.displayClientMessage(Component.translatable("end_trader_message.leave_dim"), true);
+                        }
 
-                    LostLootData.PLAYER_LOST_LOOT.put(linkedPlayerUuid, merchantLoot);
+                        LostLootData.PLAYER_LOST_LOOT.put(linkedPlayerUuid, merchantLoot);
+                    }
                 }
             }
         }
@@ -157,9 +199,18 @@ public class EndTraderEntity extends AbstractTraderEntity {
 
     public void goBackToTheEnd() {
         if (!level().isClientSide()) {
-            if (isAlive()) {
-                playSound(SoundEvents.ENDERMAN_TELEPORT);
-                discard();
+            removePlayerTag();
+            discard();
+        } else {
+            playSound(SoundEvents.ENDERMAN_TELEPORT);
+        }
+    }
+
+    private void removePlayerTag() {
+        if (linkedPlayerUuid != null) {
+            Player player = level().getPlayerByUUID(linkedPlayerUuid);
+            if (player != null) {
+                player.removeTag("linked_with_end_trader");
             }
         }
     }

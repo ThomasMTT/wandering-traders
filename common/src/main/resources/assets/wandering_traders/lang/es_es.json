@@ -8,6 +8,8 @@
   "end_trader_message.leave_dim": "El Vendedor del End ha regresado al end",
   "end_trader_message.leave_dim_lost": "El Vendedor del End ha perdido parte de tu botín mientras regresaba al end",
   "end_trader_message.leave_dim_angry": "El Vendedor del End ha destruido tu botín y ha regresado al end",
+  "end_trader_message.summon_with_bell": "El Vendedor del End ha venido a vender tu botín perdido!",
+  "end_trader_message.other_still_around": "Ya tienes un vendedor, prueba otra vez cuando se haya ido",
   "creative_tab.wandering_traders_tab": "Vendedores Ambulantes",
   "item.wandering_traders.end_trader_spawn_egg": "Generar Vendedor del End",
   "item.wandering_traders.gambling_trader_spawn_egg": "Generar Vendedor Ludopata",
@@ -17,5 +19,6 @@
   "item.wandering_traders.weapon_loot_box": "Caja de armas",
   "item.wandering_traders.tool_loot_box": "Caja de herramientas",
   "item.wandering_traders.food_loot_box": "Caja de Comida",
-  "item.wandering_traders.potion_loot_box": "Caja de pociones"
+  "item.wandering_traders.potion_loot_box": "Caja de pociones",
+  "item.wandering_traders.end_bell": "Campana del end"
 }

@@ -8,6 +8,8 @@
   "end_trader_message.leave_dim": "The End Trader went back to the end",
   "end_trader_message.leave_dim_lost": "The End Trader lost some of your loot while going back to the end",
   "end_trader_message.leave_dim_angry": "The End Trader has destroyed your loot and went back to the end",
+  "end_trader_message.summon_with_bell": "The End Trader came to sell your lost loot!",
+  "end_trader_message.other_still_around": "You already have a trader, try again when he leaves",
   "creative_tab.wandering_traders_tab": "Wandering Traders",
   "item.wandering_traders.end_trader_spawn_egg": "End Trader Spawn Egg",
   "item.wandering_traders.gambling_trader_spawn_egg": "Gambling Trader Spawn Egg",
@@ -17,5 +19,6 @@
   "item.wandering_traders.weapon_loot_box": "Weapon box",
   "item.wandering_traders.tool_loot_box": "Tool box",
   "item.wandering_traders.food_loot_box": "Food Box",
-  "item.wandering_traders.potion_loot_box": "Potion Box"
+  "item.wandering_traders.potion_loot_box": "Potion Box",
+  "item.wandering_traders.end_bell": "End Trader Bell"
 }

@@ -16,7 +16,7 @@ public class TraderCreativeTabNeoForge {
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> TRADERS_TAB = CREATIVE_MODE_TABS.register("wandering_traders_tab",
             () -> CreativeModeTab.builder().icon(() ->
-                            new ItemStack(TraderItemsNeoForge.END_TRADER_SPAWN_EGG.get()))
+                            new ItemStack(TraderItemsNeoForge.END_BELL.get()))
                     .title(Component.translatable("creative_tab.wandering_traders_tab")).displayItems(
                             (parameters, output) -> {
                                 output.accept(TraderItemsNeoForge.END_TRADER_SPAWN_EGG.get());
@@ -28,6 +28,7 @@ public class TraderCreativeTabNeoForge {
                                 output.accept(TraderItemsNeoForge.TOOL_LOOT_BOX.get());
                                 output.accept(TraderItemsNeoForge.FOOD_LOOT_BOX.get());
                                 output.accept(TraderItemsNeoForge.POTION_LOOT_BOX.get());
+                                output.accept(TraderItemsNeoForge.END_BELL.get());
                             })
                     .build()
     );

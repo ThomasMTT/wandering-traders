@@ -5,6 +5,7 @@ import life.thoms.wandering_traders.entity.BookTraderEntity;
 import life.thoms.wandering_traders.entity.EndTraderEntity;
 import life.thoms.wandering_traders.entity.ForestTraderEntity;
 import life.thoms.wandering_traders.entity.GamblingTraderEntity;
+import life.thoms.wandering_traders.item.EndBellItem;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -38,6 +39,7 @@ public class TraderEntitiesFabric {
         FabricDefaultAttributeRegistry.register(TraderEntitiesFabric.GAMBLING_TRADER, GamblingTraderEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(TraderEntitiesFabric.BOOK_TRADER, BookTraderEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(TraderEntitiesFabric.FOREST_TRADER, ForestTraderEntity.createAttributes());
+        EndBellItem.END_TRADER_ENTITY = TraderEntitiesFabric.END_TRADER;
     }
 
 }

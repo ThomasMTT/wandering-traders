@@ -5,7 +5,9 @@ import life.thoms.wandering_traders.entity.BookTraderEntity;
 import life.thoms.wandering_traders.entity.EndTraderEntity;
 import life.thoms.wandering_traders.entity.ForestTraderEntity;
 import life.thoms.wandering_traders.entity.GamblingTraderEntity;
+import life.thoms.wandering_traders.item.EndBellItem;
 import life.thoms.wandering_traders.neoforge.event.EntityEventsNeoForge;
+import life.thoms.wandering_traders.neoforge.loot.LootModifiers;
 import life.thoms.wandering_traders.neoforge.registry.TraderCreativeTabNeoForge;
 import life.thoms.wandering_traders.neoforge.registry.TraderEntitiesNeoForge;
 import life.thoms.wandering_traders.neoforge.registry.TraderItemsNeoForge;
@@ -24,6 +26,7 @@ public final class WanderingTradersNeoForge {
         TraderItemsNeoForge.register(eventBus);
         TraderCreativeTabNeoForge.register(eventBus);
         eventBus.addListener(SpawnPlacementRegisterEvent.class, EntityEventsNeoForge::registerSpawnPlacements);
+        LootModifiers.register(eventBus);
         eventBus.register(this);
     }
 
@@ -33,6 +36,9 @@ public final class WanderingTradersNeoForge {
         event.put(TraderEntitiesNeoForge.GAMBLING_TRADER.get(), GamblingTraderEntity.createAttributes().build());
         event.put(TraderEntitiesNeoForge.BOOK_TRADER.get(), BookTraderEntity.createAttributes().build());
         event.put(TraderEntitiesNeoForge.FOREST_TRADER.get(), ForestTraderEntity.createAttributes().build());
+
+        // Add here to avoid Uninitialized Exception
+        EndBellItem.END_TRADER_ENTITY = TraderEntitiesNeoForge.END_TRADER.get();
     }
 
 }

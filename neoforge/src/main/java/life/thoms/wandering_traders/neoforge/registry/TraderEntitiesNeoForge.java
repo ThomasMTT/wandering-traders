@@ -5,6 +5,7 @@ import life.thoms.wandering_traders.entity.BookTraderEntity;
 import life.thoms.wandering_traders.entity.EndTraderEntity;
 import life.thoms.wandering_traders.entity.ForestTraderEntity;
 import life.thoms.wandering_traders.entity.GamblingTraderEntity;
+import life.thoms.wandering_traders.item.EndBellItem;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
