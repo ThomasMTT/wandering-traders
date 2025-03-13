@@ -2,14 +2,17 @@ package life.thoms.wandering_traders.neoforge.event;
 
 import life.thoms.wandering_traders.WanderingTraders;
 import life.thoms.wandering_traders.entity.BookTraderEntity;
+import life.thoms.wandering_traders.entity.EndTraderEntity;
 import life.thoms.wandering_traders.entity.ForestTraderEntity;
 import life.thoms.wandering_traders.entity.GamblingTraderEntity;
 import life.thoms.wandering_traders.handler.EntityEventHandler;
+import life.thoms.wandering_traders.item.EndBellItem;
 import life.thoms.wandering_traders.neoforge.registry.TraderEntitiesNeoForge;
 import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.EntityLeaveLevelEvent;
 import net.neoforged.neoforge.event.entity.SpawnPlacementRegisterEvent;
 
@@ -33,6 +36,16 @@ public class EntityEventsNeoForge {
         event.register(TraderEntitiesNeoForge.FOREST_TRADER.get(), SpawnPlacementTypes.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, ForestTraderEntity::checkMobSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.REPLACE);
+    }
+
+    public static void registerAttributes(EntityAttributeCreationEvent event) {
+        event.put(TraderEntitiesNeoForge.END_TRADER.get(), EndTraderEntity.createAttributes().build());
+        event.put(TraderEntitiesNeoForge.GAMBLING_TRADER.get(), GamblingTraderEntity.createAttributes().build());
+        event.put(TraderEntitiesNeoForge.BOOK_TRADER.get(), BookTraderEntity.createAttributes().build());
+        event.put(TraderEntitiesNeoForge.FOREST_TRADER.get(), ForestTraderEntity.createAttributes().build());
+
+        // Add here to avoid Uninitialized Exception
+        EndBellItem.END_TRADER_ENTITY = TraderEntitiesNeoForge.END_TRADER.get();
     }
 
 }

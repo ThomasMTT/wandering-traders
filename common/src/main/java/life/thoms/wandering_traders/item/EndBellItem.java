@@ -2,6 +2,7 @@ package life.thoms.wandering_traders.item;
 
 import life.thoms.wandering_traders.entity.EndTraderEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
@@ -29,6 +30,10 @@ public class EndBellItem extends Item {
             if (!level.isClientSide) {
                 ItemStack bellItem = player.getItemInHand(usedHand);
                 BlockPos playerPos = player.blockPosition();
+                Direction spawnDirection = player.getDirection();
+                if (spawnDirection == Direction.DOWN || spawnDirection == Direction.UP) {
+                    spawnDirection = Direction.NORTH;
+                }
                 BlockPos spawnPos = playerPos.relative(player.getDirection(), 2);
                 int spawnY = level.getHeight(Heightmap.Types.WORLD_SURFACE, (int) spawnPos.getX(), (int) spawnPos.getZ());
                 spawnPos = new BlockPos(spawnPos.getX(), spawnY, spawnPos.getZ());
