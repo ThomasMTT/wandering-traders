@@ -42,6 +42,12 @@ public class TraderItemsNeoForge {
                     0x008000, 0xcea512, new Item.Properties())
     );
 
+    public static final DeferredHolder<Item, DeferredSpawnEggItem> POTION_TRADER_SPAWN_EGG = ITEMS.register(
+            "potion_trader_spawn_egg",
+            () -> new DeferredSpawnEggItem(TraderEntitiesNeoForge.POTION_TRADER,
+                    0x953298, 0xcac9c9, new Item.Properties())
+    );
+
     // Loot Boxes
     public static final DeferredHolder<Item, Item> ARMOR_LOOT_BOX = ITEMS.register(
             "armor_loot_box",

@@ -1,10 +1,7 @@
 package life.thoms.wandering_traders.fabric.registry;
 
 import life.thoms.wandering_traders.WanderingTraders;
-import life.thoms.wandering_traders.entity.BookTraderEntity;
-import life.thoms.wandering_traders.entity.EndTraderEntity;
-import life.thoms.wandering_traders.entity.ForestTraderEntity;
-import life.thoms.wandering_traders.entity.GamblingTraderEntity;
+import life.thoms.wandering_traders.entity.*;
 import life.thoms.wandering_traders.item.EndBellItem;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.core.Registry;
@@ -33,12 +30,17 @@ public class TraderEntitiesFabric {
             BuiltInRegistries.ENTITY_TYPE, WanderingTraders.MOD_ID + ":forest_trader", EntityType.Builder.of(
                     ForestTraderEntity::new, MobCategory.CREATURE).sized(0.6F, 2.0F).build("forest_trader")
     );
+    public static final EntityType<PotionTraderEntity> POTION_TRADER = Registry.register(
+            BuiltInRegistries.ENTITY_TYPE, WanderingTraders.MOD_ID + ":potion_trader", EntityType.Builder.of(
+                    PotionTraderEntity::new, MobCategory.CREATURE).sized(0.6F, 2.0F).build("potion_trader")
+    );
 
     public static void register() {
-        FabricDefaultAttributeRegistry.register(TraderEntitiesFabric.END_TRADER, EndTraderEntity.createAttributes());
-        FabricDefaultAttributeRegistry.register(TraderEntitiesFabric.GAMBLING_TRADER, GamblingTraderEntity.createAttributes());
-        FabricDefaultAttributeRegistry.register(TraderEntitiesFabric.BOOK_TRADER, BookTraderEntity.createAttributes());
-        FabricDefaultAttributeRegistry.register(TraderEntitiesFabric.FOREST_TRADER, ForestTraderEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(END_TRADER, EndTraderEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(GAMBLING_TRADER, GamblingTraderEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(BOOK_TRADER, BookTraderEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(FOREST_TRADER, ForestTraderEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(POTION_TRADER, ForestTraderEntity.createAttributes());
         EndBellItem.END_TRADER_ENTITY = TraderEntitiesFabric.END_TRADER;
     }
 

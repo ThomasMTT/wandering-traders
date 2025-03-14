@@ -23,6 +23,8 @@ public class TraderEntitySpawner {
         BiomeModifications.addSpawn(BiomeSelectors.tag(BiomeTags.IS_FOREST), MobCategory.CREATURE,
                 TraderEntitiesFabric.FOREST_TRADER, 1, 1, 1);
 
+        BiomeModifications.addSpawn(BiomeSelectors.tag(BiomeTags.HAS_SWAMP_HUT), MobCategory.CREATURE,
+                TraderEntitiesFabric.POTION_TRADER, 1, 1, 1);
     }
 
 }

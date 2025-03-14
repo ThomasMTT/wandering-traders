@@ -1,10 +1,7 @@
 package life.thoms.wandering_traders.neoforge.registry;
 
 import life.thoms.wandering_traders.WanderingTraders;
-import life.thoms.wandering_traders.entity.BookTraderEntity;
-import life.thoms.wandering_traders.entity.EndTraderEntity;
-import life.thoms.wandering_traders.entity.ForestTraderEntity;
-import life.thoms.wandering_traders.entity.GamblingTraderEntity;
+import life.thoms.wandering_traders.entity.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -33,6 +30,10 @@ public class TraderEntitiesNeoForge {
     public static final Supplier<EntityType<ForestTraderEntity>> FOREST_TRADER =
             ENTITY_TYPES.register("forest_trader", () -> EntityType.Builder.of(ForestTraderEntity::new,
                     MobCategory.CREATURE).sized(0.6F, 2.0F).build("forest_trader"));
+
+    public static final Supplier<EntityType<PotionTraderEntity>> POTION_TRADER =
+            ENTITY_TYPES.register("potion_trader", () -> EntityType.Builder.of(PotionTraderEntity::new,
+                    MobCategory.CREATURE).sized(0.6F, 2.0F).build("potion_trader"));
 
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);

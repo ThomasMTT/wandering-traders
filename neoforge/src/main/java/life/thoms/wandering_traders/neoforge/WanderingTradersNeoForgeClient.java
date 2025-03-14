@@ -1,11 +1,9 @@
 package life.thoms.wandering_traders.neoforge;
 
 import life.thoms.wandering_traders.WanderingTraders;
+import life.thoms.wandering_traders.model.PotionTraderModel;
 import life.thoms.wandering_traders.neoforge.registry.TraderEntitiesNeoForge;
-import life.thoms.wandering_traders.rendering.BookTraderRenderer;
-import life.thoms.wandering_traders.rendering.EndTraderRenderer;
-import life.thoms.wandering_traders.rendering.ForestTraderRenderer;
-import life.thoms.wandering_traders.rendering.GamblingTraderRenderer;
+import life.thoms.wandering_traders.rendering.*;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -26,6 +24,12 @@ public class WanderingTradersNeoForgeClient {
         event.registerEntityRenderer(TraderEntitiesNeoForge.GAMBLING_TRADER.get(), GamblingTraderRenderer::new);
         event.registerEntityRenderer(TraderEntitiesNeoForge.BOOK_TRADER.get(), BookTraderRenderer::new);
         event.registerEntityRenderer(TraderEntitiesNeoForge.FOREST_TRADER.get(), ForestTraderRenderer::new);
+        event.registerEntityRenderer(TraderEntitiesNeoForge.POTION_TRADER.get(), PotionTraderRenderer::new);
+    }
+
+    @SubscribeEvent
+    public static void registerEntityRenderers(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(PotionTraderModel.LAYER_LOCATION, PotionTraderModel::createBodyLayer);
     }
 
 }

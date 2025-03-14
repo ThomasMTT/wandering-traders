@@ -24,6 +24,9 @@ public class TraderItemsFabric {
     public static final Item FOREST_TRADER_SPAWN_EGG = register("forest_trader_spawn_egg",
             new SpawnEggItem(TraderEntitiesFabric.FOREST_TRADER, 0x008000, 0xcea512, new Item.Properties()));
 
+    public static final Item POTION_TRADER_SPAWN_EGG = register("potion_trader_spawn_egg",
+            new SpawnEggItem(TraderEntitiesFabric.POTION_TRADER, 0x953298, 0xcac9c9, new Item.Properties()));
+
     // Loot Boxes
     public static final Item ARMOR_LOOT_BOX = register("armor_loot_box",
             new ArmorLootBoxItem(new Item.Properties()));
