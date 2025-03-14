@@ -14,6 +14,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.npc.WanderingTrader;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -34,6 +35,13 @@ public class EndTraderEntity extends AbstractTraderEntity {
 
     public EndTraderEntity(EntityType<? extends WanderingTrader> entityType, Level level) {
         super(entityType, level);
+    }
+
+    @Override
+    protected void registerGoals() {
+     super.registerGoals();
+     // This trader doesn't hide in the night
+     goalSelector.removeAllGoals(goal ->  goal instanceof UseItemGoal);
     }
 
     public void addLinkedPlayer(Player player) {
