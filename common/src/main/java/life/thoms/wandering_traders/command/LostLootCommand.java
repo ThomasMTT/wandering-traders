@@ -4,7 +4,6 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import life.thoms.wandering_traders.menu.ViewOnlyChestMenu;
-import life.thoms.wandering_traders.server.data.LostLootData;
 import life.thoms.wandering_traders.util.LostLootUtil;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;

@@ -3,7 +3,6 @@ package life.thoms.wandering_traders.item;
 import life.thoms.wandering_traders.entity.EndTraderEntity;
 import life.thoms.wandering_traders.server.data.PlayerEndTraderData;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
@@ -16,8 +15,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.Heightmap;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.UUID;
 
 public class EndBellItem extends Item {
 

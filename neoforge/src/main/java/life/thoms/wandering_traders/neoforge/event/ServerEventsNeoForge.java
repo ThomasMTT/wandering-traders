@@ -3,7 +3,6 @@ package life.thoms.wandering_traders.neoforge.event;
 import life.thoms.wandering_traders.WanderingTraders;
 import life.thoms.wandering_traders.handler.ServerEventHandler;
 import life.thoms.wandering_traders.neoforge.registry.TraderItemsNeoForge;
-import life.thoms.wandering_traders.server.ModRegistryAccess;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;

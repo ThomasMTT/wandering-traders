@@ -1,6 +1,5 @@
 package life.thoms.wandering_traders.entity;
 
-import life.thoms.wandering_traders.server.data.LostLootData;
 import life.thoms.wandering_traders.server.data.PlayerEndTraderData;
 import life.thoms.wandering_traders.util.LostLootUtil;
 import life.thoms.wandering_traders.util.trader.EndTraderUtil;
@@ -25,7 +24,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 

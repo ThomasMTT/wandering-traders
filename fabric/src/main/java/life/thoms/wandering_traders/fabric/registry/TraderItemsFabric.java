@@ -1,7 +1,6 @@
 package life.thoms.wandering_traders.fabric.registry;
 
 import life.thoms.wandering_traders.WanderingTraders;
-import life.thoms.wandering_traders.item.EndBellItem;
 import life.thoms.wandering_traders.item.*;
 import life.thoms.wandering_traders.server.ModRegistryAccess;
 import net.minecraft.core.Registry;

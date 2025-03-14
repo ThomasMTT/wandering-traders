@@ -15,7 +15,7 @@ import java.util.Random;
 public abstract class AbstractLootBoxItem extends Item {
 
     public static final Random RANDOM = new Random();
-    public List<Item> lootList = generateLootList();
+    public final List<Item> lootList = generateLootList();
 
     public AbstractLootBoxItem(Properties properties) {
         super(properties);
