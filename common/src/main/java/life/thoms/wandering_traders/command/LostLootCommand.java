@@ -5,6 +5,7 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import life.thoms.wandering_traders.menu.ViewOnlyChestMenu;
 import life.thoms.wandering_traders.server.data.LostLootData;
+import life.thoms.wandering_traders.util.LostLootUtil;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -16,7 +17,6 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.item.ItemStack;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -46,8 +46,7 @@ public class LostLootCommand {
     private static int viewPlayerLoot(CommandContext<CommandSourceStack> context, ServerPlayer target) {
         ServerPlayer player = context.getSource().getPlayer();
         if (player != null) {
-            List<ItemStack> lostLoot = LostLootData.PLAYER_LOST_LOOT.get(
-                    Objects.requireNonNullElse(target, player).getUUID());
+            List<ItemStack> lostLoot = LostLootUtil.getPlayerLoot(Objects.requireNonNullElse(target, player));
 
             if (lostLoot != null && !lostLoot.isEmpty()) {
                 SimpleContainer lostLootContainer = new SimpleContainer(54);
@@ -83,8 +82,7 @@ public class LostLootCommand {
     private static int clearLoot(CommandContext<CommandSourceStack> context) {
         ServerPlayer player = context.getSource().getPlayer();
         if (player != null) {
-            LostLootData.PLAYER_LOST_LOOT.put(player.getUUID(), new ArrayList<>());
-            LostLootData.INSTANCE.setDirty();
+            LostLootUtil.clearPlayerLoot(player);
             context.getSource().sendSystemMessage(Component.translatable("command.lostloot.clear.loot_cleared"));
             return 0;
         }
@@ -93,8 +91,7 @@ public class LostLootCommand {
 
     private static int clearOtherLoot(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         ServerPlayer target = EntityArgument.getPlayer(context, "Player");
-        LostLootData.PLAYER_LOST_LOOT.put(target.getUUID(), new ArrayList<>());
-        LostLootData.INSTANCE.setDirty();
+        LostLootUtil.clearPlayerLoot(target);
         MutableComponent message = Component.translatable("command.lostloot.clear.loot_cleared");
         message.append(Component.literal(" (" + target.getName().getString() + ")"));
         context.getSource().sendSystemMessage(message);

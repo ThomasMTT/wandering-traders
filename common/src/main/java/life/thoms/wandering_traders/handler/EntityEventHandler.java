@@ -18,24 +18,11 @@ public class EntityEventHandler {
     public static void onEntityLeaveLevel(Entity entity, Level level) {
         if (entity instanceof ItemEntity itemEntity) {
             if (itemEntity.getOwner() instanceof Player player) {
-                UUID playerUUID = player.getUUID();
                 if (LootFilters.isImportantLoot(itemEntity.getItem())) {
-                    ItemStack itemStack = itemEntity.getItem();
-                    if (itemStack.isStackable()) {
-                        LostLootUtil.handleStackableLoot(playerUUID, itemStack);
-                    } else {
-                        List<ItemStack> playerLoot = LostLootData.PLAYER_LOST_LOOT.getOrDefault(playerUUID, new ArrayList<>());
-                        playerLoot.add(itemStack);
-                        LostLootUtil.removeOldEntries(playerLoot);
-                        LostLootData.PLAYER_LOST_LOOT.put(playerUUID, playerLoot);
-                    }
-                    if (level.getServer() != null) {
-                        LostLootData.INSTANCE.setDirty();
-                    }
+                    ItemStack stack = itemEntity.getItem();
+                    LostLootUtil.addPlayerLoot(player, stack);
                 }
             }
-        } else if (entity instanceof Player player) {
-
         }
     }
 

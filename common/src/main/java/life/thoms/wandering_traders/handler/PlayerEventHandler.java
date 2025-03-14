@@ -27,7 +27,7 @@ public class PlayerEventHandler {
 
                 List<ItemStack> importantStacks = stacks.stream().filter(LootFilters::isImportantLoot).toList();
                 if (!importantStacks.isEmpty()) {
-                    List<ItemStack> playerLoot = LostLootData.PLAYER_LOST_LOOT.getOrDefault(player.getUUID(), new ArrayList<>());
+                    List<ItemStack> playerLoot = LostLootUtil.getPlayerLoot(player);
                     for (ItemStack stack : importantStacks) {
                         if (stack.isStackable()) {
                             LostLootUtil.handleStackableLoot(player.getUUID(), stack);

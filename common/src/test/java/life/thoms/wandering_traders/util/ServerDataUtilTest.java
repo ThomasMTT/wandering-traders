@@ -7,6 +7,7 @@ import com.mojang.serialization.JsonOps;
 import life.thoms.wandering_traders.server.data.LostLootData;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
@@ -15,6 +16,7 @@ import net.minecraft.server.Bootstrap;
 import net.minecraft.world.item.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +41,9 @@ class ServerDataUtilTest {
     @Test
     void saveNbtTest() {
         // Save to result of saveNbt to compound
-        CompoundTag compound = prepareSaveOrLoadNbt();
+        CompoundTag rootCompound = prepareSaveOrLoadNbt();
+        assertTrue(rootCompound.contains("wandering-traders-player-loot"));
+        CompoundTag compound = rootCompound.getCompound("wandering-traders-player-loot");
 
         // Test if was saved and loads correctly
         assertTrue(compound.contains(playerUUID.toString()));
@@ -73,17 +77,15 @@ class ServerDataUtilTest {
 
     @Test
     void LoadNbtTest() {
-        CompoundTag rootCompound = new CompoundTag();
         CompoundTag compound = prepareSaveOrLoadNbt();
-        rootCompound.put("wandering-traders-player-loot", compound);
 
         LostLootData.PLAYER_LOST_LOOT.clear();
-        LostLootDataUtil.loadNbt(rootCompound);
+        LostLootData.load(compound, null);
 
         assertSame(2, LostLootData.PLAYER_LOST_LOOT.size());
         for (UUID playerUUID : LostLootData.PLAYER_LOST_LOOT.keySet()) {
             assertTrue(LostLootData.PLAYER_LOST_LOOT.containsKey(playerUUID));
-            List<ItemStack> playerStacks = LostLootData.PLAYER_LOST_LOOT.getOrDefault(playerUUID, new ArrayList<>());
+            List<ItemStack> playerStacks = LostLootUtil.getPlayerLoot(playerUUID);
             assertFalse(playerStacks.isEmpty());
             for (ItemStack stack : playerStacks) {
                 if (stack.getItem() instanceof ArmorItem) {
@@ -114,10 +116,11 @@ class ServerDataUtilTest {
                 new ItemStack(Items.DIAMOND_BLOCK, 10)
         );
 
-        LostLootData.PLAYER_LOST_LOOT.put(playerUUID, playerLoot);
-        LostLootData.PLAYER_LOST_LOOT.put(player2UUID, player2Loot);
-
-        return LostLootDataUtil.saveNbt();
+        LostLootUtil.putPlayerLoot(playerUUID, playerLoot);
+        LostLootUtil.putPlayerLoot(player2UUID, player2Loot);
+        LostLootData mockedInstance = Mockito.spy(LostLootData.class);
+        HolderLookup.Provider provider = Mockito.mock(HolderLookup.Provider.class);
+        return mockedInstance.save(new CompoundTag(), provider);
     }
 
 }

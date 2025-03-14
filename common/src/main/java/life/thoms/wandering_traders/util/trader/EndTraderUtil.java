@@ -1,6 +1,7 @@
 package life.thoms.wandering_traders.util.trader;
 
 import life.thoms.wandering_traders.server.data.LostLootData;
+import life.thoms.wandering_traders.util.LostLootUtil;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -39,7 +40,7 @@ public class EndTraderUtil {
     }
 
     public static MerchantOffers createOffersFromLostLoot(UUID playerUUID, MerchantOffers existingOffers) {
-        List<ItemStack> playerLostLoot = LostLootData.PLAYER_LOST_LOOT.getOrDefault(playerUUID, new ArrayList<>());
+        List<ItemStack> playerLostLoot = LostLootUtil.getPlayerLoot(playerUUID);
         if (playerLostLoot == null || playerLostLoot.isEmpty()) {
             return existingOffers;
         }
@@ -51,7 +52,7 @@ public class EndTraderUtil {
             }
         }
 
-        LostLootData.PLAYER_LOST_LOOT.put(playerUUID, new ArrayList<>());
+       LostLootUtil.clearPlayerLoot(playerUUID);
         LostLootData.INSTANCE.setDirty();
         return existingOffers;
     }

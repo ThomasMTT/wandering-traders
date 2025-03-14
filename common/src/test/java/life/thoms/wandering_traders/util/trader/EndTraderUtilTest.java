@@ -1,6 +1,7 @@
 package life.thoms.wandering_traders.util.trader;
 
 import life.thoms.wandering_traders.server.data.LostLootData;
+import life.thoms.wandering_traders.util.LostLootUtil;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentPatch;
@@ -44,7 +45,7 @@ class EndTraderUtilTest {
                                 .set(DataComponents.CUSTOM_NAME, Component.literal("Test Item Name"))
                                 .build())
         );
-        LostLootData.PLAYER_LOST_LOOT.put(playerUUID, playerLoot);
+        LostLootUtil.putPlayerLoot(playerUUID, playerLoot);
     }
 
     @Test
@@ -82,7 +83,7 @@ class EndTraderUtilTest {
         prepareCreateOffersFromLostLoot();
         EndTraderUtil.createOffersFromLostLoot(playerUUID, offers);
 
-        assertTrue(LostLootData.PLAYER_LOST_LOOT.get(playerUUID).isEmpty());
+        assertTrue(LostLootUtil.getPlayerLoot(playerUUID).isEmpty());
     }
 
 }

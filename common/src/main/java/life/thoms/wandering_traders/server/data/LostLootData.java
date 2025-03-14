@@ -5,6 +5,7 @@ import com.google.gson.JsonParser;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.JsonOps;
 import life.thoms.wandering_traders.WanderingTraders;
+import life.thoms.wandering_traders.util.LostLootUtil;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.MinecraftServer;
@@ -47,7 +48,7 @@ public class LostLootData extends SavedData {
                 Optional<ItemStack> optionalStack = result.result();
                 optionalStack.ifPresent(playerLostLoot::add);
             }
-            LostLootData.PLAYER_LOST_LOOT.put(playerUUID, playerLostLoot);
+            LostLootUtil.putPlayerLoot(playerUUID, playerLostLoot);
         }
         return new LostLootData();
     }
@@ -57,7 +58,7 @@ public class LostLootData extends SavedData {
         CompoundTag compound = new CompoundTag();
         for (UUID playerUUID : LostLootData.PLAYER_LOST_LOOT.keySet()) {
             CompoundTag playerLootUUIDCompound = new CompoundTag();
-            List<ItemStack> playerLoot = LostLootData.PLAYER_LOST_LOOT.getOrDefault(playerUUID, new ArrayList<>());
+            List<ItemStack> playerLoot = LostLootUtil.getPlayerLoot(playerUUID);
 
             for (ItemStack stack : playerLoot) {
                 CompoundTag playerLootCompound = new CompoundTag();

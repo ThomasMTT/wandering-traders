@@ -1,6 +1,7 @@
 package life.thoms.wandering_traders.util;
 
 import life.thoms.wandering_traders.server.data.LostLootData;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
@@ -9,11 +10,9 @@ import java.util.UUID;
 
 public class LostLootUtil {
 
-    public static void handleStackableLoot(UUID playerUUID, ItemStack stack) {
-        if (stack.getCount() <= 0) return;
+    public static List<ItemStack> handleStackableLoot(UUID playerUUID, ItemStack stack) {
+        List<ItemStack> playerLoot = LostLootUtil.getPlayerLoot(playerUUID);
         int maxStackSize = 16;
-
-        List<ItemStack> playerLoot = LostLootData.PLAYER_LOST_LOOT.getOrDefault(playerUUID, new ArrayList<>());
 
         // Try to merge with existing stacks
         for (ItemStack existingStack : playerLoot) {
@@ -24,7 +23,7 @@ public class LostLootUtil {
                     existingStack.setCount(existingStack.getCount() + amountToAdd);
                     stack.setCount(stack.getCount() - amountToAdd);
 
-                    if (stack.getCount() <= 0) return;
+                    if (stack.getCount() <= 0) return playerLoot;
                 }
             }
         }
@@ -36,10 +35,10 @@ public class LostLootUtil {
             ItemStack newStack = stack.copy();
             newStack.setCount(amountToAdd);
             playerLoot.add(newStack);
-            LostLootUtil.removeOldEntries(playerLoot);
-            LostLootData.PLAYER_LOST_LOOT.put(playerUUID, playerLoot);
+
             stackCount = stackCount - amountToAdd;
         }
+        return playerLoot;
     }
 
     //  max size = 54 (9 slots * 6 rows)
@@ -47,6 +46,64 @@ public class LostLootUtil {
         while (lostLoot.size() > 54) {
             lostLoot.removeFirst();
         }
+    }
+
+    public static List<ItemStack> getPlayerLoot(UUID player) {
+        return LostLootData.PLAYER_LOST_LOOT.getOrDefault(player, new ArrayList<>());
+    }
+
+    public static void putPlayerLoot(UUID player, List<ItemStack> stacksToPut) {
+        removeOldEntries(stacksToPut);
+        LostLootData.PLAYER_LOST_LOOT.put(player, stacksToPut);
+    }
+
+    public static void addPlayerLoot(UUID player, ItemStack stack) {
+        List<ItemStack> playerLoot;
+        if (stack.isStackable()) {
+            playerLoot = handleStackableLoot(player, stack);
+        } else {
+            playerLoot = getPlayerLoot(player);
+            playerLoot.add(stack);
+        }
+        removeOldEntries(playerLoot);
+        LostLootUtil.addPlayerLoot(player, playerLoot);
+    }
+
+    public static void addPlayerLoot(UUID player, List<ItemStack> stacksToAdd) {
+        List<ItemStack> playerLoot = getPlayerLoot(player);
+        for (ItemStack stack : stacksToAdd) {
+            if (stack.isStackable()) {
+                playerLoot = handleStackableLoot(player, stack);
+            } else {
+                playerLoot.add(stack);
+            }
+        }
+        removeOldEntries(playerLoot);
+        LostLootData.PLAYER_LOST_LOOT.put(player, playerLoot);
+    }
+
+    public static void clearPlayerLoot(UUID player) {
+        LostLootData.PLAYER_LOST_LOOT.put(player, new ArrayList<>());
+    }
+
+    public static List<ItemStack> getPlayerLoot(Player player) {
+        return getPlayerLoot(player.getUUID());
+    }
+
+    public static void putPlayerLoot(Player player, List<ItemStack> stacksToPut) {
+        putPlayerLoot(player.getUUID(), stacksToPut);
+    }
+
+    public static void addPlayerLoot(Player player, ItemStack stack) {
+        addPlayerLoot(player.getUUID(), stack);
+    }
+
+    public static void addPlayerLoot(Player player, List<ItemStack> stacksToAdd) {
+        addPlayerLoot(player.getUUID(), stacksToAdd);
+    }
+
+    public static void clearPlayerLoot(Player player) {
+        clearPlayerLoot(player.getUUID());
     }
 
 }

@@ -51,7 +51,7 @@ public class EndTraderEntity extends AbstractTraderEntity {
             if (linkedPlayerUuid == null) {
                 UUID playerLinkedTraderUUID = PlayerEndTraderData.PLAYER_END_TRADER_MAP.get(player.getUUID());
                 if (playerLinkedTraderUUID == null) {
-                    if (!LostLootData.PLAYER_LOST_LOOT.getOrDefault(player.getUUID(), new ArrayList<>()).isEmpty()) {
+                    if (!LostLootUtil.getPlayerLoot(player).isEmpty()) {
                         addLinkedPlayer(player);
                     }
                 } else {
@@ -153,7 +153,7 @@ public class EndTraderEntity extends AbstractTraderEntity {
                     if (player != null) {
                         removeFromLinkMap(player);
 
-                        List<ItemStack> merchantLoot = LostLootData.PLAYER_LOST_LOOT.getOrDefault(player.getUUID(), new ArrayList<>());
+                        List<ItemStack> merchantLoot = LostLootUtil.getPlayerLoot(player);
                         if (merchantLoot.size() > 53) {
                             player.displayClientMessage(Component.translatable("end_trader_message.leave_dim_too_many_items"), true);
                         } else {
@@ -164,11 +164,6 @@ public class EndTraderEntity extends AbstractTraderEntity {
                                         ItemStack stack = offer.getResult();
                                         merchantLoot.add(stack);
                                     }
-                                    // Loot that wasn't already added once takes priority over old reinstated loot
-                                    if (merchantLoot.size() >= 54) {
-                                        lostSomeLoot = true;
-                                        break;
-                                    }
                                 }
                             }
 
@@ -178,7 +173,7 @@ public class EndTraderEntity extends AbstractTraderEntity {
                                 player.displayClientMessage(Component.translatable("end_trader_message.leave_dim"), true);
                             }
 
-                            LostLootData.PLAYER_LOST_LOOT.put(linkedPlayerUuid, merchantLoot);
+                            LostLootUtil.putPlayerLoot(linkedPlayerUuid, merchantLoot);
                         }
                     }
                 }
