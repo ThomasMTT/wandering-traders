@@ -4,6 +4,7 @@ import life.thoms.wandering_traders.entity.EndTraderEntity;
 import life.thoms.wandering_traders.server.data.PlayerEndTraderData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -15,6 +16,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.Heightmap;
 import org.jetbrains.annotations.NotNull;
+import java.util.List;
+import java.util.UUID;
 
 public class EndBellItem extends Item {
 
@@ -50,7 +53,17 @@ public class EndBellItem extends Item {
             }
 
         } else{
-            player.displayClientMessage(Component.translatable("end_trader_message.other_still_around"), true);
+            if (!level.isClientSide) {
+                MutableComponent message = Component.translatable("end_trader_message.other_still_around");
+                UUID traderUUID = PlayerEndTraderData.PLAYER_END_TRADER_MAP.get(player.getUUID());
+                List<EndTraderEntity> traderList = level.getEntitiesOfClass(EndTraderEntity.class, player.getBoundingBox().inflate(1000), x -> x.getUUID().equals(traderUUID));
+                if (traderList.isEmpty()) {
+                    player.displayClientMessage(message, true);
+                } else {
+                    EndTraderEntity trader = traderList.getFirst();
+                    player.displayClientMessage(message.append(" (" + (int) trader.getX() + " " + (int)  trader.getY() + " " + (int)  trader.getZ() + ")"), true);
+                }
+            }
         }
 
         return InteractionResultHolder.pass(player.getItemInHand(usedHand));
