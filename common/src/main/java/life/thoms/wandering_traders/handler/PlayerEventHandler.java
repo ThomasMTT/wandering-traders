@@ -33,12 +33,12 @@ public class PlayerEventHandler {
                             LostLootUtil.handleStackableLoot(player.getUUID(), stack);
                         } else {
                             playerLoot.add(stack);
-                            LostLootData.PLAYER_LOST_LOOT.put(player.getUUID(), playerLoot);
                         }
                         if (player.level().getServer() != null) {
                             LostLootData.INSTANCE.setDirty();
                         }
                     }
+                    LostLootUtil.removeOldEntries(playerLoot);
                     LostLootData.PLAYER_LOST_LOOT.put(player.getUUID(), playerLoot);
                 }
             }

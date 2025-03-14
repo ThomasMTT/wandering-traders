@@ -78,7 +78,7 @@ class ServerDataUtilTest {
         rootCompound.put("wandering-traders-player-loot", compound);
 
         LostLootData.PLAYER_LOST_LOOT.clear();
-        ServerDataUtil.loadNbt(rootCompound);
+        LostLootDataUtil.loadNbt(rootCompound);
 
         assertSame(2, LostLootData.PLAYER_LOST_LOOT.size());
         for (UUID playerUUID : LostLootData.PLAYER_LOST_LOOT.keySet()) {
@@ -117,7 +117,7 @@ class ServerDataUtilTest {
         LostLootData.PLAYER_LOST_LOOT.put(playerUUID, playerLoot);
         LostLootData.PLAYER_LOST_LOOT.put(player2UUID, player2Loot);
 
-        return ServerDataUtil.saveNbt();
+        return LostLootDataUtil.saveNbt();
     }
 
 }

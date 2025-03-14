@@ -26,6 +26,7 @@ public class EntityEventHandler {
                     } else {
                         List<ItemStack> playerLoot = LostLootData.PLAYER_LOST_LOOT.getOrDefault(playerUUID, new ArrayList<>());
                         playerLoot.add(itemStack);
+                        LostLootUtil.removeOldEntries(playerLoot);
                         LostLootData.PLAYER_LOST_LOOT.put(playerUUID, playerLoot);
                     }
                     if (level.getServer() != null) {

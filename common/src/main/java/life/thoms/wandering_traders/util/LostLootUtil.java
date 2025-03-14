@@ -36,8 +36,16 @@ public class LostLootUtil {
             ItemStack newStack = stack.copy();
             newStack.setCount(amountToAdd);
             playerLoot.add(newStack);
+            LostLootUtil.removeOldEntries(playerLoot);
             LostLootData.PLAYER_LOST_LOOT.put(playerUUID, playerLoot);
             stackCount = stackCount - amountToAdd;
+        }
+    }
+
+    //  max size = 54 (9 slots * 6 rows)
+    public static void removeOldEntries(List<ItemStack> lostLoot) {
+        while (lostLoot.size() > 54) {
+            lostLoot.removeFirst();
         }
     }
 

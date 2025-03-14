@@ -1,6 +1,8 @@
 package life.thoms.wandering_traders.entity;
 
 import life.thoms.wandering_traders.server.data.LostLootData;
+import life.thoms.wandering_traders.server.data.PlayerEndTraderData;
+import life.thoms.wandering_traders.util.LostLootUtil;
 import life.thoms.wandering_traders.util.trader.EndTraderUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -25,7 +27,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 public class EndTraderEntity extends AbstractTraderEntity {
@@ -40,22 +41,16 @@ public class EndTraderEntity extends AbstractTraderEntity {
     public void addLinkedPlayer(Player player) {
         this.linkedPlayerUuid = player.getUUID();
         this.linkedPlayerName = player.getName().getString();
-        player.addTag("linked_with_end_trader");
+        PlayerEndTraderData.PLAYER_END_TRADER_MAP.put(player.getUUID(), uuid);
+        PlayerEndTraderData.INSTANCE.setDirty();
     }
 
     @Override
     public @NotNull InteractionResult mobInteract(Player player, InteractionHand hand) {
-        if (isClientSide()) {
+        if (!isClientSide()) {
             if (linkedPlayerUuid == null) {
-                if (!player.getTags().contains("linked_with_end_trader")) {
-                    if (!LostLootData.PLAYER_LOST_LOOT.getOrDefault(player.getUUID(), new ArrayList<>()).isEmpty()) {
-                        player.addTag("linked_with_end_trader");
-                    }
-                }
-            }
-        } else  {
-            if (linkedPlayerUuid == null) {
-                if (!player.getTags().contains("linked_with_end_trader")) {
+                UUID playerLinkedTraderUUID = PlayerEndTraderData.PLAYER_END_TRADER_MAP.get(player.getUUID());
+                if (playerLinkedTraderUUID == null) {
                     if (!LostLootData.PLAYER_LOST_LOOT.getOrDefault(player.getUUID(), new ArrayList<>()).isEmpty()) {
                         addLinkedPlayer(player);
                     }
@@ -112,10 +107,11 @@ public class EndTraderEntity extends AbstractTraderEntity {
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        if (!isClientSide()) {
-            if (source.getEntity() instanceof Player player) {
+        if (source.getEntity() instanceof Player player) {
+            if (!isClientSide()) {
+
                 if (player.isCreative() && player.isCrouching()) {
-                    removePlayerTag();
+                    removeFromLinkMap(player);
                     return super.hurt(source, getMaxHealth());
                 }
                 if (linkedPlayerUuid != null) {
@@ -125,14 +121,21 @@ public class EndTraderEntity extends AbstractTraderEntity {
                         } else {
                             player.displayClientMessage(Component.translatable("end_trader_message.leave_dim"), true);
                         }
-                        goBackToTheEnd();
+                        goBackToTheEnd(player);
                         return false;
                     }
                 }
+            } else {
+                if (player.isCreative() && player.isCrouching()) {
+                    removeFromLinkMap(player);
+                }
             }
         }
+
         if (source.is(DamageTypes.GENERIC_KILL)) {
-            removePlayerTag();
+            if (source.getEntity() instanceof Player player) {
+                removeFromLinkMap(player);
+            }
             return super.hurt(source, getMaxHealth());
         }
         randomTeleport();
@@ -148,31 +151,35 @@ public class EndTraderEntity extends AbstractTraderEntity {
                 if (linkedPlayerUuid != null) {
                     Player player = level().getPlayerByUUID(linkedPlayerUuid);
                     if (player != null) {
-                        player.removeTag("linked_with_end_trader");
-                    }
-                }
-            } else {
-                if (linkedPlayerUuid != null) {
-                    Player player = level().getPlayerByUUID(linkedPlayerUuid);
-                    if (player != null) {
-                        player.removeTag("linked_with_end_trader");
+                        removeFromLinkMap(player);
 
-                        List<ItemStack> merchantLoot = new ArrayList<>();
-                        boolean lostSomeLoot = random.nextInt(0, 100) > 33;
-                        for (MerchantOffer offer : offers.stream().toList()) {
-                            if (!lostSomeLoot || random.nextBoolean()) {
-                                ItemStack stack = offer.getResult();
-                                merchantLoot.add(stack);
-                            }
-                        }
-
-                        if (lostSomeLoot) {
-                            player.displayClientMessage(Component.translatable("end_trader_message.leave_dim_lost"), true);
+                        List<ItemStack> merchantLoot = LostLootData.PLAYER_LOST_LOOT.getOrDefault(player.getUUID(), new ArrayList<>());
+                        if (merchantLoot.size() > 53) {
+                            player.displayClientMessage(Component.translatable("end_trader_message.leave_dim_too_many_items"), true);
                         } else {
-                            player.displayClientMessage(Component.translatable("end_trader_message.leave_dim"), true);
-                        }
+                            boolean lostSomeLoot = random.nextInt(0, 100) > 33;
+                            if (offers != null && !offers.isEmpty()) {
+                                for (MerchantOffer offer : offers.stream().toList()) {
+                                    if (!lostSomeLoot || random.nextBoolean()) {
+                                        ItemStack stack = offer.getResult();
+                                        merchantLoot.add(stack);
+                                    }
+                                    // Loot that wasn't already added once takes priority over old reinstated loot
+                                    if (merchantLoot.size() >= 54) {
+                                        lostSomeLoot = true;
+                                        break;
+                                    }
+                                }
+                            }
 
-                        LostLootData.PLAYER_LOST_LOOT.put(linkedPlayerUuid, merchantLoot);
+                            if (lostSomeLoot) {
+                                player.displayClientMessage(Component.translatable("end_trader_message.leave_dim_lost"), true);
+                            } else {
+                                player.displayClientMessage(Component.translatable("end_trader_message.leave_dim"), true);
+                            }
+
+                            LostLootData.PLAYER_LOST_LOOT.put(linkedPlayerUuid, merchantLoot);
+                        }
                     }
                 }
             }
@@ -197,21 +204,20 @@ public class EndTraderEntity extends AbstractTraderEntity {
         }
     }
 
-    public void goBackToTheEnd() {
+    public void goBackToTheEnd(Player player) {
         if (!level().isClientSide()) {
-            removePlayerTag();
+            removeFromLinkMap(player);
             discard();
         } else {
+            removeFromLinkMap(player);
             playSound(SoundEvents.ENDERMAN_TELEPORT);
         }
     }
 
-    private void removePlayerTag() {
-        if (linkedPlayerUuid != null) {
-            Player player = level().getPlayerByUUID(linkedPlayerUuid);
-            if (player != null) {
-                player.removeTag("linked_with_end_trader");
-            }
+    private void removeFromLinkMap(Player player) {
+        if (player != null) {
+            PlayerEndTraderData.PLAYER_END_TRADER_MAP.remove(player.getUUID());
+            PlayerEndTraderData.INSTANCE.setDirty();
         }
     }
 

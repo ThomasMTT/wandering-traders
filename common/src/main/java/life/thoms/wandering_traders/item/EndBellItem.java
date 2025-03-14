@@ -1,6 +1,7 @@
 package life.thoms.wandering_traders.item;
 
 import life.thoms.wandering_traders.entity.EndTraderEntity;
+import life.thoms.wandering_traders.server.data.PlayerEndTraderData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -16,6 +17,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.Heightmap;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.UUID;
+
 public class EndBellItem extends Item {
 
     public static EntityType<? extends WanderingTrader> END_TRADER_ENTITY;
@@ -26,14 +29,11 @@ public class EndBellItem extends Item {
 
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
-        if (!player.getTags().contains("linked_with_end_trader")) {
+
+        if (!PlayerEndTraderData.PLAYER_END_TRADER_MAP.containsKey(player.getUUID())) {
+            ItemStack bellItem = player.getItemInHand(usedHand);
             if (!level.isClientSide) {
-                ItemStack bellItem = player.getItemInHand(usedHand);
                 BlockPos playerPos = player.blockPosition();
-                Direction spawnDirection = player.getDirection();
-                if (spawnDirection == Direction.DOWN || spawnDirection == Direction.UP) {
-                    spawnDirection = Direction.NORTH;
-                }
                 BlockPos spawnPos = playerPos.relative(player.getDirection(), 2);
                 int spawnY = level.getHeight(Heightmap.Types.WORLD_SURFACE, (int) spawnPos.getX(), (int) spawnPos.getZ());
                 spawnPos = new BlockPos(spawnPos.getX(), spawnY, spawnPos.getZ());
@@ -47,9 +47,9 @@ public class EndBellItem extends Item {
                 trader.addLinkedPlayer(player);
                 player.displayClientMessage(Component.translatable("end_trader_message.summon_with_bell"), true);
             } else {
+                player.swing(usedHand);
                 player.playSound(SoundEvents.BELL_BLOCK);
                 player.playSound(SoundEvents.ENDERMAN_TELEPORT);
-                player.addTag("linked_with_end_trader");
             }
 
         } else{
