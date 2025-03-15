@@ -4,6 +4,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import life.thoms.wandering_traders.menu.ViewOnlyChestMenu;
+import life.thoms.wandering_traders.menu.ViewOnlySimpleContainer;
 import life.thoms.wandering_traders.util.LostLootUtil;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
@@ -12,7 +13,6 @@ import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.item.ItemStack;
 
@@ -48,7 +48,7 @@ public class LostLootCommand {
             List<ItemStack> lostLoot = LostLootUtil.getPlayerLoot(Objects.requireNonNullElse(target, player));
 
             if (lostLoot != null && !lostLoot.isEmpty()) {
-                SimpleContainer lostLootContainer = new SimpleContainer(54);
+                ViewOnlySimpleContainer lostLootContainer = new ViewOnlySimpleContainer(54);
                 lostLoot.forEach(lostLootContainer::addItem);
 
                 MutableComponent title;

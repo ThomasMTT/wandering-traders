@@ -66,7 +66,7 @@ public class LostLootUtil {
             playerLoot.add(stack);
         }
         removeOldEntries(playerLoot);
-        LostLootUtil.addPlayerLoot(player, playerLoot);
+        LostLootData.PLAYER_LOST_LOOT.put(player, playerLoot);
     }
 
     public static void addPlayerLoot(UUID player, List<ItemStack> stacksToAdd) {
