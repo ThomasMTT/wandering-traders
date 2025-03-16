@@ -18,6 +18,8 @@ public final class WanderingTradersFabricClient implements ClientModInitializer 
         EntityRendererRegistry.register(TraderEntitiesFabric.BOOK_TRADER, BookTraderRenderer::new);
         EntityRendererRegistry.register(TraderEntitiesFabric.FOREST_TRADER, ForestTraderRenderer::new);
         EntityRendererRegistry.register(TraderEntitiesFabric.POTION_TRADER, PotionTraderRenderer::new);
+        EntityRendererRegistry.register(TraderEntitiesFabric.ANIMAL_TRADER, AnimalTraderRenderer::new);
+        EntityRendererRegistry.register(TraderEntitiesFabric.EXCLUSIVE_TRADER, ExclusiveTraderRenderer::new);
 
         // Custom Models
         EntityModelLayerRegistry.registerModelLayer(PotionTraderModel.LAYER_LOCATION, PotionTraderModel::createBodyLayer);

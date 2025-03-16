@@ -5,6 +5,13 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.Cow;
+import net.minecraft.world.entity.monster.hoglin.Hoglin;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionContents;
@@ -29,11 +36,11 @@ public class MerchantUtil {
     public static final List<Item> TOOL_ITEMS = new ArrayList<>();
     public static final List<Item> FOOD_ITEMS = new ArrayList<>();
     public static final List<Item> SAPPLING_ITEMS = new ArrayList<>();
-    public static final List<Item> CROP_ITEMS = new ArrayList<>();
+    public static final List<Item> ANIMAL_SPAWN_EGG_ITEMS = new ArrayList<>();
 
     public static final MerchantOffers LOOT_BOX_OFFERS = new MerchantOffers();
 
-    public static void register() {
+    public static void register(ServerLevel level) {
         LOOT_BOX_OFFERS.clear();
         LOOT_BOX_OFFERS.add(createOffer(ModRegistryAccess.ITEM_ACCESS.get("food_loot_box"), 2, 32));
         LOOT_BOX_OFFERS.add(createOffer(ModRegistryAccess.ITEM_ACCESS.get("potion_loot_box"), 4, 16));
@@ -50,6 +57,7 @@ public class MerchantUtil {
         for (ResourceLocation potionLocation : potionLocations) {
             POTIONS.add(BuiltInRegistries.POTION.get(potionLocation));
         }
+        Animal fakeAnimal;
 
         Set<ResourceLocation> itemLocations = BuiltInRegistries.ITEM.keySet();
         for (ResourceLocation itemLocation : itemLocations) {
@@ -64,6 +72,16 @@ public class MerchantUtil {
                 WEAPON_ITEMS.add(item);
             } else if (new ItemStack(item).getComponents().has(DataComponents.FOOD)) {
                 FOOD_ITEMS.add(item);
+            } else if (item instanceof SpawnEggItem eggItem) {
+                Entity entity = eggItem.getType(new ItemStack(eggItem)).create(level);
+                // Dissable hoglin
+                if (entity instanceof Hoglin) break;
+                if (entity != null) {
+                    if (entity instanceof Animal) {
+                        ANIMAL_SPAWN_EGG_ITEMS.add(item);
+                    }
+                    entity.discard();
+                }
             }
             if (item instanceof BlockItem blockItem) {
                 Block block = blockItem.getBlock();

@@ -35,12 +35,25 @@ public class TraderEntitiesFabric {
                     PotionTraderEntity::new, MobCategory.CREATURE).sized(0.6F, 2.0F).build("potion_trader")
     );
 
+    public static final EntityType<AnimalTraderEntity> ANIMAL_TRADER = Registry.register(
+            BuiltInRegistries.ENTITY_TYPE, WanderingTraders.MOD_ID + ":animal_trader", EntityType.Builder.of(
+                    AnimalTraderEntity::new, MobCategory.CREATURE).sized(0.6F, 2.0F).build("animal_trader")
+    );
+
+    public static final EntityType<ExclusiveTraderEntity> EXCLUSIVE_TRADER = Registry.register(
+            BuiltInRegistries.ENTITY_TYPE, WanderingTraders.MOD_ID + ":exclusive_trader", EntityType.Builder.of(
+                    ExclusiveTraderEntity::new, MobCategory.CREATURE).sized(0.6F, 2.0F).fireImmune()
+                    .build("exclusive_trader")
+    );
+
     public static void register() {
         FabricDefaultAttributeRegistry.register(END_TRADER, EndTraderEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(GAMBLING_TRADER, GamblingTraderEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(BOOK_TRADER, BookTraderEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(FOREST_TRADER, ForestTraderEntity.createAttributes());
-        FabricDefaultAttributeRegistry.register(POTION_TRADER, ForestTraderEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(POTION_TRADER, PotionTraderEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(ANIMAL_TRADER, AnimalTraderEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(EXCLUSIVE_TRADER, ExclusiveTraderEntity.createAttributes());
         EndBellItem.END_TRADER_ENTITY = TraderEntitiesFabric.END_TRADER;
     }
 

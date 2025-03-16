@@ -24,6 +24,8 @@ public class TraderCreativeTabNeoForge {
                                 output.accept(TraderItemsNeoForge.BOOK_TRADER_SPAWN_EGG.get());
                                 output.accept(TraderItemsNeoForge.FOREST_TRADER_SPAWN_EGG.get());
                                 output.accept(TraderItemsNeoForge.POTION_TRADER_SPAWN_EGG.get());
+                                output.accept(TraderItemsNeoForge.ANIMAL_TRADER_SPAWN_EGG.get());
+                                output.accept(TraderItemsNeoForge.EXCLUSIVE_TRADER_SPAWN_EGG.get());
                                 output.accept(TraderItemsNeoForge.ARMOR_LOOT_BOX.get());
                                 output.accept(TraderItemsNeoForge.WEAPON_LOOT_BOX.get());
                                 output.accept(TraderItemsNeoForge.TOOL_LOOT_BOX.get());

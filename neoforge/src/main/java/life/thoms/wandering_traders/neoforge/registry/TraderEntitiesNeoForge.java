@@ -35,6 +35,14 @@ public class TraderEntitiesNeoForge {
             ENTITY_TYPES.register("potion_trader", () -> EntityType.Builder.of(PotionTraderEntity::new,
                     MobCategory.CREATURE).sized(0.6F, 2.0F).build("potion_trader"));
 
+    public static final Supplier<EntityType<AnimalTraderEntity>> ANIMAL_TRADER =
+            ENTITY_TYPES.register("animal_trader", () -> EntityType.Builder.of(AnimalTraderEntity::new,
+                    MobCategory.CREATURE).sized(0.6F, 2.0F).build("animal_trader"));
+
+    public static final Supplier<EntityType<ExclusiveTraderEntity>> EXCLUSIVE_TRADER =
+            ENTITY_TYPES.register("exclusive_trader", () -> EntityType.Builder.of(ExclusiveTraderEntity::new,
+                    MobCategory.CREATURE).sized(0.6F, 2.0F).fireImmune().build("exclusive_trader"));
+
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);
     }

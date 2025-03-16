@@ -25,6 +25,8 @@ public class WanderingTradersNeoForgeClient {
         event.registerEntityRenderer(TraderEntitiesNeoForge.BOOK_TRADER.get(), BookTraderRenderer::new);
         event.registerEntityRenderer(TraderEntitiesNeoForge.FOREST_TRADER.get(), ForestTraderRenderer::new);
         event.registerEntityRenderer(TraderEntitiesNeoForge.POTION_TRADER.get(), PotionTraderRenderer::new);
+        event.registerEntityRenderer(TraderEntitiesNeoForge.ANIMAL_TRADER.get(), AnimalTraderRenderer::new);
+        event.registerEntityRenderer(TraderEntitiesNeoForge.EXCLUSIVE_TRADER.get(), ExclusiveTraderRenderer::new);
     }
 
     @SubscribeEvent

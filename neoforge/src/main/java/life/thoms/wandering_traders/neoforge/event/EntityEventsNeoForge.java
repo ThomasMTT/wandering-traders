@@ -6,6 +6,7 @@ import life.thoms.wandering_traders.handler.EntityEventHandler;
 import life.thoms.wandering_traders.item.EndBellItem;
 import life.thoms.wandering_traders.neoforge.registry.TraderEntitiesNeoForge;
 import net.minecraft.world.entity.SpawnPlacementTypes;
+import net.minecraft.world.entity.monster.MagmaCube;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -34,7 +35,13 @@ public class EntityEventsNeoForge {
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, ForestTraderEntity::checkMobSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.REPLACE);
         event.register(TraderEntitiesNeoForge.POTION_TRADER.get(), SpawnPlacementTypes.ON_GROUND,
-                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, ForestTraderEntity::checkMobSpawnRules,
+                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, PotionTraderEntity::checkMobSpawnRules,
+                SpawnPlacementRegisterEvent.Operation.REPLACE);
+        event.register(TraderEntitiesNeoForge.ANIMAL_TRADER.get(), SpawnPlacementTypes.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, AnimalTraderEntity::checkMobSpawnRules,
+                SpawnPlacementRegisterEvent.Operation.REPLACE);
+        event.register(TraderEntitiesNeoForge.EXCLUSIVE_TRADER.get(), SpawnPlacementTypes.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, ExclusiveTraderEntity::checkMobSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.REPLACE);
     }
 
@@ -44,6 +51,8 @@ public class EntityEventsNeoForge {
         event.put(TraderEntitiesNeoForge.BOOK_TRADER.get(), BookTraderEntity.createAttributes().build());
         event.put(TraderEntitiesNeoForge.FOREST_TRADER.get(), ForestTraderEntity.createAttributes().build());
         event.put(TraderEntitiesNeoForge.POTION_TRADER.get(), PotionTraderEntity.createAttributes().build());
+        event.put(TraderEntitiesNeoForge.ANIMAL_TRADER.get(), AnimalTraderEntity.createAttributes().build());
+        event.put(TraderEntitiesNeoForge.EXCLUSIVE_TRADER.get(), ExclusiveTraderEntity.createAttributes().build());
 
         // Add here to avoid Uninitialized Exception
         EndBellItem.END_TRADER_ENTITY = TraderEntitiesNeoForge.END_TRADER.get();
