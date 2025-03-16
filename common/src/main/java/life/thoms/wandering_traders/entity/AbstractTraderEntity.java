@@ -19,8 +19,7 @@ public abstract class AbstractTraderEntity extends WanderingTrader {
     }
 
     @Override
-    protected void updateTrades() {
-    }
+    protected void updateTrades() {/* Empty on purpose to avoid trades being updated by default */}
 
     @Override
     public @NotNull MerchantOffers getOffers() {

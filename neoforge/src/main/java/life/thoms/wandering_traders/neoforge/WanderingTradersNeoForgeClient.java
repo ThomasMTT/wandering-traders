@@ -14,9 +14,7 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 public class WanderingTradersNeoForgeClient {
 
     @SubscribeEvent
-    public static void setup(FMLClientSetupEvent event) {
-
-    }
+    public static void setup(FMLClientSetupEvent event) {/* Empty until needed */}
 
     @SubscribeEvent
     public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {

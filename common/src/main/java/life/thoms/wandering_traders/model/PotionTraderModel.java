@@ -63,7 +63,7 @@ public class PotionTraderModel<T extends PotionTraderEntity> extends EntityModel
 
     @Override
     public void setupAnim(PotionTraderEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-
+        /* Empty on purpose as there are no animations intended for the trader */
     }
 
     @Override
