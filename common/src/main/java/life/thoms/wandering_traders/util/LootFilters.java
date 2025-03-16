@@ -1,6 +1,6 @@
 package life.thoms.wandering_traders.util;
 
-import life.thoms.wandering_traders.item.AbstractLootBoxItem;
+import life.thoms.wandering_traders.item.lootbox.AbstractLootBoxItem;
 import net.minecraft.core.Holder;
 import net.minecraft.world.item.*;
 

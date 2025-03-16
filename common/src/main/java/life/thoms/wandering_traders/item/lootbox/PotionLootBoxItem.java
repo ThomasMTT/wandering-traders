@@ -1,4 +1,4 @@
-package life.thoms.wandering_traders.item;
+package life.thoms.wandering_traders.item.lootbox;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;

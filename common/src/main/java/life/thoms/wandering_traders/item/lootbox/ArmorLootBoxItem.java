@@ -1,19 +1,19 @@
-package life.thoms.wandering_traders.item;
+package life.thoms.wandering_traders.item.lootbox;
 
 import life.thoms.wandering_traders.util.MerchantUtil;
 import net.minecraft.world.item.Item;
 
 import java.util.List;
 
-public class FoodLootBoxItem extends AbstractLootBoxItem {
+public class ArmorLootBoxItem extends AbstractLootBoxItem {
 
-    public FoodLootBoxItem(Properties properties) {
+    public ArmorLootBoxItem(Properties properties) {
         super(properties);
     }
 
     @Override
     public List<Item> generateLootList() {
-        return MerchantUtil.FOOD_ITEMS;
+        return MerchantUtil.ARMOR_ITEMS;
     }
 
 }
