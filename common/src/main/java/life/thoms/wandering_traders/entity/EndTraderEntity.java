@@ -111,23 +111,8 @@ public class EndTraderEntity extends AbstractTraderEntity {
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-
         if (source.getEntity() instanceof Player player && !isClientSide()) {
-
-            if (player.isCreative() && player.isCrouching()) {
-                removeFromLinkMap(player);
-                return super.hurt(source, getMaxHealth());
-            }
-
-            if (linkedPlayerUuid != null && linkedPlayerUuid.equals(player.getUUID())) {
-
-                EndTraderMessage messageHolder = (offers != null && !offers.isEmpty())
-                        ? EndTraderMessage.LEAVE_DIM_ANGRY
-                        : EndTraderMessage.LEAVE_DIM;
-                player.displayClientMessage(messageHolder.getMessage(), true);
-                goBackToTheEnd(player);
-                return false;
-            }
+            return handlePlayerDamage(source, player);
         }
 
         if (source.is(DamageTypes.GENERIC_KILL)) {
@@ -136,6 +121,23 @@ public class EndTraderEntity extends AbstractTraderEntity {
         }
 
         randomTeleport();
+        return false;
+    }
+
+    private boolean handlePlayerDamage(DamageSource source, Player player) {
+        if (player.isCreative() && player.isCrouching()) {
+            removeFromLinkMap(player);
+            return super.hurt(source, getMaxHealth());
+        }
+
+        if (linkedPlayerUuid != null && linkedPlayerUuid.equals(player.getUUID())) {
+            EndTraderMessage messageHolder = (offers != null && !offers.isEmpty())
+                    ? EndTraderMessage.LEAVE_DIM_ANGRY
+                    : EndTraderMessage.LEAVE_DIM;
+            player.displayClientMessage(messageHolder.getMessage(), true);
+            goBackToTheEnd(player);
+            return false;
+        }
 
         return false;
     }
