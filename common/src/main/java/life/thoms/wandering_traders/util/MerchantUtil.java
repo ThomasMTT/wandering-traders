@@ -183,10 +183,14 @@ public class MerchantUtil {
         return PotionContents.createItemStack(stack.getItem(), Holder.direct(potion));
     }
 
-    private static MerchantOffer createOffer(Item lootBoxItem, int price, int maxUses) {
+    public static MerchantOffer createOffer(Item lootBoxItem, int price, int maxUses) {
+       return createOffer(new ItemStack(lootBoxItem), price, maxUses);
+    }
+
+    public static MerchantOffer createOffer(ItemStack lootBoxItem, int price, int maxUses) {
         return new MerchantOffer(
                 new ItemCost(Items.EMERALD, price),
-                new ItemStack(lootBoxItem),
+                lootBoxItem,
                 maxUses, 1, 1
         );
     }

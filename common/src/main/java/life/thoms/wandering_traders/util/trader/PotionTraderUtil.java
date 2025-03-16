@@ -8,8 +8,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionContents;
-import net.minecraft.world.item.trading.ItemCost;
-import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.item.trading.MerchantOffers;
 
 import java.util.Random;
@@ -23,18 +21,12 @@ public class PotionTraderUtil {
         offers.clear();
 
         for (int i = 0; i < 12; i++) {
-            offers.add(createOffer());
+
+            offers.add(MerchantUtil.createOffer(generatePotion(), RANDOM.nextInt(8,15),
+                    RANDOM.nextInt(1,4)));
         }
         offers.sort((x, z) -> Integer.compare(z.getItemCostA().count(), x.getItemCostA().count()));
         return offers;
-    }
-
-    private static MerchantOffer createOffer() {
-        ItemStack potion = generatePotion();
-        return new MerchantOffer(
-                new ItemCost(Items.EMERALD, RANDOM.nextInt(8,15)), potion,
-                RANDOM.nextInt(1, 4), 1, 1
-        );
     }
 
     public static ItemStack generatePotion() {
