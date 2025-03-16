@@ -18,10 +18,7 @@ import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.item.trading.MerchantOffers;
 import net.minecraft.world.level.block.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 public class MerchantUtil {
 
@@ -35,6 +32,9 @@ public class MerchantUtil {
     public static final List<Item> SAPPLING_ITEMS = new ArrayList<>();
     public static final List<Item> ANIMAL_SPAWN_EGG_ITEMS = new ArrayList<>();
 
+    public static final Map<Item, Integer> EXCLUSIVE_ITEMS = new HashMap<>();
+    public static final List<Item> EXCLUSIVE_ITEMS_LIST = new ArrayList<>();;
+
     public static final MerchantOffers LOOT_BOX_OFFERS = new MerchantOffers();
 
     public static void register(ServerLevel level) {
@@ -43,6 +43,7 @@ public class MerchantUtil {
         registerEnchantments();
         registerPotions();
         registerItems(level);
+        registerExclusiveItems();
     }
 
     private static void registerLootBoxOffers() {
@@ -73,6 +74,17 @@ public class MerchantUtil {
             Item item = BuiltInRegistries.ITEM.get(itemLocation);
             categorizeItem(level, item);
         }
+    }
+
+    public static void registerExclusiveItems() {
+        EXCLUSIVE_ITEMS.put(ModRegistryAccess.ITEM_ACCESS.get("end_bell"), 16);
+        EXCLUSIVE_ITEMS.put(Items.TOTEM_OF_UNDYING, 32);
+        EXCLUSIVE_ITEMS.put(Items.ENCHANTED_GOLDEN_APPLE, 20);
+        EXCLUSIVE_ITEMS.put(Items.WITHER_SKELETON_SKULL, 48);
+        EXCLUSIVE_ITEMS.put(Items.NAME_TAG, 12);
+        EXCLUSIVE_ITEMS.put(Items.SADDLE, 8);
+        EXCLUSIVE_ITEMS.put(Items.DIAMOND_HORSE_ARMOR, 12);
+        EXCLUSIVE_ITEMS_LIST.addAll(EXCLUSIVE_ITEMS.keySet().stream().toList());
     }
 
     private static void categorizeItem(ServerLevel level, Item item) {

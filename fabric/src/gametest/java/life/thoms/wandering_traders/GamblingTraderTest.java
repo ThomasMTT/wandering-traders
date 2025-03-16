@@ -10,15 +10,8 @@ public class GamblingTraderTest implements FabricGameTest {
 
     @GameTest(template = EMPTY_STRUCTURE)
     public void spawnTrader(GameTestHelper context) {
-        double x = context.getBounds().minX;
-        double y = context.getBounds().minY;
-        double z = context.getBounds().minZ;
         GamblingTraderEntity trader = new GamblingTraderEntity(EntityType.WANDERING_TRADER, context.getLevel());
-        trader.setPos(x, y, z);
-        context.getLevel().addFreshEntity(trader);
-        if (trader.isAlive()) {
-            context.succeed();
-        }
+        SpawnTestUtil.spawnTrader(context, trader);
     }
 
 }

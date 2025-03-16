@@ -13,7 +13,6 @@ public class ServerEventHandler {
         LostLootData.createServerState(server);
 
         MerchantUtil.register(server.overworld());
-        ExclusiveTraderUtil.prepareExclusiveItems();
     }
 
 }
