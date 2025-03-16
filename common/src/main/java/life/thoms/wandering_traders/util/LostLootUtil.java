@@ -15,6 +15,16 @@ public class LostLootUtil {
         int maxStackSize = 16;
 
         // Try to merge with existing stacks
+        if (mergeWithExistingStacks(playerLoot, stack, maxStackSize)) {
+            return playerLoot;
+        }
+
+        // Add new stacks if there are remaining items
+        addNewStacks(playerLoot, stack, maxStackSize);
+        return playerLoot;
+    }
+
+    private static boolean mergeWithExistingStacks(List<ItemStack> playerLoot, ItemStack stack, int maxStackSize) {
         for (ItemStack existingStack : playerLoot) {
             if (existingStack.getItem().equals(stack.getItem())) {
                 int availableSpace = maxStackSize - existingStack.getCount();
@@ -23,12 +33,16 @@ public class LostLootUtil {
                     existingStack.setCount(existingStack.getCount() + amountToAdd);
                     stack.setCount(stack.getCount() - amountToAdd);
 
-                    if (stack.getCount() <= 0) return playerLoot;
+                    if (stack.getCount() <= 0) {
+                        return true; // All items have been merged
+                    }
                 }
             }
         }
+        return false; // Not all items could be merged
+    }
 
-        // Add new stacks if there are remaining items
+    private static void addNewStacks(List<ItemStack> playerLoot, ItemStack stack, int maxStackSize) {
         int stackCount = stack.getCount();
         while (stackCount > 0) {
             int amountToAdd = Math.min(stack.getCount(), maxStackSize);
@@ -36,9 +50,8 @@ public class LostLootUtil {
             newStack.setCount(amountToAdd);
             playerLoot.add(newStack);
 
-            stackCount = stackCount - amountToAdd;
+            stackCount -= amountToAdd;
         }
-        return playerLoot;
     }
 
     //  max size = 54 (9 slots * 6 rows)
