@@ -47,34 +47,44 @@ public class LostLootCommand {
             List<ItemStack> lostLoot = LostLootUtil.getPlayerLoot(Objects.requireNonNullElse(target, player));
 
             if (lostLoot != null && !lostLoot.isEmpty()) {
-                ViewOnlySimpleContainer lostLootContainer = new ViewOnlySimpleContainer(54);
-                lostLoot.forEach(lostLootContainer::addItem);
-
-                MutableComponent title;
-                if (target == null) {
-                    title = LostLootCommandMessage.LOST_LOOT_TITLE.getMessage();
-                } else {
-                    title = LostLootCommandMessage.LOST_LOOT_TITLE.getMessage()
-                            .append(Component.literal(" (" + target.getName().getString() + ")"));
-                }
-
-                SimpleMenuProvider menuProvider = new SimpleMenuProvider((i, inventory, player1) ->
-                        ViewOnlyChestMenu.sixRows(1, player1.getInventory(), lostLootContainer), title);
-                player.openMenu(menuProvider);
+                openLootMenu(player, lostLoot, target);
                 return 0;
             } else {
-                if (target == null) {
-                    context.getSource().sendSystemMessage(LostLootCommandMessage.NO_LOOT.getMessage());
-                } else {
-                    MutableComponent message = Component.literal(target.getName().getString() + " ");
-                    message.append(LostLootCommandMessage.NO_LOOT_OTHER.getMessage());
-                    context.getSource().sendSystemMessage(message);
-                }
+                sendNoLootMessage(context, target);
             }
         } else {
             context.getSource().sendSystemMessage(CommandMessage.CANNOT_RUN_FROM_CONSOLE.getMessage());
         }
         return 1;
+    }
+
+    private static void openLootMenu(ServerPlayer player, List<ItemStack> lostLoot, ServerPlayer target) {
+        ViewOnlySimpleContainer lostLootContainer = new ViewOnlySimpleContainer(54);
+        lostLoot.forEach(lostLootContainer::addItem);
+
+        MutableComponent title = createLootTitle(target);
+        SimpleMenuProvider menuProvider = new SimpleMenuProvider((i, inventory, player1) ->
+                ViewOnlyChestMenu.sixRows(1, player1.getInventory(), lostLootContainer), title);
+        player.openMenu(menuProvider);
+    }
+
+    private static MutableComponent createLootTitle(ServerPlayer target) {
+        if (target == null) {
+            return LostLootCommandMessage.LOST_LOOT_TITLE.getMessage();
+        } else {
+            return LostLootCommandMessage.LOST_LOOT_TITLE.getMessage()
+                    .append(Component.literal(" (" + target.getName().getString() + ")"));
+        }
+    }
+
+    private static void sendNoLootMessage(CommandContext<CommandSourceStack> context, ServerPlayer target) {
+        if (target == null) {
+            context.getSource().sendSystemMessage(LostLootCommandMessage.NO_LOOT.getMessage());
+        } else {
+            MutableComponent message = Component.literal(target.getName().getString() + " ");
+            message.append(LostLootCommandMessage.NO_LOOT_OTHER.getMessage());
+            context.getSource().sendSystemMessage(message);
+        }
     }
 
     private static int clearLoot(CommandContext<CommandSourceStack> context) {
