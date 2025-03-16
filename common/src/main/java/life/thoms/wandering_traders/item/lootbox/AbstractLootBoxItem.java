@@ -41,20 +41,13 @@ public abstract class AbstractLootBoxItem extends Item {
     public ItemStack generateReward() {
         Item randomItem = lootList.get(RANDOM.nextInt(lootList.size()));
 
-        // If netherite 50/50 chance of changing to another item
-        if (randomItem instanceof TieredItem tieredItem) {
-            if (tieredItem.getTier().equals(Tiers.NETHERITE)) {
-                if (RANDOM.nextBoolean()) {
-                    randomItem = lootList.get(RANDOM.nextInt(lootList.size()));
-                }
+        // Random chance of changing to another item if netherite (to balance loot boxes)
+        if (RANDOM.nextBoolean()) {
+            if (randomItem instanceof TieredItem tieredItem && tieredItem.getTier().equals(Tiers.NETHERITE)) {
+                randomItem = lootList.get(RANDOM.nextInt(lootList.size()));
             }
-
-        }
-        if (randomItem instanceof ArmorItem armorItem) {
-            if (armorItem.getMaterial().equals(ArmorMaterials.NETHERITE)) {
-                if (RANDOM.nextBoolean()) {
-                    randomItem = lootList.get(RANDOM.nextInt(lootList.size()));
-                }
+            if (randomItem instanceof ArmorItem armorItem && armorItem.getMaterial().equals(ArmorMaterials.NETHERITE)) {
+                randomItem = lootList.get(RANDOM.nextInt(lootList.size()));
             }
         }
         return MerchantUtil.generateStackFromItem(RANDOM, randomItem);

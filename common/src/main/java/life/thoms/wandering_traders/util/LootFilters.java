@@ -7,10 +7,15 @@ import net.minecraft.world.item.*;
 public class LootFilters {
 
     public static boolean isImportantLoot(ItemStack stack) {
-        return !isExcludedItem(stack) && (isEnchanted(stack) || isEnchantedBook(stack) || isWeapon(stack)
-                || isValuableArmor(stack) || isValuableTool(stack) || isEffectPotion(stack) || isValuableBlock(stack) ||
-                isValuableIngot(stack)) || isLootBox(stack);
+        return !isExcludedItem(stack) && (isEnchanted(stack) || isEnchantedBook(stack) || isLootBox(stack)) ||
+                isValuableItem(stack);
     }
+
+    private static boolean isValuableItem(ItemStack stack) {
+        return  isWeapon(stack) || isValuableArmor(stack) || isValuableTool(stack) || isEffectPotion(stack) ||
+                isValuableBlock(stack) || isValuableIngot(stack);
+    }
+
 
     public static boolean isExcludedItem(ItemStack stack) {
         return (Items.EMERALD == stack.getItem() || Items.AIR == stack.getItem());

@@ -16,35 +16,50 @@ import java.util.List;
 public class PlayerEventHandler {
 
     public static boolean onPlayerDeath(LivingEntity livingEntity, DamageSource damageSource, float ignored) {
-
         if (livingEntity instanceof Player player && !player.isCreative()) {
-            if (damageSource.is(DamageTypes.FELL_OUT_OF_WORLD) || isFallingToVoid(player)) {
-
-                List<ItemStack> stacks = new ArrayList<>();
-                stacks.addAll(player.getInventory().items);
-                stacks.addAll(player.getInventory().armor);
-                stacks.addAll(player.getInventory().offhand);
-
-                List<ItemStack> importantStacks = stacks.stream().filter(LootFilters::isImportantLoot).toList();
-                if (!importantStacks.isEmpty()) {
-                    List<ItemStack> playerLoot = LostLootUtil.getPlayerLoot(player);
-                    for (ItemStack stack : importantStacks) {
-                        if (stack.isStackable()) {
-                            LostLootUtil.handleStackableLoot(player.getUUID(), stack);
-                        } else {
-                            playerLoot.add(stack);
-                        }
-                        if (player.level().getServer() != null) {
-                            LostLootData.INSTANCE.setDirty();
-                        }
-                    }
-                    LostLootUtil.removeOldEntries(playerLoot);
-                    LostLootData.PLAYER_LOST_LOOT.put(player.getUUID(), playerLoot);
-                }
+            if (isPlayerFallingToVoid(player, damageSource)) {
+                handlePlayerLootOnDeath(player);
             }
         }
         return true;
     }
+
+    private static boolean isPlayerFallingToVoid(Player player, DamageSource damageSource) {
+        return damageSource.is(DamageTypes.FELL_OUT_OF_WORLD) || isFallingToVoid(player);
+    }
+
+    private static void handlePlayerLootOnDeath(Player player) {
+        List<ItemStack> importantStacks = getImportantLootStacks(player);
+        if (!importantStacks.isEmpty()) {
+            List<ItemStack> playerLoot = LostLootUtil.getPlayerLoot(player);
+            processImportantLoot(player, importantStacks, playerLoot);
+            LostLootUtil.removeOldEntries(playerLoot);
+            LostLootData.PLAYER_LOST_LOOT.put(player.getUUID(), playerLoot);
+
+            if (player.level().getServer() != null) {
+                LostLootData.INSTANCE.setDirty();
+            }
+        }
+    }
+
+    private static List<ItemStack> getImportantLootStacks(Player player) {
+        List<ItemStack> stacks = new ArrayList<>();
+        stacks.addAll(player.getInventory().items);
+        stacks.addAll(player.getInventory().armor);
+        stacks.addAll(player.getInventory().offhand);
+        return stacks.stream().filter(LootFilters::isImportantLoot).toList();
+    }
+
+    private static void processImportantLoot(Player player, List<ItemStack> importantStacks, List<ItemStack> playerLoot) {
+        for (ItemStack stack : importantStacks) {
+            if (stack.isStackable()) {
+                LostLootUtil.handleStackableLoot(player.getUUID(), stack);
+            } else {
+                playerLoot.add(stack);
+            }
+        }
+    }
+
 
     // Even if you don't die of falling to the void, if you have no blocks below, your items won't drop (this fixes it)
     private static boolean isFallingToVoid(Player player) {
