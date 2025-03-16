@@ -2,9 +2,6 @@ package life.thoms.wandering_traders.util.trader;
 
 import life.thoms.wandering_traders.util.MerchantUtil;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.trading.ItemCost;
-import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.item.trading.MerchantOffers;
 
 import java.util.*;

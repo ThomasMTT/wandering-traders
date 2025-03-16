@@ -28,8 +28,6 @@ class ServerDataUtilTest {
 
     private static final UUID playerUUID = UUID.randomUUID();
     private static final UUID player2UUID = UUID.randomUUID();
-    private static List<ItemStack> playerLoot;
-    private static List<ItemStack> player2Loot;
 
     @BeforeAll
     public static void beforeAll() {
@@ -62,15 +60,7 @@ class ServerDataUtilTest {
             Optional<ItemStack> optionalStack = result.result();
             assertTrue(optionalStack.isPresent());
             ItemStack stack = optionalStack.get();
-            if (stack.getItem() instanceof ArmorItem) {
-                assertEquals("[Test Item Name]", stack.getDisplayName().getString());
-                assertSame(Items.NETHERITE_HELMET, stack.getItem());
-            } else if (stack.getItem() instanceof BlockItem) {
-                assertSame(Items.DIAMOND_BLOCK, stack.getItem());
-                assertSame(10, stack.getCount());
-            } else {
-                assertSame(Items.DIAMOND_AXE, stack.getItem());
-            }
+            assertItemStackProperties(stack);
         }
     }
 
@@ -87,22 +77,14 @@ class ServerDataUtilTest {
             List<ItemStack> playerStacks = LostLootUtil.getPlayerLoot(playerUUID);
             assertFalse(playerStacks.isEmpty());
             for (ItemStack stack : playerStacks) {
-                if (stack.getItem() instanceof ArmorItem) {
-                    assertEquals("[Test Item Name]", stack.getDisplayName().getString());
-                    assertSame(Items.NETHERITE_HELMET, stack.getItem());
-                } else if (stack.getItem() instanceof BlockItem) {
-                    assertSame(Items.DIAMOND_BLOCK, stack.getItem());
-                    assertSame(10, stack.getCount());
-                } else {
-                    assertSame(Items.DIAMOND_AXE, stack.getItem());
-                }
+                assertItemStackProperties(stack);
             }
         }
 
     }
 
     private static CompoundTag prepareSaveOrLoadNbt() {
-         playerLoot = List.of(
+        List<ItemStack> playerLoot = List.of(
                 new ItemStack(Items.DIAMOND_AXE),
                 new ItemStack(Holder.direct(Items.NETHERITE_HELMET),
                         1,
@@ -111,7 +93,7 @@ class ServerDataUtilTest {
                                 .build())
         );
 
-        player2Loot = List.of(
+        List<ItemStack> player2Loot = List.of(
                 new ItemStack(Items.DIAMOND_BLOCK, 10)
         );
 
@@ -120,6 +102,18 @@ class ServerDataUtilTest {
         LostLootData mockedInstance = Mockito.spy(LostLootData.class);
         HolderLookup.Provider provider = Mockito.mock(HolderLookup.Provider.class);
         return mockedInstance.save(new CompoundTag(), provider);
+    }
+
+    private void assertItemStackProperties(ItemStack stack) {
+        if (stack.getItem() instanceof ArmorItem) {
+            assertEquals("[Test Item Name]", stack.getDisplayName().getString());
+            assertSame(Items.NETHERITE_HELMET, stack.getItem());
+        } else if (stack.getItem() instanceof BlockItem) {
+            assertSame(Items.DIAMOND_BLOCK, stack.getItem());
+            assertSame(10, stack.getCount());
+        } else {
+            assertSame(Items.DIAMOND_AXE, stack.getItem());
+        }
     }
 
 }
