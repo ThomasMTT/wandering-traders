@@ -1,20 +1,19 @@
 package life.thoms.wandering_traders.entity;
 
 import life.thoms.wandering_traders.server.data.PlayerEndTraderData;
+import life.thoms.wandering_traders.util.EndTraderMessage;
 import life.thoms.wandering_traders.util.LostLootUtil;
 import life.thoms.wandering_traders.util.trader.EndTraderUtil;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.UseItemGoal;
 import net.minecraft.world.entity.npc.WanderingTrader;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -39,9 +38,9 @@ public class EndTraderEntity extends AbstractTraderEntity {
 
     @Override
     protected void registerGoals() {
-     super.registerGoals();
-     // This trader doesn't hide in the night
-     goalSelector.removeAllGoals(goal ->  goal instanceof UseItemGoal);
+        super.registerGoals();
+        // This trader doesn't hide in the night
+        goalSelector.removeAllGoals(goal -> goal instanceof UseItemGoal);
     }
 
     public void addLinkedPlayer(Player player) {
@@ -61,7 +60,7 @@ public class EndTraderEntity extends AbstractTraderEntity {
                         addLinkedPlayer(player);
                     }
                 } else {
-                    player.displayClientMessage(Component.translatable("end_trader_message.other_still_around"), true);
+                    player.displayClientMessage(EndTraderMessage.OTHER_STILL_AROUND.getMessage(), true);
                     return InteractionResult.sidedSuccess(true);
                 }
             }
@@ -72,16 +71,15 @@ public class EndTraderEntity extends AbstractTraderEntity {
                 if (linkedPlayerUuid.equals(player.getUUID())) {
                     offers = EndTraderUtil.createOffersFromLostLoot(linkedPlayerUuid, offers);
                     if (offers.isEmpty()) {
-                        player.displayClientMessage(Component.translatable("end_trader_message.no_trades"), true);
+                        player.displayClientMessage(EndTraderMessage.NO_TRADES.getMessage(), true);
                     } else {
                         super.mobInteract(player, hand);
                     }
                 } else {
-                    MutableComponent message = Component.translatable("end_trader_message.only_trade_with");
-                    player.displayClientMessage(message.append(linkedPlayerName).withStyle(ChatFormatting.ITALIC), true);
+                    player.displayClientMessage(EndTraderMessage.ONLY_TRADE_WITH.getMessage(linkedPlayerName), true);
                 }
             } else {
-                player.displayClientMessage(Component.translatable("end_trader_message.no_trades"), true);
+                player.displayClientMessage(EndTraderMessage.NO_TRADES.getMessage(), true);
             }
         }
         return InteractionResult.sidedSuccess(true);
@@ -113,37 +111,30 @@ public class EndTraderEntity extends AbstractTraderEntity {
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        if (source.getEntity() instanceof Player player) {
-            if (!isClientSide()) {
 
-                if (player.isCreative() && player.isCrouching()) {
-                    removeFromLinkMap(player);
-                    return super.hurt(source, getMaxHealth());
-                }
-                if (linkedPlayerUuid != null) {
-                    if (linkedPlayerUuid.equals(player.getUUID())) {
-                        if (offers != null && !offers.isEmpty()) {
-                            player.displayClientMessage(Component.translatable("end_trader_message.leave_dim_angry"), true);
-                        } else {
-                            player.displayClientMessage(Component.translatable("end_trader_message.leave_dim"), true);
-                        }
-                        goBackToTheEnd(player);
-                        return false;
-                    }
-                }
-            } else {
-                if (player.isCreative() && player.isCrouching()) {
-                    removeFromLinkMap(player);
-                }
+        if (source.getEntity() instanceof Player player && !isClientSide()) {
+
+            if (player.isCreative() && player.isCrouching()) {
+                removeFromLinkMap(player);
+                return super.hurt(source, getMaxHealth());
+            }
+
+            if (linkedPlayerUuid != null && linkedPlayerUuid.equals(player.getUUID())) {
+
+                EndTraderMessage messageHolder = (offers != null && !offers.isEmpty())
+                        ? EndTraderMessage.LEAVE_DIM_ANGRY
+                        : EndTraderMessage.LEAVE_DIM;
+                player.displayClientMessage(messageHolder.getMessage(), true);
+                goBackToTheEnd(player);
+                return false;
             }
         }
 
         if (source.is(DamageTypes.GENERIC_KILL)) {
-            if (source.getEntity() instanceof Player player) {
-                removeFromLinkMap(player);
-            }
+            removeFromLinkMap(source.getEntity());
             return super.hurt(source, getMaxHealth());
         }
+
         randomTeleport();
 
         return false;
@@ -152,54 +143,49 @@ public class EndTraderEntity extends AbstractTraderEntity {
     @Override
     public void aiStep() {
         super.aiStep();
-        if (isRemoved()) {
-            if (isClientSide()) {
-                if (linkedPlayerUuid != null) {
-                    Player player = level().getPlayerByUUID(linkedPlayerUuid);
-                    if (player != null) {
-                        removeFromLinkMap(player);
-
-                        List<ItemStack> merchantLoot = LostLootUtil.getPlayerLoot(player);
-                        if (merchantLoot.size() > 53) {
-                            player.displayClientMessage(Component.translatable("end_trader_message.leave_dim_too_many_items"), true);
-                        } else {
-                            boolean lostSomeLoot = random.nextInt(0, 100) > 33;
-                            if (offers != null && !offers.isEmpty()) {
-                                for (MerchantOffer offer : offers.stream().toList()) {
-                                    if (!lostSomeLoot || random.nextBoolean()) {
-                                        ItemStack stack = offer.getResult();
-                                        merchantLoot.add(stack);
-                                    }
-                                }
-                            }
-
-                            if (lostSomeLoot) {
-                                player.displayClientMessage(Component.translatable("end_trader_message.leave_dim_lost"), true);
-                            } else {
-                                player.displayClientMessage(Component.translatable("end_trader_message.leave_dim"), true);
-                            }
-
-                            LostLootUtil.putPlayerLoot(linkedPlayerUuid, merchantLoot);
-                        }
-                    }
-                }
+        if (isRemoved() && isClientSide() && linkedPlayerUuid != null) {
+            Player player = level().getPlayerByUUID(linkedPlayerUuid);
+            if (player != null) {
+                handleDespawn(player);
             }
         }
     }
 
-    public void randomTeleport() {
-        if (!level().isClientSide()) {
-            if (isAlive()) {
-                for (int attempts = 0; attempts < 15; attempts++) {
-                    double x = getX() + (random.nextDouble() - 0.5) * 64.0;
-                    double z = getZ() + (random.nextDouble() - 0.5) * 64.0;
-                    double y = getCommandSenderWorld().getHeight(Heightmap.Types.WORLD_SURFACE, (int) x, (int) z);
-                    BlockState state = getCommandSenderWorld().getBlockState(new BlockPos((int) x, (int) y - 1, (int) z));
+    private void handleDespawn(Player player) {
+        removeFromLinkMap(player);
+        List<ItemStack> merchantLoot = LostLootUtil.getPlayerLoot(player);
 
-                    if (!(state.getBlock() instanceof LiquidBlock)) {
-                        playSound(SoundEvents.ENDERMAN_TELEPORT);
-                        teleportTo(x, y, z);
+        if (merchantLoot.size() > 53) {
+            player.displayClientMessage(EndTraderMessage.LEAVE_DIM_TOO_MANY_ITEMS.getMessage(), true);
+        } else {
+            boolean lostSomeLoot = random.nextInt(0, 100) > 33;
+            if (offers != null && !offers.isEmpty()) {
+                for (MerchantOffer offer : offers) {
+                    if (!lostSomeLoot || random.nextBoolean()) {
+                        ItemStack stack = offer.getResult();
+                        merchantLoot.add(stack);
                     }
+                }
+            }
+
+            EndTraderMessage messageHolder = lostSomeLoot ? EndTraderMessage.LEAVE_DIM_LOST : EndTraderMessage.LEAVE_DIM;
+            player.displayClientMessage(messageHolder.getMessage(), true);
+            LostLootUtil.putPlayerLoot(linkedPlayerUuid, merchantLoot);
+        }
+    }
+
+    public void randomTeleport() {
+        if (!level().isClientSide() && isAlive()) {
+
+            for (int attempts = 0; attempts < 15; attempts++) {
+                double x = getX() + (random.nextDouble() - 0.5) * 64.0;
+                double z = getZ() + (random.nextDouble() - 0.5) * 64.0;
+                double y = getCommandSenderWorld().getHeight(Heightmap.Types.WORLD_SURFACE, (int) x, (int) z);
+                BlockState state = getCommandSenderWorld().getBlockState(new BlockPos((int) x, (int) y - 1, (int) z));
+
+                if (!(state.getBlock() instanceof LiquidBlock)) {
+                    playSound(SoundEvents.ENDERMAN_TELEPORT);
+                    teleportTo(x, y, z);
                 }
             }
         }
@@ -210,13 +196,12 @@ public class EndTraderEntity extends AbstractTraderEntity {
             removeFromLinkMap(player);
             discard();
         } else {
-            removeFromLinkMap(player);
             playSound(SoundEvents.ENDERMAN_TELEPORT);
         }
     }
 
-    private void removeFromLinkMap(Player player) {
-        if (player != null) {
+    private void removeFromLinkMap(Entity entity) {
+        if (entity instanceof Player player) {
             PlayerEndTraderData.PLAYER_END_TRADER_MAP.remove(player.getUUID());
             PlayerEndTraderData.INSTANCE.setDirty();
         }

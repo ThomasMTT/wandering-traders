@@ -7,10 +7,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.Cow;
 import net.minecraft.world.entity.monster.hoglin.Hoglin;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.alchemy.Potion;
@@ -42,88 +39,136 @@ public class MerchantUtil {
 
     public static void register(ServerLevel level) {
         LOOT_BOX_OFFERS.clear();
+        registerLootBoxOffers();
+        registerEnchantments();
+        registerPotions();
+        registerItems(level);
+    }
+
+    private static void registerLootBoxOffers() {
         LOOT_BOX_OFFERS.add(createOffer(ModRegistryAccess.ITEM_ACCESS.get("food_loot_box"), 2, 32));
         LOOT_BOX_OFFERS.add(createOffer(ModRegistryAccess.ITEM_ACCESS.get("potion_loot_box"), 4, 16));
         LOOT_BOX_OFFERS.add(createOffer(ModRegistryAccess.ITEM_ACCESS.get("armor_loot_box"), 16, 4));
         LOOT_BOX_OFFERS.add(createOffer(ModRegistryAccess.ITEM_ACCESS.get("weapon_loot_box"), 16, 4));
         LOOT_BOX_OFFERS.add(createOffer(ModRegistryAccess.ITEM_ACCESS.get("tool_loot_box"), 16, 4));
+    }
 
+    private static void registerEnchantments() {
         List<ResourceLocation> enchantmentLocations = BuiltInRegistries.ENCHANTMENT.keySet().stream().toList();
         for (ResourceLocation enchantmentLocation : enchantmentLocations) {
             ENCHANTMENTS.add(BuiltInRegistries.ENCHANTMENT.get(enchantmentLocation));
         }
+    }
 
+    private static void registerPotions() {
         List<ResourceLocation> potionLocations = BuiltInRegistries.POTION.keySet().stream().toList();
         for (ResourceLocation potionLocation : potionLocations) {
             POTIONS.add(BuiltInRegistries.POTION.get(potionLocation));
         }
-        Animal fakeAnimal;
+    }
 
+    private static void registerItems(ServerLevel level) {
         Set<ResourceLocation> itemLocations = BuiltInRegistries.ITEM.keySet();
         for (ResourceLocation itemLocation : itemLocations) {
             Item item = BuiltInRegistries.ITEM.get(itemLocation);
-            if (item instanceof ArmorItem) {
-                ARMOR_ITEMS.add(item);
-            } else if (item instanceof DiggerItem || item instanceof ShearsItem || item instanceof FlintAndSteelItem ||
-                    item instanceof SpyglassItem || item instanceof CompassItem || item instanceof FishingRodItem) {
-                TOOL_ITEMS.add(item);
-            } else if (item instanceof SwordItem || item instanceof BowItem || item instanceof CrossbowItem ||
-                    item instanceof TridentItem || item instanceof ShieldItem) {
-                WEAPON_ITEMS.add(item);
-            } else if (new ItemStack(item).getComponents().has(DataComponents.FOOD)) {
-                FOOD_ITEMS.add(item);
-            } else if (item instanceof SpawnEggItem eggItem) {
-                Entity entity = eggItem.getType(new ItemStack(eggItem)).create(level);
-                // Dissable hoglin
-                if (entity instanceof Hoglin) break;
-                if (entity != null) {
-                    if (entity instanceof Animal) {
-                        ANIMAL_SPAWN_EGG_ITEMS.add(item);
-                    }
-                    entity.discard();
-                }
-            }
-            if (item instanceof BlockItem blockItem) {
-                Block block = blockItem.getBlock();
-                if (block instanceof SaplingBlock) {
-                    SAPPLING_ITEMS.add(item);
-                }
-            }
+            categorizeItem(level, item);
         }
     }
+
+    private static void categorizeItem(ServerLevel level, Item item) {
+        if (item instanceof ArmorItem) {
+            ARMOR_ITEMS.add(item);
+        } else if (isToolItem(item)) {
+            TOOL_ITEMS.add(item);
+        } else if (isWeaponItem(item)) {
+            WEAPON_ITEMS.add(item);
+        } else if (new ItemStack(item).getComponents().has(DataComponents.FOOD)) {
+            FOOD_ITEMS.add(item);
+        } else if (item instanceof SpawnEggItem eggItem) {
+            handleSpawnEggItem(level, eggItem);
+        }
+        if (item instanceof BlockItem blockItem) {
+            handleBlockItem(blockItem);
+        }
+    }
+
+    private static boolean isToolItem(Item item) {
+        return item instanceof DiggerItem || item instanceof ShearsItem ||
+                item instanceof FlintAndSteelItem || item instanceof SpyglassItem ||
+                item instanceof CompassItem || item instanceof FishingRodItem;
+    }
+
+    private static boolean isWeaponItem(Item item) {
+        return item instanceof SwordItem || item instanceof BowItem ||
+                item instanceof CrossbowItem || item instanceof TridentItem ||
+                item instanceof ShieldItem;
+    }
+
+    private static void handleSpawnEggItem(ServerLevel level, SpawnEggItem eggItem) {
+        Entity entity = eggItem.getType(new ItemStack(eggItem)).create(level);
+        // Disable Hoglin
+        if (entity instanceof Hoglin) return;
+        if (entity != null) {
+            if (entity instanceof Animal) {
+                ANIMAL_SPAWN_EGG_ITEMS.add(eggItem);
+            }
+            entity.discard();
+        }
+    }
+
+    private static void handleBlockItem(BlockItem blockItem) {
+        Block block = blockItem.getBlock();
+        if (block instanceof SaplingBlock) {
+            SAPPLING_ITEMS.add(blockItem);
+        }
+    }
+
 
     public static ItemStack generateStackFromItem(Random random, Item item) {
         ItemStack stack = new ItemStack(item);
 
-        if (stack.isEnchantable() && (ARMOR_ITEMS.contains(item) || TOOL_ITEMS.contains(item) ||
-                WEAPON_ITEMS.contains(item) || item instanceof EnchantedBookItem)) {
-            // Determine if item should be enchanted and how many times
-            int enchantmentChance = random.nextInt(100);
-            int enchantments = 0;
-            if (enchantmentChance > 90) enchantments = 3;
-            else if (enchantmentChance > 80) enchantments = 2;
-            else if (enchantmentChance > 60) enchantments = 1;
-
-            // Apply random compatible enchantments (max 20 tries per enchantment (if reached returns the item as is)
-            if (enchantments > 0) {
-
-                int i = 0;
-                while (enchantments > 0 && i < 20) {
-                    Enchantment enchantment = ENCHANTMENTS.get(random.nextInt(ENCHANTMENTS.size()));
-                    if (enchantment.canEnchant(stack)) {
-                        stack.enchant(enchantment, random.nextInt(enchantment.getMaxLevel()));
-                        enchantments -= 1;
-                        i = 0;
-                    }
-                    i++;
-                }
-            }
+        if (shouldEnchantItem(stack, item)) {
+            applyRandomEnchantments(random, stack);
         } else if (item instanceof PotionItem) {
-            item.components();
-            Potion potion = POTIONS.get(random.nextInt(POTIONS.size()));
-            stack = PotionContents.createItemStack(stack.getItem(), Holder.direct(potion));
+            stack = createPotionStack(random, stack);
         }
+
         return stack;
+    }
+
+    private static boolean shouldEnchantItem(ItemStack stack, Item item) {
+        return stack.isEnchantable() && (ARMOR_ITEMS.contains(item) || TOOL_ITEMS.contains(item) ||
+                WEAPON_ITEMS.contains(item) || item instanceof EnchantedBookItem);
+    }
+
+    private static void applyRandomEnchantments(Random random, ItemStack stack) {
+        int enchantmentChance = random.nextInt(100);
+        int enchantments = determineEnchantmentCount(enchantmentChance);
+
+        if (enchantments > 0) {
+            int attempts = 0;
+            while (enchantments > 0 && attempts < 20) {
+                Enchantment enchantment = ENCHANTMENTS.get(random.nextInt(ENCHANTMENTS.size()));
+                if (enchantment.canEnchant(stack)) {
+                    stack.enchant(enchantment, random.nextInt(enchantment.getMaxLevel()) + 1); // +1 to ensure at least level 1
+                    enchantments -= 1;
+                    attempts = 0; // Reset attempts after a successful enchantment
+                }
+                attempts++;
+            }
+        }
+    }
+
+    private static int determineEnchantmentCount(int enchantmentChance) {
+        if (enchantmentChance > 90) return 3;
+        else if (enchantmentChance > 80) return 2;
+        else if (enchantmentChance > 60) return 1;
+        return 0;
+    }
+
+    private static ItemStack createPotionStack(Random random, ItemStack stack) {
+        Potion potion = POTIONS.get(random.nextInt(POTIONS.size()));
+        return PotionContents.createItemStack(stack.getItem(), Holder.direct(potion));
     }
 
     private static MerchantOffer createOffer(Item lootBoxItem, int price, int maxUses) {

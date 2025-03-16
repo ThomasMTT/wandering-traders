@@ -2,8 +2,8 @@ package life.thoms.wandering_traders.item;
 
 import life.thoms.wandering_traders.entity.EndTraderEntity;
 import life.thoms.wandering_traders.server.data.PlayerEndTraderData;
+import life.thoms.wandering_traders.util.EndTraderMessage;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
@@ -45,7 +45,7 @@ public class EndBellItem extends Item {
                 trader.setPos(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
                 level.addFreshEntity(trader);
                 trader.addLinkedPlayer(player);
-                player.displayClientMessage(Component.translatable("end_trader_message.summon_with_bell"), true);
+                player.displayClientMessage(EndTraderMessage.SUMMON_WITH_BELL.getMessage(), true);
             } else {
                 player.swing(usedHand);
                 player.playSound(SoundEvents.BELL_BLOCK);
@@ -54,14 +54,16 @@ public class EndBellItem extends Item {
 
         } else{
             if (!level.isClientSide) {
-                MutableComponent message = Component.translatable("end_trader_message.other_still_around");
+                MutableComponent message = EndTraderMessage.OTHER_STILL_AROUND.getMessage();
                 UUID traderUUID = PlayerEndTraderData.PLAYER_END_TRADER_MAP.get(player.getUUID());
-                List<EndTraderEntity> traderList = level.getEntitiesOfClass(EndTraderEntity.class, player.getBoundingBox().inflate(1000), x -> x.getUUID().equals(traderUUID));
+                List<EndTraderEntity> traderList = level.getEntitiesOfClass(EndTraderEntity.class,
+                        player.getBoundingBox().inflate(1000), x -> x.getUUID().equals(traderUUID));
                 if (traderList.isEmpty()) {
                     player.displayClientMessage(message, true);
                 } else {
                     EndTraderEntity trader = traderList.getFirst();
-                    player.displayClientMessage(message.append(" (" + (int) trader.getX() + " " + (int)  trader.getY() + " " + (int)  trader.getZ() + ")"), true);
+                    player.displayClientMessage(message.append(" (" + (int) trader.getX() + " " + (int)  trader.getY() +
+                            " " + (int)  trader.getZ() + ")"), true);
                 }
             }
         }
