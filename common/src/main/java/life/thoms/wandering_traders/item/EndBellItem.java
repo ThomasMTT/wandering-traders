@@ -2,7 +2,7 @@ package life.thoms.wandering_traders.item;
 
 import life.thoms.wandering_traders.entity.EndTraderEntity;
 import life.thoms.wandering_traders.server.data.PlayerEndTraderData;
-import life.thoms.wandering_traders.util.EndTraderMessage;
+import life.thoms.wandering_traders.entity.EndTraderMessage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.sounds.SoundEvents;

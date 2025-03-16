@@ -1,4 +1,4 @@
-package life.thoms.wandering_traders.util;
+package life.thoms.wandering_traders.entity;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;

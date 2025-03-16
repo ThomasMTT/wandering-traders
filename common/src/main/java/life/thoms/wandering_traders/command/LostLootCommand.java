@@ -30,7 +30,6 @@ public class LostLootCommand {
                         .then(Commands.argument("Player", EntityArgument.player()).executes(LostLootCommand::viewOtherLoot))
                 )
         );
-
     }
 
     private static int viewLoot(CommandContext<CommandSourceStack> context) {
@@ -53,10 +52,10 @@ public class LostLootCommand {
 
                 MutableComponent title;
                 if (target == null) {
-                    title = Component.translatable("command.lostloot.view.title");
+                    title = LostLootCommandMessage.LOST_LOOT_TITLE.getMessage();
                 } else {
-                    title = Component.translatable("command.lostloot.view.title");
-                    title.append(Component.literal(" (" + target.getName().getString() + ")"));
+                    title = LostLootCommandMessage.LOST_LOOT_TITLE.getMessage()
+                            .append(Component.literal(" (" + target.getName().getString() + ")"));
                 }
 
                 SimpleMenuProvider menuProvider = new SimpleMenuProvider((i, inventory, player1) ->
@@ -65,15 +64,15 @@ public class LostLootCommand {
                 return 0;
             } else {
                 if (target == null) {
-                    context.getSource().sendSystemMessage(Component.translatable("command.lostloot.view.no_loot"));
+                    context.getSource().sendSystemMessage(LostLootCommandMessage.NO_LOOT.getMessage());
                 } else {
                     MutableComponent message = Component.literal(target.getName().getString() + " ");
-                    message.append(Component.translatable("command.lostloot.view.no_loot_other"));
+                    message.append(LostLootCommandMessage.NO_LOOT_OTHER.getMessage());
                     context.getSource().sendSystemMessage(message);
                 }
             }
         } else {
-            context.getSource().sendSystemMessage(Component.translatable("command.generic.cannot_run_from_console"));
+            context.getSource().sendSystemMessage(CommandMessage.CANNOT_RUN_FROM_CONSOLE.getMessage());
         }
         return 1;
     }
@@ -82,7 +81,7 @@ public class LostLootCommand {
         ServerPlayer player = context.getSource().getPlayer();
         if (player != null) {
             LostLootUtil.clearPlayerLoot(player);
-            context.getSource().sendSystemMessage(Component.translatable("command.lostloot.clear.loot_cleared"));
+            context.getSource().sendSystemMessage(LostLootCommandMessage.LOOT_CLEARED.getMessage());
             return 0;
         }
         return 1;
@@ -91,10 +90,9 @@ public class LostLootCommand {
     private static int clearOtherLoot(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         ServerPlayer target = EntityArgument.getPlayer(context, "Player");
         LostLootUtil.clearPlayerLoot(target);
-        MutableComponent message = Component.translatable("command.lostloot.clear.loot_cleared");
-        message.append(Component.literal(" (" + target.getName().getString() + ")"));
+        MutableComponent message = LostLootCommandMessage.LOOT_CLEARED.getMessage()
+                .append(Component.literal(" (" + target.getName().getString() + ")"));
         context.getSource().sendSystemMessage(message);
         return 0;
     }
-
 }

@@ -1,7 +1,6 @@
 package life.thoms.wandering_traders.entity;
 
 import life.thoms.wandering_traders.server.data.PlayerEndTraderData;
-import life.thoms.wandering_traders.util.EndTraderMessage;
 import life.thoms.wandering_traders.util.LostLootUtil;
 import life.thoms.wandering_traders.util.trader.EndTraderUtil;
 import net.minecraft.core.BlockPos;
