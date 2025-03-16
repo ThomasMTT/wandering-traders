@@ -2,6 +2,7 @@ package life.thoms.wandering_traders.util.trader;
 
 import life.thoms.wandering_traders.server.data.LostLootData;
 import life.thoms.wandering_traders.util.LostLootUtil;
+import life.thoms.wandering_traders.util.MerchantUtil;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -52,7 +53,8 @@ public class EndTraderUtil {
             }
         }
 
-       LostLootUtil.clearPlayerLoot(playerUUID);
+        MerchantUtil.sortOffers(existingOffers);
+        LostLootUtil.clearPlayerLoot(playerUUID);
         LostLootData.INSTANCE.setDirty();
         return existingOffers;
     }

@@ -195,4 +195,8 @@ public class MerchantUtil {
         );
     }
 
+    public static void sortOffers(MerchantOffers offers) {
+        offers.sort((x, z) -> Integer.compare(z.getItemCostA().count(), x.getItemCostA().count()));
+    }
+
 }

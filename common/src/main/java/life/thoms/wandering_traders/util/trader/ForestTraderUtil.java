@@ -26,10 +26,10 @@ public class ForestTraderUtil {
     ));
 
     public static MerchantOffers generateOffers() {
-        MerchantOffers merchantOffers = new MerchantOffers();
-        merchantOffers.clear();
+        MerchantOffers offers = new MerchantOffers();
+        offers.clear();
         FOREST_SEED_LIST.forEach(item -> {
-            merchantOffers.add(new MerchantOffer(
+            offers.add(new MerchantOffer(
                     new ItemCost(Items.EMERALD, item.getDescriptionId().contains("fungus") ? 8 : 4),
                     new ItemStack(item, 16),
                     1, 8, 1
@@ -37,14 +37,16 @@ public class ForestTraderUtil {
         });
 
         MerchantUtil.SAPPLING_ITEMS.forEach(item -> {
-            merchantOffers.add(new MerchantOffer(
+            offers.add(new MerchantOffer(
                     new ItemCost(Items.EMERALD, 8),
                     new ItemStack(item, 16),
                     3, 1, 1
             ));
         });
 
-        return merchantOffers;
+        MerchantUtil.sortOffers(offers);
+
+        return offers;
     }
 
 }

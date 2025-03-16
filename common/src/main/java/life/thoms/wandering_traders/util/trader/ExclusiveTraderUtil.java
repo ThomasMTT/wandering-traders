@@ -25,7 +25,7 @@ public class ExclusiveTraderUtil {
             int price = MerchantUtil.EXCLUSIVE_ITEMS.get(stack.getItem());
             offers.add(MerchantUtil.createOffer(stack, price, MAX_USES));
         }
-        offers.sort((x, z) -> Integer.compare(z.getItemCostA().count(), x.getItemCostA().count()));
+        MerchantUtil.sortOffers(offers);
         return offers;
     }
 

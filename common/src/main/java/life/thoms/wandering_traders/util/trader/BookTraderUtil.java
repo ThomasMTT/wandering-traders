@@ -24,7 +24,7 @@ public class BookTraderUtil {
         for (int i = 0; i < 6; i++) {
             offers.add(createOffer());
         }
-        offers.sort((x, z) -> Integer.compare(z.getItemCostA().count(), x.getItemCostA().count()));
+        MerchantUtil.sortOffers(offers);
         return offers;
     }
 

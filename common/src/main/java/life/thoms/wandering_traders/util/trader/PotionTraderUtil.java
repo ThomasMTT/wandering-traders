@@ -30,7 +30,7 @@ public class PotionTraderUtil {
             offers.add(MerchantUtil.createOffer(generatePotion(), RANDOM.nextInt(MIN_COST, MAX_COST),
                     RANDOM.nextInt(MIN_QUANTITY, MAX_QUANTITY)));
         }
-        offers.sort((x, z) -> Integer.compare(z.getItemCostA().count(), x.getItemCostA().count()));
+        MerchantUtil.sortOffers(offers);
         return offers;
     }
 
