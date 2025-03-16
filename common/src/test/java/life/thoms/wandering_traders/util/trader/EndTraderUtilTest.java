@@ -49,7 +49,7 @@ class EndTraderUtilTest {
     }
 
     @Test
-    void createOffer_IsValidOfferTest() {
+    void createValidOfferTest() {
         ItemStack stack = new ItemStack(Items.NETHERITE_LEGGINGS);
         MerchantOffer offer = EndTraderUtil.createOffer(stack);
         assertNotNull(offer.getItemCostA());
@@ -61,7 +61,7 @@ class EndTraderUtilTest {
     }
 
     @Test
-    void createOffer_IsAllowedPriceItemTest() {
+    void createAllowedOfferPriceItemTest() {
         ItemStack stack = new ItemStack(Items.NETHERITE_LEGGINGS);
         MerchantOffer offer = EndTraderUtil.createOffer(stack);
 
@@ -72,14 +72,14 @@ class EndTraderUtilTest {
     }
 
     @Test
-    void createOffersFromLostLoot_OffersCreated() {
+    void createOffersCreateFromLostLootTest() {
         prepareCreateOffersFromLostLoot();
         MerchantOffers newOffers = EndTraderUtil.createOffersFromLostLoot(playerUUID, offers);
         assertSame(2, newOffers.size());
     }
 
     @Test
-    void createOffersFromLostLoot_PlayerLootListEmptiedTest() {
+    void createOffersPlayerLootListEmptiedTest() {
         prepareCreateOffersFromLostLoot();
         EndTraderUtil.createOffersFromLostLoot(playerUUID, offers);
 

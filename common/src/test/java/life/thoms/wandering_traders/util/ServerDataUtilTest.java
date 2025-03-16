@@ -75,7 +75,7 @@ class ServerDataUtilTest {
     }
 
     @Test
-    void LoadNbtTest() {
+    void loadNbtTest() {
         CompoundTag compound = prepareSaveOrLoadNbt();
 
         LostLootData.PLAYER_LOST_LOOT.clear();

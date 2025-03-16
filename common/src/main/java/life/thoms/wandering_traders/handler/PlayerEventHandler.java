@@ -16,10 +16,8 @@ import java.util.List;
 public class PlayerEventHandler {
 
     public static boolean onPlayerDeath(LivingEntity livingEntity, DamageSource damageSource, float ignored) {
-        if (livingEntity instanceof Player player && !player.isCreative()) {
-            if (isPlayerFallingToVoid(player, damageSource)) {
-                handlePlayerLootOnDeath(player);
-            }
+        if (livingEntity instanceof Player player && !player.isCreative() && isPlayerFallingToVoid(player, damageSource)) {
+            handlePlayerLootOnDeath(player);
         }
         return true;
     }
