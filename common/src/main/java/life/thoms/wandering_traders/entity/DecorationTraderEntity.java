@@ -9,7 +9,9 @@ public class DecorationTraderEntity extends AbstractTraderEntity {
 
     public DecorationTraderEntity(EntityType<? extends WanderingTrader> entityType, Level level) {
         super(entityType, level);
-        this.offers = DecorationTraderUtil.generateOffers();
+        if (!isClientSide() && (this.offers == null || offers.isEmpty())) {
+            this.offers = DecorationTraderUtil.generateOffers();
+        }
     }
 
 }

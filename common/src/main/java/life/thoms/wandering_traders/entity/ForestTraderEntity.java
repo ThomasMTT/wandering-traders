@@ -22,7 +22,7 @@ public class ForestTraderEntity extends AbstractTraderEntity {
 
     @Override
     public @NotNull InteractionResult mobInteract(Player player, InteractionHand hand) {
-        if (this.offers == null || offers.isEmpty()) {
+        if (!isClientSide() && (this.offers == null || offers.isEmpty())) {
             this.offers = ForestTraderUtil.generateOffers();
         }
         return super.mobInteract(player, hand);

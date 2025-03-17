@@ -7,6 +7,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.npc.WanderingTrader;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.trading.MerchantOffers;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
@@ -23,7 +24,7 @@ public class AnimalTraderEntity extends AbstractTraderEntity {
 
     @Override
     public @NotNull InteractionResult mobInteract(Player player, InteractionHand hand) {
-        if (this.offers == null || offers.isEmpty()) {
+        if (!isClientSide() && (this.offers == null || offers.isEmpty())) {
             this.offers = AnimalTraderUtil.generateOffers();
         }
         return super.mobInteract(player, hand);

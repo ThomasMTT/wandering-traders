@@ -41,7 +41,7 @@ public class ExclusiveTraderEntity extends AbstractTraderEntity {
 
     @Override
     public @NotNull InteractionResult mobInteract(Player player, InteractionHand hand) {
-        if (offers == null || offers.isEmpty()) {
+        if (!isClientSide() && (this.offers == null || offers.isEmpty())) {
             offers = ExclusiveTraderUtil.generateOffers();
         }
         return super.mobInteract(player, hand);
