@@ -116,17 +116,20 @@ public class EndTraderEntity extends AbstractTraderEntity {
         }
 
         if (source.is(DamageTypes.GENERIC_KILL)) {
-            removeFromLinkMap(source.getEntity());
+            removeFromLinkMap();
             return super.hurt(source, getMaxHealth());
         }
 
-        randomTeleport();
+        if (!source.is(DamageTypes.FALL)) {
+            randomTeleport();
+        }
+
         return false;
     }
 
     private boolean handlePlayerDamage(DamageSource source, Player player) {
         if (player.isCreative() && player.isCrouching()) {
-            removeFromLinkMap(player);
+            removeFromLinkMap();
             return super.hurt(source, getMaxHealth());
         }
 
@@ -135,10 +138,10 @@ public class EndTraderEntity extends AbstractTraderEntity {
                     ? EndTraderMessage.LEAVE_DIM_ANGRY
                     : EndTraderMessage.LEAVE_DIM;
             player.displayClientMessage(messageHolder.getMessage(), true);
-            goBackToTheEnd(player);
+            goBackToTheEnd();
             return false;
         }
-
+        randomTeleport();
         return false;
     }
 
@@ -154,7 +157,7 @@ public class EndTraderEntity extends AbstractTraderEntity {
     }
 
     private void handleDespawn(Player player) {
-        removeFromLinkMap(player);
+        removeFromLinkMap();
         List<ItemStack> merchantLoot = LostLootUtil.getPlayerLoot(player);
 
         if (merchantLoot.size() > 53) {
@@ -177,11 +180,10 @@ public class EndTraderEntity extends AbstractTraderEntity {
     }
 
     public void randomTeleport() {
-        if (!level().isClientSide() && isAlive()) {
-
+        if (isAlive()) {
             for (int attempts = 0; attempts < 15; attempts++) {
-                double x = getX() + (random.nextDouble() - 0.5) * 64.0;
-                double z = getZ() + (random.nextDouble() - 0.5) * 64.0;
+                double x = getX() + (random.nextDouble() - 0.5) * 16;
+                double z = getZ() + (random.nextDouble() - 0.5) * 16;
                 double y = getCommandSenderWorld().getHeight(Heightmap.Types.WORLD_SURFACE, (int) x, (int) z);
                 BlockState state = getCommandSenderWorld().getBlockState(new BlockPos((int) x, (int) y - 1, (int) z));
 
@@ -193,18 +195,18 @@ public class EndTraderEntity extends AbstractTraderEntity {
         }
     }
 
-    public void goBackToTheEnd(Player player) {
+    public void goBackToTheEnd() {
         if (!level().isClientSide()) {
-            removeFromLinkMap(player);
+            removeFromLinkMap();
             discard();
         } else {
             playSound(SoundEvents.ENDERMAN_TELEPORT);
         }
     }
 
-    private void removeFromLinkMap(Entity entity) {
-        if (entity instanceof Player player) {
-            PlayerEndTraderData.PLAYER_END_TRADER_MAP.remove(player.getUUID());
+    private void removeFromLinkMap() {
+        if (linkedPlayerUuid != null) {
+            PlayerEndTraderData.PLAYER_END_TRADER_MAP.remove(linkedPlayerUuid);
             PlayerEndTraderData.INSTANCE.setDirty();
         }
     }
