@@ -2,7 +2,6 @@ package life.thoms.wandering_traders.neoforge.registry;
 
 import life.thoms.wandering_traders.WanderingTraders;
 import life.thoms.wandering_traders.item.*;
-import life.thoms.wandering_traders.item.lootbox.*;
 import life.thoms.wandering_traders.server.ModRegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Item;
