@@ -1,14 +1,12 @@
 package life.thoms.wandering_traders.util;
 
-import life.thoms.wandering_traders.item.lootbox.AbstractLootBoxItem;
 import net.minecraft.core.Holder;
 import net.minecraft.world.item.*;
 
 public class LootFilters {
 
     public static boolean isImportantLoot(ItemStack stack) {
-        return !isExcludedItem(stack) && (isEnchanted(stack) || isEnchantedBook(stack) || isLootBox(stack)) ||
-                isValuableItem(stack);
+        return !isExcludedItem(stack) && (isEnchanted(stack) || isEnchantedBook(stack) || isValuableItem(stack));
     }
 
     private static boolean isValuableItem(ItemStack stack) {
@@ -90,8 +88,5 @@ public class LootFilters {
         return stack.getItem() instanceof PotionItem;
     }
 
-    public static boolean isLootBox(ItemStack stack) {
-        return stack.getItem() instanceof AbstractLootBoxItem;
-    }
 
 }

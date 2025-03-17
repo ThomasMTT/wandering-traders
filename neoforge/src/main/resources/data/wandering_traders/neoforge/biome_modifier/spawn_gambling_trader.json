@@ -2,7 +2,7 @@
   "type": "neoforge:add_spawns",
   "biomes": "minecraft:desert",
   "spawners": {
-    "type": "wandering_traders:gambling_trader",
+    "type": "wandering_traders:decoration_trader",
     "minCount": 1,
     "maxCount": 1,
     "weight": 1

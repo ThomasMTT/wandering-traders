@@ -16,7 +16,8 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.trading.ItemCost;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.item.trading.MerchantOffers;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SaplingBlock;
 
 import java.util.*;
 
@@ -33,25 +34,19 @@ public class MerchantUtil {
     public static final List<Item> ANIMAL_SPAWN_EGG_ITEMS = new ArrayList<>();
 
     public static final Map<Item, Integer> EXCLUSIVE_ITEMS = new HashMap<>();
-    public static final List<Item> EXCLUSIVE_ITEMS_LIST = new ArrayList<>();;
+    public static final List<Item> EXCLUSIVE_ITEMS_LIST = new ArrayList<>();
+    ;
 
-    public static final MerchantOffers LOOT_BOX_OFFERS = new MerchantOffers();
+    public static final Map<Item, Integer> DECORATIVE_ITEMS = new LinkedHashMap<>();
+    public static final List<Item> DECORATIVE_ITEMS_LIST = new ArrayList<>();
+    ;
 
     public static void register(ServerLevel level) {
-        LOOT_BOX_OFFERS.clear();
-        registerLootBoxOffers();
+        registerDecorativeItems();
         registerEnchantments();
         registerPotions();
         registerItems(level);
         registerExclusiveItems();
-    }
-
-    private static void registerLootBoxOffers() {
-        LOOT_BOX_OFFERS.add(createOffer(ModRegistryAccess.ITEM_ACCESS.get("food_loot_box"), 2, 32));
-        LOOT_BOX_OFFERS.add(createOffer(ModRegistryAccess.ITEM_ACCESS.get("potion_loot_box"), 4, 16));
-        LOOT_BOX_OFFERS.add(createOffer(ModRegistryAccess.ITEM_ACCESS.get("armor_loot_box"), 16, 4));
-        LOOT_BOX_OFFERS.add(createOffer(ModRegistryAccess.ITEM_ACCESS.get("weapon_loot_box"), 16, 4));
-        LOOT_BOX_OFFERS.add(createOffer(ModRegistryAccess.ITEM_ACCESS.get("tool_loot_box"), 16, 4));
     }
 
     private static void registerEnchantments() {
@@ -135,7 +130,6 @@ public class MerchantUtil {
         }
     }
 
-
     public static ItemStack generateStackFromItem(Random random, Item item) {
         ItemStack stack = new ItemStack(item);
 
@@ -184,7 +178,7 @@ public class MerchantUtil {
     }
 
     public static MerchantOffer createOffer(Item lootBoxItem, int price, int maxUses) {
-       return createOffer(new ItemStack(lootBoxItem), price, maxUses);
+        return createOffer(new ItemStack(lootBoxItem), price, maxUses);
     }
 
     public static MerchantOffer createOffer(ItemStack lootBoxItem, int price, int maxUses) {
@@ -195,8 +189,160 @@ public class MerchantUtil {
         );
     }
 
+    public static void sortOffers(MerchantOffers offers, boolean reversed) {
+        int rev = reversed ? -1 : 1;
+        offers.sort((x, z) -> rev * Integer.compare(z.getItemCostA().count(), x.getItemCostA().count()));
+    }
+
     public static void sortOffers(MerchantOffers offers) {
-        offers.sort((x, z) -> Integer.compare(z.getItemCostA().count(), x.getItemCostA().count()));
+        sortOffers(offers, false);
+    }
+
+    public static void registerDecorativeItems() {
+        int carpetPrice = 1;
+        int woolPrice = 2;
+        int glassPrice = 2;
+        int terracottaPrice = 2;
+        int glazedTerracottaPrice = 3;
+        int concretePrice = 3;
+        int bannerPrice = 6;
+
+        // Add Carpets
+        DECORATIVE_ITEMS.put(Items.WHITE_CARPET, carpetPrice);
+        DECORATIVE_ITEMS.put(Items.ORANGE_CARPET, carpetPrice);
+        DECORATIVE_ITEMS.put(Items.MAGENTA_CARPET, carpetPrice);
+        DECORATIVE_ITEMS.put(Items.LIGHT_BLUE_CARPET, carpetPrice);
+        DECORATIVE_ITEMS.put(Items.YELLOW_CARPET, carpetPrice);
+        DECORATIVE_ITEMS.put(Items.LIME_CARPET, carpetPrice);
+        DECORATIVE_ITEMS.put(Items.PINK_CARPET, carpetPrice);
+        DECORATIVE_ITEMS.put(Items.GRAY_CARPET, carpetPrice);
+        DECORATIVE_ITEMS.put(Items.LIGHT_GRAY_CARPET, carpetPrice);
+        DECORATIVE_ITEMS.put(Items.CYAN_CARPET, carpetPrice);
+        DECORATIVE_ITEMS.put(Items.PURPLE_CARPET, carpetPrice);
+        DECORATIVE_ITEMS.put(Items.BLUE_CARPET, carpetPrice);
+        DECORATIVE_ITEMS.put(Items.BROWN_CARPET, carpetPrice);
+        DECORATIVE_ITEMS.put(Items.GREEN_CARPET, carpetPrice);
+        DECORATIVE_ITEMS.put(Items.RED_CARPET, carpetPrice);
+        DECORATIVE_ITEMS.put(Items.BLACK_CARPET, carpetPrice);
+
+        DECORATIVE_ITEMS.put(Items.QUARTZ_BLOCK, 2);
+        DECORATIVE_ITEMS.put(Items.BRICKS, 2);
+
+        // Add Wool
+        DECORATIVE_ITEMS.put(Items.WHITE_WOOL, woolPrice);
+        DECORATIVE_ITEMS.put(Items.ORANGE_WOOL, woolPrice);
+        DECORATIVE_ITEMS.put(Items.MAGENTA_WOOL, woolPrice);
+        DECORATIVE_ITEMS.put(Items.LIGHT_BLUE_WOOL, woolPrice);
+        DECORATIVE_ITEMS.put(Items.YELLOW_WOOL, woolPrice);
+        DECORATIVE_ITEMS.put(Items.LIME_WOOL, woolPrice);
+        DECORATIVE_ITEMS.put(Items.PINK_WOOL, woolPrice);
+        DECORATIVE_ITEMS.put(Items.GRAY_WOOL, woolPrice);
+        DECORATIVE_ITEMS.put(Items.LIGHT_GRAY_WOOL, woolPrice);
+        DECORATIVE_ITEMS.put(Items.CYAN_WOOL, woolPrice);
+        DECORATIVE_ITEMS.put(Items.PURPLE_WOOL, woolPrice);
+        DECORATIVE_ITEMS.put(Items.BLUE_WOOL, woolPrice);
+        DECORATIVE_ITEMS.put(Items.BROWN_WOOL, woolPrice);
+        DECORATIVE_ITEMS.put(Items.GREEN_WOOL, woolPrice);
+        DECORATIVE_ITEMS.put(Items.RED_WOOL, woolPrice);
+        DECORATIVE_ITEMS.put(Items.BLACK_WOOL, woolPrice);
+
+        // Add Glass
+        DECORATIVE_ITEMS.put(Items.GLASS, 2);
+        DECORATIVE_ITEMS.put(Items.WHITE_STAINED_GLASS, glassPrice);
+        DECORATIVE_ITEMS.put(Items.ORANGE_STAINED_GLASS, glassPrice);
+        DECORATIVE_ITEMS.put(Items.MAGENTA_STAINED_GLASS, glassPrice);
+        DECORATIVE_ITEMS.put(Items.LIGHT_BLUE_STAINED_GLASS, glassPrice);
+        DECORATIVE_ITEMS.put(Items.YELLOW_STAINED_GLASS, glassPrice);
+        DECORATIVE_ITEMS.put(Items.LIME_STAINED_GLASS, glassPrice);
+        DECORATIVE_ITEMS.put(Items.PINK_STAINED_GLASS, glassPrice);
+        DECORATIVE_ITEMS.put(Items.GRAY_STAINED_GLASS, glassPrice);
+        DECORATIVE_ITEMS.put(Items.LIGHT_GRAY_STAINED_GLASS, glassPrice);
+        DECORATIVE_ITEMS.put(Items.CYAN_STAINED_GLASS, glassPrice);
+        DECORATIVE_ITEMS.put(Items.PURPLE_STAINED_GLASS, glassPrice);
+        DECORATIVE_ITEMS.put(Items.BLUE_STAINED_GLASS, glassPrice);
+        DECORATIVE_ITEMS.put(Items.BROWN_STAINED_GLASS, glassPrice);
+        DECORATIVE_ITEMS.put(Items.GREEN_STAINED_GLASS, glassPrice);
+        DECORATIVE_ITEMS.put(Items.RED_STAINED_GLASS, glassPrice);
+        DECORATIVE_ITEMS.put(Items.BLACK_STAINED_GLASS, glassPrice);
+
+        // Add colored Terracotta
+        DECORATIVE_ITEMS.put(Items.TERRACOTTA, terracottaPrice);
+        DECORATIVE_ITEMS.put(Items.WHITE_TERRACOTTA, terracottaPrice);
+        DECORATIVE_ITEMS.put(Items.ORANGE_TERRACOTTA, terracottaPrice);
+        DECORATIVE_ITEMS.put(Items.MAGENTA_TERRACOTTA, terracottaPrice);
+        DECORATIVE_ITEMS.put(Items.LIGHT_BLUE_TERRACOTTA, terracottaPrice);
+        DECORATIVE_ITEMS.put(Items.YELLOW_TERRACOTTA, terracottaPrice);
+        DECORATIVE_ITEMS.put(Items.LIME_TERRACOTTA, terracottaPrice);
+        DECORATIVE_ITEMS.put(Items.PINK_TERRACOTTA, terracottaPrice);
+        DECORATIVE_ITEMS.put(Items.GRAY_TERRACOTTA, terracottaPrice);
+        DECORATIVE_ITEMS.put(Items.LIGHT_GRAY_TERRACOTTA, terracottaPrice);
+        DECORATIVE_ITEMS.put(Items.CYAN_TERRACOTTA, terracottaPrice);
+        DECORATIVE_ITEMS.put(Items.PURPLE_TERRACOTTA, terracottaPrice);
+        DECORATIVE_ITEMS.put(Items.BLUE_TERRACOTTA, terracottaPrice);
+        DECORATIVE_ITEMS.put(Items.BROWN_TERRACOTTA, terracottaPrice);
+        DECORATIVE_ITEMS.put(Items.GREEN_TERRACOTTA, terracottaPrice);
+        DECORATIVE_ITEMS.put(Items.RED_TERRACOTTA, terracottaPrice);
+        DECORATIVE_ITEMS.put(Items.BLACK_TERRACOTTA, terracottaPrice);
+
+        // Add Glazed Terracotta
+        DECORATIVE_ITEMS.put(Items.WHITE_GLAZED_TERRACOTTA, glazedTerracottaPrice);
+        DECORATIVE_ITEMS.put(Items.ORANGE_GLAZED_TERRACOTTA, glazedTerracottaPrice);
+        DECORATIVE_ITEMS.put(Items.MAGENTA_GLAZED_TERRACOTTA, glazedTerracottaPrice);
+        DECORATIVE_ITEMS.put(Items.LIGHT_BLUE_GLAZED_TERRACOTTA, glazedTerracottaPrice);
+        DECORATIVE_ITEMS.put(Items.YELLOW_GLAZED_TERRACOTTA, glazedTerracottaPrice);
+        DECORATIVE_ITEMS.put(Items.LIME_GLAZED_TERRACOTTA, glazedTerracottaPrice);
+        DECORATIVE_ITEMS.put(Items.PINK_GLAZED_TERRACOTTA, glazedTerracottaPrice);
+        DECORATIVE_ITEMS.put(Items.GRAY_GLAZED_TERRACOTTA, glazedTerracottaPrice);
+        DECORATIVE_ITEMS.put(Items.LIGHT_GRAY_GLAZED_TERRACOTTA, glazedTerracottaPrice);
+        DECORATIVE_ITEMS.put(Items.CYAN_GLAZED_TERRACOTTA, glazedTerracottaPrice);
+        DECORATIVE_ITEMS.put(Items.PURPLE_GLAZED_TERRACOTTA, glazedTerracottaPrice);
+        DECORATIVE_ITEMS.put(Items.BLUE_GLAZED_TERRACOTTA, glazedTerracottaPrice);
+        DECORATIVE_ITEMS.put(Items.BROWN_GLAZED_TERRACOTTA, glazedTerracottaPrice);
+        DECORATIVE_ITEMS.put(Items.GREEN_GLAZED_TERRACOTTA, glazedTerracottaPrice);
+        DECORATIVE_ITEMS.put(Items.RED_GLAZED_TERRACOTTA, glazedTerracottaPrice);
+        DECORATIVE_ITEMS.put(Items.BLACK_GLAZED_TERRACOTTA, glazedTerracottaPrice);
+
+        // Add Concrete
+        DECORATIVE_ITEMS.put(Items.WHITE_CONCRETE, concretePrice);
+        DECORATIVE_ITEMS.put(Items.ORANGE_CONCRETE, concretePrice);
+        DECORATIVE_ITEMS.put(Items.MAGENTA_CONCRETE, concretePrice);
+        DECORATIVE_ITEMS.put(Items.LIGHT_BLUE_CONCRETE, concretePrice);
+        DECORATIVE_ITEMS.put(Items.YELLOW_CONCRETE, concretePrice);
+        DECORATIVE_ITEMS.put(Items.LIME_CONCRETE, concretePrice);
+        DECORATIVE_ITEMS.put(Items.PINK_CONCRETE, concretePrice);
+        DECORATIVE_ITEMS.put(Items.GRAY_CONCRETE, concretePrice);
+        DECORATIVE_ITEMS.put(Items.LIGHT_GRAY_CONCRETE, concretePrice);
+        DECORATIVE_ITEMS.put(Items.CYAN_CONCRETE, concretePrice);
+        DECORATIVE_ITEMS.put(Items.PURPLE_CONCRETE, concretePrice);
+        DECORATIVE_ITEMS.put(Items.BLUE_CONCRETE, concretePrice);
+        DECORATIVE_ITEMS.put(Items.BROWN_CONCRETE, concretePrice);
+        DECORATIVE_ITEMS.put(Items.GREEN_CONCRETE, concretePrice);
+        DECORATIVE_ITEMS.put(Items.RED_CONCRETE, concretePrice);
+        DECORATIVE_ITEMS.put(Items.BLACK_CONCRETE, concretePrice);
+
+        DECORATIVE_ITEMS.put(Items.ITEM_FRAME, 4);
+        DECORATIVE_ITEMS.put(Items.PAINTING, 4);
+
+        // Add Banners
+        DECORATIVE_ITEMS.put(Items.WHITE_BANNER, bannerPrice);
+        DECORATIVE_ITEMS.put(Items.ORANGE_BANNER, bannerPrice);
+        DECORATIVE_ITEMS.put(Items.MAGENTA_BANNER, bannerPrice);
+        DECORATIVE_ITEMS.put(Items.LIGHT_BLUE_BANNER, bannerPrice);
+        DECORATIVE_ITEMS.put(Items.YELLOW_BANNER, bannerPrice);
+        DECORATIVE_ITEMS.put(Items.LIME_BANNER, bannerPrice);
+        DECORATIVE_ITEMS.put(Items.PINK_BANNER, bannerPrice);
+        DECORATIVE_ITEMS.put(Items.GRAY_BANNER, bannerPrice);
+        DECORATIVE_ITEMS.put(Items.LIGHT_GRAY_BANNER, bannerPrice);
+        DECORATIVE_ITEMS.put(Items.CYAN_BANNER, bannerPrice);
+        DECORATIVE_ITEMS.put(Items.PURPLE_BANNER, bannerPrice);
+        DECORATIVE_ITEMS.put(Items.BLUE_BANNER, bannerPrice);
+        DECORATIVE_ITEMS.put(Items.BROWN_BANNER, bannerPrice);
+        DECORATIVE_ITEMS.put(Items.GREEN_BANNER, bannerPrice);
+        DECORATIVE_ITEMS.put(Items.RED_BANNER, bannerPrice);
+        DECORATIVE_ITEMS.put(Items.BLACK_BANNER, bannerPrice);
+
+        // Add all items to the list
+        DECORATIVE_ITEMS_LIST.addAll(DECORATIVE_ITEMS.keySet().stream().toList());
     }
 
 }

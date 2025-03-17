@@ -7,15 +7,15 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.npc.WanderingTrader;
 import org.jetbrains.annotations.NotNull;
 
-public class GamblingTraderRenderer extends WanderingTraderRenderer {
+public class DecorationTraderRenderer extends WanderingTraderRenderer {
 
-    public GamblingTraderRenderer(EntityRendererProvider.Context context) {
+    public DecorationTraderRenderer(EntityRendererProvider.Context context) {
         super(context);
     }
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(WanderingTrader entity) {
-        return new ResourceLocation(WanderingTraders.MOD_ID, "textures/entity/gambling_trader.png");
+        return new ResourceLocation(WanderingTraders.MOD_ID, "textures/entity/decoration_trader.png");
     }
 
 }

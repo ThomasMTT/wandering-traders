@@ -14,7 +14,7 @@ public final class WanderingTradersFabricClient implements ClientModInitializer 
 
         // Renderers
         EntityRendererRegistry.register(TraderEntitiesFabric.END_TRADER, EndTraderRenderer::new);
-        EntityRendererRegistry.register(TraderEntitiesFabric.GAMBLING_TRADER, GamblingTraderRenderer::new);
+        EntityRendererRegistry.register(TraderEntitiesFabric.DECORATION_TRADER, DecorationTraderRenderer::new);
         EntityRendererRegistry.register(TraderEntitiesFabric.BOOK_TRADER, BookTraderRenderer::new);
         EntityRendererRegistry.register(TraderEntitiesFabric.FOREST_TRADER, ForestTraderRenderer::new);
         EntityRendererRegistry.register(TraderEntitiesFabric.POTION_TRADER, PotionTraderRenderer::new);

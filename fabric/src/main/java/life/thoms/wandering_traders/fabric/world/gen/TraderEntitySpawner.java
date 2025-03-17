@@ -8,7 +8,6 @@ import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.entity.SpawnPlacements;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.levelgen.Heightmap;
 
@@ -18,7 +17,7 @@ public class TraderEntitySpawner {
 
         // Add spawns
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(Biomes.DESERT), MobCategory.CREATURE,
-                TraderEntitiesFabric.GAMBLING_TRADER, 1, 1, 1);
+                TraderEntitiesFabric.DECORATION_TRADER, 1, 1, 1);
 
         BiomeModifications.addSpawn(
                 BiomeSelectors.includeByKey(Biomes.SNOWY_BEACH, Biomes.SNOWY_PLAINS, Biomes.SNOWY_SLOPES,
@@ -32,15 +31,15 @@ public class TraderEntitySpawner {
         BiomeModifications.addSpawn(BiomeSelectors.tag(BiomeTags.HAS_SWAMP_HUT), MobCategory.CREATURE,
                 TraderEntitiesFabric.POTION_TRADER, 1, 1, 1);
 
-        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(Biomes.CRIMSON_FOREST), MobCategory.CREATURE,
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(Biomes.PLAINS), MobCategory.CREATURE,
                 TraderEntitiesFabric.ANIMAL_TRADER, 1, 1, 1);
 
-        BiomeModifications.addSpawn(BiomeSelectors.foundInTheNether(), MobCategory.CREATURE,
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(Biomes.CRIMSON_FOREST), MobCategory.CREATURE,
                 TraderEntitiesFabric.EXCLUSIVE_TRADER, 5, 1, 1);
 
         // Spawn placements
-        SpawnPlacements.register(TraderEntitiesFabric.GAMBLING_TRADER, SpawnPlacementTypes.ON_GROUND,
-                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, GamblingTraderEntity::checkMobSpawnRules);
+        SpawnPlacements.register(TraderEntitiesFabric.DECORATION_TRADER, SpawnPlacementTypes.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, DecorationTraderEntity::checkMobSpawnRules);
 
         SpawnPlacements.register(TraderEntitiesFabric.BOOK_TRADER, SpawnPlacementTypes.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, BookTraderEntity::checkMobSpawnRules);

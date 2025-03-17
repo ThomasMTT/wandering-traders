@@ -25,9 +25,9 @@ public class TraderItemsNeoForge {
                     0x5e0da5, 0xcea512, new Item.Properties())
     );
 
-    public static final DeferredHolder<Item, DeferredSpawnEggItem> GAMBLING_TRADER_SPAWN_EGG = ITEMS.register(
-            "gambling_trader_spawn_egg",
-            () -> new DeferredSpawnEggItem(TraderEntitiesNeoForge.GAMBLING_TRADER,
+    public static final DeferredHolder<Item, DeferredSpawnEggItem> DECORATION_TRADER_SPAWN_EGG = ITEMS.register(
+            "decoration_trader_spawn_egg",
+            () -> new DeferredSpawnEggItem(TraderEntitiesNeoForge.DECORATION_TRADER,
                     0xeaeef5, 0xcea512, new Item.Properties())
     );
 
@@ -61,32 +61,6 @@ public class TraderItemsNeoForge {
                     0x421111, 0xcc8e29, new Item.Properties())
     );
 
-    // Loot Boxes
-    public static final DeferredHolder<Item, Item> ARMOR_LOOT_BOX = ITEMS.register(
-            "armor_loot_box",
-            () -> new ArmorLootBoxItem(new Item.Properties())
-    );
-
-    public static final DeferredHolder<Item, Item> WEAPON_LOOT_BOX = ITEMS.register(
-            "weapon_loot_box",
-            () -> new WeaponLootBoxItem(new Item.Properties())
-    );
-
-    public static final DeferredHolder<Item, Item> TOOL_LOOT_BOX = ITEMS.register(
-            "tool_loot_box",
-            () -> new ToolLootBoxItem(new Item.Properties())
-    );
-
-    public static final DeferredHolder<Item, Item> FOOD_LOOT_BOX = ITEMS.register(
-            "food_loot_box",
-            () -> new FoodLootBoxItem(new Item.Properties())
-    );
-
-    public static final DeferredHolder<Item, Item> POTION_LOOT_BOX = ITEMS.register(
-            "potion_loot_box",
-            () -> new PotionLootBoxItem(new Item.Properties())
-    );
-
     public static final DeferredHolder<Item, Item> END_BELL = ITEMS.register(
             "end_bell",
             () -> new EndBellItem(new Item.Properties())
@@ -97,11 +71,6 @@ public class TraderItemsNeoForge {
     }
 
     public static void registerCommon() {
-        ModRegistryAccess.addItem("armor_loot_box", ARMOR_LOOT_BOX.get());
-        ModRegistryAccess.addItem("weapon_loot_box", WEAPON_LOOT_BOX.get());
-        ModRegistryAccess.addItem("tool_loot_box", TOOL_LOOT_BOX.get());
-        ModRegistryAccess.addItem("food_loot_box", FOOD_LOOT_BOX.get());
-        ModRegistryAccess.addItem("potion_loot_box", POTION_LOOT_BOX.get());
         ModRegistryAccess.addItem("end_bell", END_BELL.get());
     }
 

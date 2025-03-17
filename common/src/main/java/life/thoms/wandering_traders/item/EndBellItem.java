@@ -49,7 +49,6 @@ public class EndBellItem extends Item {
             } else {
                 player.swing(usedHand);
                 player.playSound(SoundEvents.BELL_BLOCK);
-                player.playSound(SoundEvents.ENDERMAN_TELEPORT);
             }
 
         } else{

@@ -6,7 +6,6 @@ import life.thoms.wandering_traders.handler.EntityEventHandler;
 import life.thoms.wandering_traders.item.EndBellItem;
 import life.thoms.wandering_traders.neoforge.registry.TraderEntitiesNeoForge;
 import net.minecraft.world.entity.SpawnPlacementTypes;
-import net.minecraft.world.entity.monster.MagmaCube;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -25,8 +24,8 @@ public class EntityEventsNeoForge {
     }
 
     public static void registerSpawnPlacements(SpawnPlacementRegisterEvent event) {
-        event.register(TraderEntitiesNeoForge.GAMBLING_TRADER.get(), SpawnPlacementTypes.ON_GROUND,
-                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, GamblingTraderEntity::checkMobSpawnRules,
+        event.register(TraderEntitiesNeoForge.DECORATION_TRADER.get(), SpawnPlacementTypes.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, DecorationTraderEntity::checkMobSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.REPLACE);
         event.register(TraderEntitiesNeoForge.BOOK_TRADER.get(), SpawnPlacementTypes.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, BookTraderEntity::checkMobSpawnRules,
@@ -47,7 +46,7 @@ public class EntityEventsNeoForge {
 
     public static void registerAttributes(EntityAttributeCreationEvent event) {
         event.put(TraderEntitiesNeoForge.END_TRADER.get(), EndTraderEntity.createAttributes().build());
-        event.put(TraderEntitiesNeoForge.GAMBLING_TRADER.get(), GamblingTraderEntity.createAttributes().build());
+        event.put(TraderEntitiesNeoForge.DECORATION_TRADER.get(), DecorationTraderEntity.createAttributes().build());
         event.put(TraderEntitiesNeoForge.BOOK_TRADER.get(), BookTraderEntity.createAttributes().build());
         event.put(TraderEntitiesNeoForge.FOREST_TRADER.get(), ForestTraderEntity.createAttributes().build());
         event.put(TraderEntitiesNeoForge.POTION_TRADER.get(), PotionTraderEntity.createAttributes().build());

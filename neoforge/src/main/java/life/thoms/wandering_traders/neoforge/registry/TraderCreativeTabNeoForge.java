@@ -19,19 +19,14 @@ public class TraderCreativeTabNeoForge {
                             new ItemStack(TraderItemsNeoForge.END_BELL.get()))
                     .title(Component.translatable("creative_tab.wandering_traders_tab")).displayItems(
                             (parameters, output) -> {
+                                output.accept(TraderItemsNeoForge.END_BELL.get());
                                 output.accept(TraderItemsNeoForge.END_TRADER_SPAWN_EGG.get());
-                                output.accept(TraderItemsNeoForge.GAMBLING_TRADER_SPAWN_EGG.get());
+                                output.accept(TraderItemsNeoForge.DECORATION_TRADER_SPAWN_EGG.get());
                                 output.accept(TraderItemsNeoForge.BOOK_TRADER_SPAWN_EGG.get());
                                 output.accept(TraderItemsNeoForge.FOREST_TRADER_SPAWN_EGG.get());
                                 output.accept(TraderItemsNeoForge.POTION_TRADER_SPAWN_EGG.get());
                                 output.accept(TraderItemsNeoForge.ANIMAL_TRADER_SPAWN_EGG.get());
                                 output.accept(TraderItemsNeoForge.EXCLUSIVE_TRADER_SPAWN_EGG.get());
-                                output.accept(TraderItemsNeoForge.ARMOR_LOOT_BOX.get());
-                                output.accept(TraderItemsNeoForge.WEAPON_LOOT_BOX.get());
-                                output.accept(TraderItemsNeoForge.TOOL_LOOT_BOX.get());
-                                output.accept(TraderItemsNeoForge.FOOD_LOOT_BOX.get());
-                                output.accept(TraderItemsNeoForge.POTION_LOOT_BOX.get());
-                                output.accept(TraderItemsNeoForge.END_BELL.get());
                             })
                     .build()
     );

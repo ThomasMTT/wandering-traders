@@ -19,9 +19,9 @@ public class TraderEntitiesNeoForge {
             ENTITY_TYPES.register("end_trader", () -> EntityType.Builder.of(EndTraderEntity::new,
                     MobCategory.CREATURE).sized(0.6F, 2.0F).build("end_trader"));
 
-    public static final Supplier<EntityType<GamblingTraderEntity>> GAMBLING_TRADER =
-            ENTITY_TYPES.register("gambling_trader", () -> EntityType.Builder.of(GamblingTraderEntity::new,
-                    MobCategory.CREATURE).sized(0.6F, 2.0F).build("gambling_trader"));
+    public static final Supplier<EntityType<DecorationTraderEntity>> DECORATION_TRADER =
+            ENTITY_TYPES.register("decoration_trader", () -> EntityType.Builder.of(DecorationTraderEntity::new,
+                    MobCategory.CREATURE).sized(0.6F, 2.0F).build("decoration_trader"));
 
     public static final Supplier<EntityType<BookTraderEntity>> BOOK_TRADER =
             ENTITY_TYPES.register("book_trader", () -> EntityType.Builder.of(BookTraderEntity::new,

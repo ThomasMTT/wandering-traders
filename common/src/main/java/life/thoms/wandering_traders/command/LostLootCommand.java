@@ -26,10 +26,10 @@ public class LostLootCommand {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext context, Commands.CommandSelection commandSelection) {
         dispatcher.register(Commands.literal("lostloot")
                 .then(Commands.literal("clear").executes(LostLootCommand::clearLoot)
-                        .then(Commands.argument("Player", EntityArgument.player()).executes(LostLootCommand::clearOtherLoot))
+                        .then(Commands.argument("Player", EntityArgument.player()).requires(cs -> cs.hasPermission(4)).executes(LostLootCommand::clearOtherLoot))
                 )
                 .then(Commands.literal("view").executes(LostLootCommand::viewLoot)
-                        .then(Commands.argument("Player", EntityArgument.player()).executes(LostLootCommand::viewOtherLoot))
+                        .then(Commands.argument("Player", EntityArgument.player()).requires(cs -> cs.hasPermission(4)).executes(LostLootCommand::viewOtherLoot))
                 )
         );
     }
