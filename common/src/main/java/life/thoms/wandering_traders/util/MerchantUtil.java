@@ -1,6 +1,8 @@
 package life.thoms.wandering_traders.util;
 
+import life.thoms.wandering_traders.entity.*;
 import life.thoms.wandering_traders.server.ModRegistryAccess;
+import life.thoms.wandering_traders.util.trader.*;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -35,11 +37,21 @@ public class MerchantUtil {
 
     public static final Map<Item, Integer> EXCLUSIVE_ITEMS = new HashMap<>();
     public static final List<Item> EXCLUSIVE_ITEMS_LIST = new ArrayList<>();
-    ;
 
     public static final Map<Item, Integer> DECORATIVE_ITEMS = new LinkedHashMap<>();
     public static final List<Item> DECORATIVE_ITEMS_LIST = new ArrayList<>();
-    ;
+
+    public static MerchantOffers getOffersByClass(AbstractTraderEntity trader) {
+        return switch (trader) {
+            case DecorationTraderEntity ignore -> DecorationTraderUtil.generateOffers();
+            case BookTraderEntity ignore -> BookTraderUtil.generateOffers();
+            case ForestTraderEntity ignore -> ForestTraderUtil.generateOffers();
+            case PotionTraderEntity ignore -> PotionTraderUtil.generateOffers();
+            case AnimalTraderEntity ignore -> AnimalTraderUtil.generateOffers();
+            case ExclusiveTraderEntity ignore -> ExclusiveTraderUtil.generateOffers();
+            default -> throw new IllegalStateException("Unexpected trader type: " + trader);
+        };
+    }
 
     public static void register(ServerLevel level) {
         registerDecorativeItems();
