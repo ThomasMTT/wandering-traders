@@ -148,7 +148,7 @@ public class EndTraderEntity extends AbstractTraderEntity {
     @Override
     public void aiStep() {
         super.aiStep();
-        if (isRemoved() && isClientSide() && linkedPlayerUuid != null) {
+        if (isRemoved() && !isClientSide() && linkedPlayerUuid != null) {
             Player player = level().getPlayerByUUID(linkedPlayerUuid);
             if (player != null) {
                 handleDespawn(player);
@@ -164,6 +164,7 @@ public class EndTraderEntity extends AbstractTraderEntity {
             player.displayClientMessage(EndTraderMessage.LEAVE_DIM_TOO_MANY_ITEMS.getMessage(), true);
         } else {
             boolean lostSomeLoot = random.nextInt(0, 100) > 33;
+            int originalLootSize = merchantLoot.size();
             if (offers != null && !offers.isEmpty()) {
                 for (MerchantOffer offer : offers) {
                     if (!lostSomeLoot || random.nextBoolean()) {
@@ -173,7 +174,11 @@ public class EndTraderEntity extends AbstractTraderEntity {
                 }
             }
 
-            EndTraderMessage messageHolder = lostSomeLoot ? EndTraderMessage.LEAVE_DIM_LOST : EndTraderMessage.LEAVE_DIM;
+            EndTraderMessage messageHolder = EndTraderMessage.LEAVE_DIM;
+            if (lostSomeLoot && offers.size() != merchantLoot.size() - originalLootSize) {
+                    messageHolder = EndTraderMessage.LEAVE_DIM_LOST;
+            }
+
             player.displayClientMessage(messageHolder.getMessage(), true);
             LostLootUtil.putPlayerLoot(linkedPlayerUuid, merchantLoot);
         }
