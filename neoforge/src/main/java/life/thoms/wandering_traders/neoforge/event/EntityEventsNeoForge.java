@@ -52,9 +52,6 @@ public class EntityEventsNeoForge {
         event.put(TraderEntitiesNeoForge.POTION_TRADER.get(), PotionTraderEntity.createAttributes().build());
         event.put(TraderEntitiesNeoForge.ANIMAL_TRADER.get(), AnimalTraderEntity.createAttributes().build());
         event.put(TraderEntitiesNeoForge.EXCLUSIVE_TRADER.get(), ExclusiveTraderEntity.createAttributes().build());
-
-        // Add here to avoid Uninitialized Exception
-        EndBellItem.END_TRADER_ENTITY = TraderEntitiesNeoForge.END_TRADER.get();
     }
 
 }

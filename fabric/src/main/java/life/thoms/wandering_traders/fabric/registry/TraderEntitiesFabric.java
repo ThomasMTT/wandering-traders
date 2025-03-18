@@ -3,6 +3,8 @@ package life.thoms.wandering_traders.fabric.registry;
 import life.thoms.wandering_traders.WanderingTraders;
 import life.thoms.wandering_traders.entity.*;
 import life.thoms.wandering_traders.item.EndBellItem;
+import life.thoms.wandering_traders.server.ModRegistryAccess;
+import life.thoms.wandering_traders.util.ConfigUtil;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -54,7 +56,17 @@ public class TraderEntitiesFabric {
         FabricDefaultAttributeRegistry.register(POTION_TRADER, PotionTraderEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(ANIMAL_TRADER, AnimalTraderEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(EXCLUSIVE_TRADER, ExclusiveTraderEntity.createAttributes());
-        EndBellItem.END_TRADER_ENTITY = TraderEntitiesFabric.END_TRADER;
+        registerCommon();
+    }
+
+    public static void registerCommon() {
+        ModRegistryAccess.addEntityType("end_trader", END_TRADER);
+        ModRegistryAccess.addEntityType("decoration_trader", DECORATION_TRADER);
+        ModRegistryAccess.addEntityType("book_trader", BOOK_TRADER);
+        ModRegistryAccess.addEntityType("forest_trader", FOREST_TRADER);
+        ModRegistryAccess.addEntityType("potion_trader", POTION_TRADER);
+        ModRegistryAccess.addEntityType("animal_trader", ANIMAL_TRADER);
+        ModRegistryAccess.addEntityType("exclusive_trader", EXCLUSIVE_TRADER);
     }
 
 }

@@ -1,5 +1,6 @@
 package life.thoms.wandering_traders.entity;
 
+import life.thoms.wandering_traders.util.ConfigUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
@@ -24,9 +25,7 @@ public class ExclusiveTraderEntity extends AbstractTraderEntity {
     }
 
     public static boolean checkMobSpawnRules(EntityType<? extends Mob> type, LevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random) {
-        // Allow nether spawning
-        BlockPos blockPos = pos.below();
-        return spawnType == MobSpawnType.SPAWNER || level.getBlockState(blockPos).isValidSpawn(level, blockPos, type) || !level.dimensionType().bedWorks();
+        return !level.dimensionType().bedWorks() && ConfigUtil.spawnEnabled(type);
     }
 
 }

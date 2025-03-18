@@ -2,6 +2,8 @@ package life.thoms.wandering_traders.neoforge.registry;
 
 import life.thoms.wandering_traders.WanderingTraders;
 import life.thoms.wandering_traders.entity.*;
+import life.thoms.wandering_traders.server.ModRegistryAccess;
+import life.thoms.wandering_traders.util.ConfigUtil;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -45,6 +47,17 @@ public class TraderEntitiesNeoForge {
 
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);
+    }
+
+    public static void registerCommon() {
+        ModRegistryAccess.addEntityType("end_trader", END_TRADER.get());
+        ModRegistryAccess.addEntityType("decoration_trader", DECORATION_TRADER.get());
+        ModRegistryAccess.addEntityType("book_trader", BOOK_TRADER.get());
+        ModRegistryAccess.addEntityType("forest_trader", FOREST_TRADER.get());
+        ModRegistryAccess.addEntityType("potion_trader", POTION_TRADER.get());
+        ModRegistryAccess.addEntityType("animal_trader", ANIMAL_TRADER.get());
+        ModRegistryAccess.addEntityType("exclusive_trader", EXCLUSIVE_TRADER.get());
+
     }
 
 }

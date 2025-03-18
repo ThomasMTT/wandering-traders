@@ -1,6 +1,7 @@
 package life.thoms.wandering_traders.item;
 
 import life.thoms.wandering_traders.entity.EndTraderEntity;
+import life.thoms.wandering_traders.server.ModRegistryAccess;
 import life.thoms.wandering_traders.server.data.PlayerEndTraderData;
 import life.thoms.wandering_traders.message.entity.EndTraderMessage;
 import net.minecraft.core.BlockPos;
@@ -8,8 +9,6 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.npc.WanderingTrader;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -20,8 +19,6 @@ import java.util.List;
 import java.util.UUID;
 
 public class EndBellItem extends Item {
-
-    public static EntityType<? extends WanderingTrader> END_TRADER_ENTITY;
 
     public EndBellItem(Properties properties) {
         super(properties);
@@ -41,7 +38,7 @@ public class EndBellItem extends Item {
                 if (!player.isCreative()) {
                     bellItem.setCount(bellItem.getCount() - 1);
                 }
-                EndTraderEntity trader = new EndTraderEntity(END_TRADER_ENTITY, level);
+                EndTraderEntity trader = new EndTraderEntity(ModRegistryAccess.ENTITY_ACCESS.get("end_trader"), level);
                 trader.setPos(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
                 level.addFreshEntity(trader);
                 trader.addLinkedPlayer(player);
