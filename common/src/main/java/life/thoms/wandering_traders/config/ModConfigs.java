@@ -16,6 +16,7 @@ public class ModConfigs {
     // Enable bell drop (only if ENABLE_LOOT_RECOVERY is true)
     public static boolean ENABLE_END_BELL_DROP = true;
 
-
+    // Display messages in actionbar (visible 2s above hotbar) or chat
+    public static boolean MESSAGES_TO_ACTIONBAR = true;
 
 }

@@ -34,7 +34,7 @@ public class EndBellItem extends Item {
                 player.displayClientMessage(player.getServer().isDedicatedServer()
                                 ? EndTraderMessage.FEATURE_DISABLED.getMessage()
                                 : EndTraderMessage.FEATURE_DISABLED_SP.getMessage(),
-                        true);
+                        ModConfigs.MESSAGES_TO_ACTIONBAR);
             }
             return InteractionResultHolder.pass(player.getItemInHand(usedHand));
         }
@@ -54,7 +54,7 @@ public class EndBellItem extends Item {
                 trader.setPos(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
                 level.addFreshEntity(trader);
                 trader.addLinkedPlayer(player);
-                player.displayClientMessage(EndTraderMessage.SUMMON_WITH_BELL.getMessage(), true);
+                player.displayClientMessage(EndTraderMessage.SUMMON_WITH_BELL.getMessage(), ModConfigs.MESSAGES_TO_ACTIONBAR);
             } else {
                 player.swing(usedHand);
                 player.playSound(SoundEvents.BELL_BLOCK);
@@ -67,11 +67,11 @@ public class EndBellItem extends Item {
                 List<EndTraderEntity> traderList = level.getEntitiesOfClass(EndTraderEntity.class,
                         player.getBoundingBox().inflate(1000), x -> x.getUUID().equals(traderUUID));
                 if (traderList.isEmpty()) {
-                    player.displayClientMessage(message, true);
+                    player.displayClientMessage(message, ModConfigs.MESSAGES_TO_ACTIONBAR);
                 } else {
                     EndTraderEntity trader = traderList.getFirst();
                     player.displayClientMessage(message.append(" (" + (int) trader.getX() + " " + (int)  trader.getY() +
-                            " " + (int)  trader.getZ() + ")"), true);
+                            " " + (int)  trader.getZ() + ")"), ModConfigs.MESSAGES_TO_ACTIONBAR);
                 }
             }
         }

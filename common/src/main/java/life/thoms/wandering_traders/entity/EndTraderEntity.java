@@ -71,7 +71,7 @@ public class EndTraderEntity extends AbstractTraderEntity {
                         addLinkedPlayer(player);
                     }
                 } else {
-                    player.displayClientMessage(EndTraderMessage.OTHER_STILL_AROUND.getMessage(), true);
+                    player.displayClientMessage(EndTraderMessage.OTHER_STILL_AROUND.getMessage(), ModConfigs.MESSAGES_TO_ACTIONBAR);
                     return InteractionResult.sidedSuccess(true);
                 }
             }
@@ -82,15 +82,15 @@ public class EndTraderEntity extends AbstractTraderEntity {
                 if (linkedPlayerUuid.equals(player.getUUID())) {
                     offers = EndTraderUtil.createOffersFromLostLoot(linkedPlayerUuid, offers);
                     if (offers.isEmpty()) {
-                        player.displayClientMessage(EndTraderMessage.NO_TRADES.getMessage(), true);
+                        player.displayClientMessage(EndTraderMessage.NO_TRADES.getMessage(), ModConfigs.MESSAGES_TO_ACTIONBAR);
                     } else {
                         super.mobInteract(player, hand);
                     }
                 } else {
-                    player.displayClientMessage(EndTraderMessage.ONLY_TRADE_WITH.getMessage(linkedPlayerName), true);
+                    player.displayClientMessage(EndTraderMessage.ONLY_TRADE_WITH.getMessage(linkedPlayerName), ModConfigs.MESSAGES_TO_ACTIONBAR);
                 }
             } else {
-                player.displayClientMessage(EndTraderMessage.NO_TRADES.getMessage(), true);
+                player.displayClientMessage(EndTraderMessage.NO_TRADES.getMessage(), ModConfigs.MESSAGES_TO_ACTIONBAR);
             }
         }
         return InteractionResult.sidedSuccess(true);
@@ -148,7 +148,7 @@ public class EndTraderEntity extends AbstractTraderEntity {
             EndTraderMessage messageHolder = (offers != null && !offers.isEmpty())
                     ? EndTraderMessage.LEAVE_DIM_ANGRY
                     : EndTraderMessage.LEAVE_DIM;
-            player.displayClientMessage(messageHolder.getMessage(), true);
+            player.displayClientMessage(messageHolder.getMessage(), ModConfigs.MESSAGES_TO_ACTIONBAR);
             goBackToTheEnd();
             return false;
         }
@@ -172,7 +172,7 @@ public class EndTraderEntity extends AbstractTraderEntity {
         List<ItemStack> merchantLoot = LostLootUtil.getPlayerLoot(player);
 
         if (merchantLoot.size() > 53) {
-            player.displayClientMessage(EndTraderMessage.LEAVE_DIM_TOO_MANY_ITEMS.getMessage(), true);
+            player.displayClientMessage(EndTraderMessage.LEAVE_DIM_TOO_MANY_ITEMS.getMessage(), ModConfigs.MESSAGES_TO_ACTIONBAR);
         } else {
             boolean lostSomeLoot = random.nextInt(0, 100) > 33;
             int originalLootSize = merchantLoot.size();
@@ -186,7 +186,7 @@ public class EndTraderEntity extends AbstractTraderEntity {
             }
             int lootAddedCount = merchantLoot.size() - originalLootSize;
             EndTraderMessage despawnMessage = getDespawnMessage(lostSomeLoot, lootAddedCount);
-            player.displayClientMessage(despawnMessage.getMessage(), true);
+            player.displayClientMessage(despawnMessage.getMessage(), ModConfigs.MESSAGES_TO_ACTIONBAR);
             LostLootUtil.putPlayerLoot(linkedPlayerUuid, merchantLoot);
         }
     }
