@@ -20,6 +20,8 @@
   "end_trader_message.leave_dim_too_many_items": "The End Trader went back home but couldn't take any loot with him",
   "end_trader_message.summon_with_bell": "The End Trader came to sell your lost loot!",
   "end_trader_message.other_still_around": "You already have a trader, try again when he leaves",
+  "end_trader_message.feature_disabled_sp": "The loot recovery feature is disabled in config",
+  "end_trader_message.feature_disabled": "The loot recovery feature is disabled on the server",
   "creative_tab.wandering_traders_tab": "Wandering Traders",
   "item.wandering_traders.end_trader_spawn_egg": "End Trader Spawn Egg",
   "item.wandering_traders.decoration_trader_spawn_egg": "Decoration Trader Spawn Egg",

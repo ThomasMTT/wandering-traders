@@ -1,5 +1,6 @@
 package life.thoms.wandering_traders.item;
 
+import life.thoms.wandering_traders.config.ModConfigs;
 import life.thoms.wandering_traders.entity.EndTraderEntity;
 import life.thoms.wandering_traders.server.ModRegistryAccess;
 import life.thoms.wandering_traders.server.data.PlayerEndTraderData;
@@ -8,6 +9,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -26,6 +28,16 @@ public class EndBellItem extends Item {
 
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
+
+        if (!ModConfigs.ENABLE_LOOT_RECOVERY) {
+            if (player.getServer() != null) {
+                player.displayClientMessage(player.getServer().isDedicatedServer()
+                                ? EndTraderMessage.FEATURE_DISABLED.getMessage()
+                                : EndTraderMessage.FEATURE_DISABLED_SP.getMessage(),
+                        true);
+            }
+            return InteractionResultHolder.pass(player.getItemInHand(usedHand));
+        }
 
         if (!PlayerEndTraderData.PLAYER_END_TRADER_MAP.containsKey(player.getUUID())) {
             ItemStack bellItem = player.getItemInHand(usedHand);

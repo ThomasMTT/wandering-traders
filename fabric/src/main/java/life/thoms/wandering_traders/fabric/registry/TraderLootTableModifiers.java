@@ -1,5 +1,6 @@
 package life.thoms.wandering_traders.fabric.registry;
 
+import life.thoms.wandering_traders.config.ModConfigs;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -15,14 +16,16 @@ public class TraderLootTableModifiers {
 
     public static void register() {
         LootTableEvents.MODIFY.register((resourceKey, builder, source) -> {
-            if (ENDERMAN_LOOT.equals(resourceKey.location())) {
-                LootPool.Builder poolBuilder = LootPool.lootPool()
-                        .setRolls(ConstantValue.exactly(1f))
-                        .conditionally(LootItemRandomChanceCondition.randomChance(0.03f).build())
-                        .with(LootItem.lootTableItem(TraderItemsFabric.END_BELL).build())
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 1)));
+            if (ModConfigs.ENABLE_END_BELL_DROP && ModConfigs.ENABLE_LOOT_RECOVERY) {
+                if (ENDERMAN_LOOT.equals(resourceKey.location())) {
+                    LootPool.Builder poolBuilder = LootPool.lootPool()
+                            .setRolls(ConstantValue.exactly(1f))
+                            .conditionally(LootItemRandomChanceCondition.randomChance(0.03f).build())
+                            .with(LootItem.lootTableItem(TraderItemsFabric.END_BELL).build())
+                            .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 1)));
 
-                builder.pool(poolBuilder.build());
+                    builder.pool(poolBuilder.build());
+                }
             }
         });
     }

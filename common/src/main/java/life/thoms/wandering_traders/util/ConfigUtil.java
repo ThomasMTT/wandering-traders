@@ -7,7 +7,6 @@ import net.minecraft.world.entity.Mob;
 
 public class ConfigUtil {
 
-    public static EntityType<? extends Mob> end_trader = ModRegistryAccess.ENTITY_ACCESS.get("end_trader");
     public static EntityType<? extends Mob> decoration_trader = ModRegistryAccess.ENTITY_ACCESS.get("decoration_trader");
     public static EntityType<? extends Mob> animal_trader = ModRegistryAccess.ENTITY_ACCESS.get("animal_trader");
     public static EntityType<? extends Mob> book_trader = ModRegistryAccess.ENTITY_ACCESS.get("book_trader");
@@ -17,9 +16,7 @@ public class ConfigUtil {
 
 
     public static boolean spawnEnabled(EntityType<? extends Mob> traderType) {
-        if (traderType.equals(end_trader)) {
-            return ModConfigs.ENABLE_END_TRADER_SPAWN;
-        } else if (traderType.equals(decoration_trader)) {
+        if (traderType.equals(decoration_trader)) {
             return ModConfigs.ENABLE_DECORATION_TRADER_SPAWN;
         } else if (traderType.equals(animal_trader)) {
             return ModConfigs.ENABLE_ANIMAL_TRADER_SPAWN;

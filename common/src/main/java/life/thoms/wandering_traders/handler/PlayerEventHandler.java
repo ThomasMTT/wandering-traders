@@ -1,5 +1,6 @@
 package life.thoms.wandering_traders.handler;
 
+import life.thoms.wandering_traders.config.ModConfigs;
 import life.thoms.wandering_traders.server.data.LostLootData;
 import life.thoms.wandering_traders.util.LootFilters;
 import life.thoms.wandering_traders.util.LostLootUtil;
@@ -16,7 +17,8 @@ import java.util.List;
 public class PlayerEventHandler {
 
     public static boolean onPlayerDeath(LivingEntity livingEntity, DamageSource damageSource, float ignored) {
-        if (livingEntity instanceof Player player && !player.isCreative() && isPlayerFallingToVoid(player, damageSource)) {
+        if (ModConfigs.ENABLE_LOOT_RECOVERY && livingEntity instanceof Player player
+                && !player.isCreative() && isPlayerFallingToVoid(player, damageSource)) {
             handlePlayerLootOnDeath(player);
         }
         return true;

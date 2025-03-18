@@ -20,6 +20,8 @@
   "end_trader_message.leave_dim_too_many_items": "El vendedor del end ha vuelto a casa pero no ha podido llevarse nada",
   "end_trader_message.summon_with_bell": "El Vendedor del End ha venido a vender tus objetos perdidos!",
   "end_trader_message.other_still_around": "Ya tienes un vendedor, prueba otra vez cuando se haya ido",
+  "end_trader_message.feature_disabled_sp": "El sistema de recuperacion de loot esta desactivado en la configuración",
+  "end_trader_message.feature_disabled": "El sistema de recuperacion de loot esta desactivado en el servidor",
   "creative_tab.wandering_traders_tab": "Vendedores Ambulantes",
   "item.wandering_traders.end_trader_spawn_egg": "Generar Vendedor del End",
   "item.wandering_traders.decoration_trader_spawn_egg": "Generar Vendedor de Decoración",

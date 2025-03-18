@@ -3,6 +3,7 @@ package life.thoms.wandering_traders.neoforge.loot;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import life.thoms.wandering_traders.config.ModConfigs;
 import life.thoms.wandering_traders.neoforge.registry.TraderItemsNeoForge;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Item;
@@ -32,7 +33,9 @@ public class AddItemModifier extends LootModifier {
                 return loot;
             }
         }
-        loot.add(new ItemStack(TraderItemsNeoForge.END_BELL));
+        if (ModConfigs.ENABLE_END_BELL_DROP && ModConfigs.ENABLE_LOOT_RECOVERY) {
+            loot.add(new ItemStack(TraderItemsNeoForge.END_BELL));
+        }
         return loot;
     }
 

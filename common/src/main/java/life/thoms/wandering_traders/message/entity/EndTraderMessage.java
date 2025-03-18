@@ -12,7 +12,9 @@ public enum EndTraderMessage {
     LEAVE_DIM_ANGRY("end_trader_message.leave_dim_angry"),
     LEAVE_DIM_TOO_MANY_ITEMS("end_trader_message.leave_dim_too_many_items"),
     SUMMON_WITH_BELL("end_trader_message.summon_with_bell"),
-    OTHER_STILL_AROUND("end_trader_message.other_still_around");
+    OTHER_STILL_AROUND("end_trader_message.other_still_around"),
+    FEATURE_DISABLED("end_trader_message.feature_disabled"),
+    FEATURE_DISABLED_SP("end_trader_message.feature_disabled_sp");
 
     private final String key;
 

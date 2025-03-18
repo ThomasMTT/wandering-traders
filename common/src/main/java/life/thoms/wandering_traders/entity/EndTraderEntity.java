@@ -1,5 +1,6 @@
 package life.thoms.wandering_traders.entity;
 
+import life.thoms.wandering_traders.config.ModConfigs;
 import life.thoms.wandering_traders.message.entity.EndTraderMessage;
 import life.thoms.wandering_traders.server.data.PlayerEndTraderData;
 import life.thoms.wandering_traders.util.LostLootUtil;
@@ -51,6 +52,17 @@ public class EndTraderEntity extends AbstractTraderEntity {
 
     @Override
     public @NotNull InteractionResult mobInteract(Player player, InteractionHand hand) {
+
+        if (!ModConfigs.ENABLE_LOOT_RECOVERY) {
+            if (player.getServer() != null) {
+                player.displayClientMessage(player.getServer().isDedicatedServer()
+                                ? EndTraderMessage.FEATURE_DISABLED.getMessage()
+                                : EndTraderMessage.FEATURE_DISABLED_SP.getMessage(),
+                        true);
+            }
+            return InteractionResult.sidedSuccess(true);
+        }
+
         if (!isClientSide()) {
             if (linkedPlayerUuid == null) {
                 UUID playerLinkedTraderUUID = PlayerEndTraderData.PLAYER_END_TRADER_MAP.get(player.getUUID());
