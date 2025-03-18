@@ -173,20 +173,23 @@ public class EndTraderEntity extends AbstractTraderEntity {
                     }
                 }
             }
-
-            EndTraderMessage messageHolder = EndTraderMessage.LEAVE_DIM;
             int lootAddedCount = merchantLoot.size() - originalLootSize;
-            if (lostSomeLoot && offers.size() != lootAddedCount) {
-                    if (lootAddedCount == 0) {
-                        messageHolder = EndTraderMessage.LEAVE_DIM_LOST_ALL;
-                    } else {
-                        messageHolder = EndTraderMessage.LEAVE_DIM_LOST;
-                    }
-            }
-
-            player.displayClientMessage(messageHolder.getMessage(), true);
+            EndTraderMessage despawnMessage = getDespawnMessage(lostSomeLoot, lootAddedCount);
+            player.displayClientMessage(despawnMessage.getMessage(), true);
             LostLootUtil.putPlayerLoot(linkedPlayerUuid, merchantLoot);
         }
+    }
+
+    private EndTraderMessage getDespawnMessage(boolean lostSomeLoot, int lootAddedCount) {
+        EndTraderMessage messageHolder = EndTraderMessage.LEAVE_DIM;
+        if (lostSomeLoot && offers.size() != lootAddedCount) {
+            if (lootAddedCount == 0) {
+                messageHolder = EndTraderMessage.LEAVE_DIM_LOST_ALL;
+            } else {
+                messageHolder = EndTraderMessage.LEAVE_DIM_LOST;
+            }
+        }
+        return messageHolder;
     }
 
     public void randomTeleport() {
