@@ -15,6 +15,7 @@
   "end_trader_message.only_trade_with": "I only trade with ",
   "end_trader_message.leave_dim": "The End Trader went back home",
   "end_trader_message.leave_dim_lost": "The End Trader lost some of your loot while going back home",
+  "end_trader_message.leave_dim_lost_all": "The End Trader lost your loot while going back home",
   "end_trader_message.leave_dim_angry": "The End Trader has destroyed all your loot and went back home",
   "end_trader_message.leave_dim_too_many_items": "The End Trader went back home but couldn't take any loot with him",
   "end_trader_message.summon_with_bell": "The End Trader came to sell your lost loot!",

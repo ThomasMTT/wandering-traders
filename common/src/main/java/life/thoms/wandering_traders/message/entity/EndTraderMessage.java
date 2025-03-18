@@ -8,6 +8,7 @@ public enum EndTraderMessage {
     ONLY_TRADE_WITH("end_trader_message.only_trade_with"),
     LEAVE_DIM("end_trader_message.leave_dim"),
     LEAVE_DIM_LOST("end_trader_message.leave_dim_lost"),
+    LEAVE_DIM_LOST_ALL("end_trader_message.leave_dim_lost_all"),
     LEAVE_DIM_ANGRY("end_trader_message.leave_dim_angry"),
     LEAVE_DIM_TOO_MANY_ITEMS("end_trader_message.leave_dim_too_many_items"),
     SUMMON_WITH_BELL("end_trader_message.summon_with_bell"),

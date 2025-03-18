@@ -175,8 +175,13 @@ public class EndTraderEntity extends AbstractTraderEntity {
             }
 
             EndTraderMessage messageHolder = EndTraderMessage.LEAVE_DIM;
-            if (lostSomeLoot && offers.size() != merchantLoot.size() - originalLootSize) {
-                    messageHolder = EndTraderMessage.LEAVE_DIM_LOST;
+            int lootAddedCount = merchantLoot.size() - originalLootSize;
+            if (lostSomeLoot && offers.size() != lootAddedCount) {
+                    if (lootAddedCount == 0) {
+                        messageHolder = EndTraderMessage.LEAVE_DIM_LOST_ALL;
+                    } else {
+                        messageHolder = EndTraderMessage.LEAVE_DIM_LOST;
+                    }
             }
 
             player.displayClientMessage(messageHolder.getMessage(), true);

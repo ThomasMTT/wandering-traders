@@ -15,6 +15,7 @@
   "end_trader_message.only_trade_with": "Solo comercio con ",
   "end_trader_message.leave_dim": "El Vendedor del End ha regresado a casa",
   "end_trader_message.leave_dim_lost": "El Vendedor del End ha perdido parte de tus objetos perdidos mientras regresaba a casa",
+  "end_trader_message.leave_dim_lost_all": "El Vendedor del End ha perdido tus objetos perdidos mientras regresaba a casa",
   "end_trader_message.leave_dim_angry": "El Vendedor del End ha destruido tus objetos perdidos y ha regresado a casa",
   "end_trader_message.leave_dim_too_many_items": "El vendedor del end ha vuelto a casa pero no ha podido llevarse nada",
   "end_trader_message.summon_with_bell": "El Vendedor del End ha venido a vender tus objetos perdidos!",
