@@ -12,6 +12,7 @@ public abstract class AbstractTraderEntity extends WanderingTrader {
 
     public AbstractTraderEntity(EntityType<? extends WanderingTrader> entityType, Level level) {
         super(entityType, level);
+        this.setDespawnDelay(48000);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -27,6 +28,7 @@ public abstract class AbstractTraderEntity extends WanderingTrader {
             this.offers = new MerchantOffers();
             this.offers.clear();
         }
+
         return this.offers;
     }
 
