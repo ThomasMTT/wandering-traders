@@ -19,4 +19,7 @@ public class ModConfigs {
     // Display messages in actionbar (visible 2s above hotbar) or chat
     public static boolean MESSAGES_TO_ACTIONBAR = true;
 
+    // Time it takes traders to despawn (24000 = 1 mc day = 20 minutes) (default 48000)
+    public static int TRADER_DESPAWN_TIME = 48000;
+
 }

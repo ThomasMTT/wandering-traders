@@ -23,7 +23,7 @@ public abstract class AbstractTraderEntity extends WanderingTrader {
 
     public AbstractTraderEntity(EntityType<? extends WanderingTrader> entityType, Level level) {
         super(entityType, level);
-        this.setDespawnDelay(48000);
+        this.setDespawnDelay(ModConfigs.TRADER_DESPAWN_TIME);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
