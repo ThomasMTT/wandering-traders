@@ -142,52 +142,6 @@ public class MerchantUtil {
         }
     }
 
-    public static ItemStack generateStackFromItem(Random random, Item item) {
-        ItemStack stack = new ItemStack(item);
-
-        if (shouldEnchantItem(stack, item)) {
-            applyRandomEnchantments(random, stack);
-        } else if (item instanceof PotionItem) {
-            stack = createPotionStack(random, stack);
-        }
-
-        return stack;
-    }
-
-    private static boolean shouldEnchantItem(ItemStack stack, Item item) {
-        return stack.isEnchantable() && (ARMOR_ITEMS.contains(item) || TOOL_ITEMS.contains(item) ||
-                WEAPON_ITEMS.contains(item) || item instanceof EnchantedBookItem);
-    }
-
-    private static void applyRandomEnchantments(Random random, ItemStack stack) {
-        int enchantmentChance = random.nextInt(100);
-        int enchantments = determineEnchantmentCount(enchantmentChance);
-
-        if (enchantments > 0) {
-            int attempts = 0;
-            while (enchantments > 0 && attempts < 20) {
-                Enchantment enchantment = ENCHANTMENTS.get(random.nextInt(ENCHANTMENTS.size()));
-                if (enchantment.canEnchant(stack)) {
-                    stack.enchant(enchantment, random.nextInt(enchantment.getMaxLevel()) + 1); // +1 to ensure at least level 1
-                    enchantments -= 1;
-                    attempts = 0; // Reset attempts after a successful enchantment
-                }
-                attempts++;
-            }
-        }
-    }
-
-    private static int determineEnchantmentCount(int enchantmentChance) {
-        if (enchantmentChance > 90) return 3;
-        else if (enchantmentChance > 80) return 2;
-        else if (enchantmentChance > 60) return 1;
-        return 0;
-    }
-
-    private static ItemStack createPotionStack(Random random, ItemStack stack) {
-        Potion potion = POTIONS.get(random.nextInt(POTIONS.size()));
-        return PotionContents.createItemStack(stack.getItem(), Holder.direct(potion));
-    }
 
     public static MerchantOffer createOffer(Item lootBoxItem, int price, int maxUses) {
         return createOffer(new ItemStack(lootBoxItem), price, maxUses);
