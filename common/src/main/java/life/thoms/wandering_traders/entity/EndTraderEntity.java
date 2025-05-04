@@ -193,7 +193,7 @@ public class EndTraderEntity extends AbstractTraderEntity {
 
     private EndTraderMessage getDespawnMessage(boolean lostSomeLoot, int lootAddedCount) {
         EndTraderMessage messageHolder = EndTraderMessage.LEAVE_DIM;
-        if (lostSomeLoot && offers.size() != lootAddedCount) {
+        if (lostSomeLoot && offers != null && offers.size() != lootAddedCount) {
             if (lootAddedCount == 0) {
                 messageHolder = EndTraderMessage.LEAVE_DIM_LOST_ALL;
             } else {
