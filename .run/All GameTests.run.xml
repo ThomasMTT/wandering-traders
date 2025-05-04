@@ -1,6 +1,0 @@
-<component name="ProjectRunConfigurationManager">
-    <configuration default="false" name="All GameTests" type="CompoundRunConfigurationType">
-        <toRun name="Game Test (:fabric)" type="Application"/>
-        <method v="2"/>
-    </configuration>
-</component>
