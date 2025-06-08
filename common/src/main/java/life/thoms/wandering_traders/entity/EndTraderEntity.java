@@ -58,7 +58,7 @@ public class EndTraderEntity extends AbstractTraderEntity {
                 player.displayClientMessage(player.getServer().isDedicatedServer()
                                 ? EndTraderMessage.FEATURE_DISABLED.getMessage()
                                 : EndTraderMessage.FEATURE_DISABLED_SP.getMessage(),
-                        true);
+                        ModConfigs.MESSAGES_TO_ACTIONBAR);
             }
             return InteractionResult.sidedSuccess(true);
         }
@@ -78,16 +78,18 @@ public class EndTraderEntity extends AbstractTraderEntity {
 
             if (linkedPlayerUuid != null) {
                 getOffers();
-                this.offers.removeIf(MerchantOffer::isOutOfStock);
-                if (linkedPlayerUuid.equals(player.getUUID())) {
-                    offers = EndTraderUtil.createOffersFromLostLoot(linkedPlayerUuid, offers);
-                    if (offers.isEmpty()) {
-                        player.displayClientMessage(EndTraderMessage.NO_TRADES.getMessage(), ModConfigs.MESSAGES_TO_ACTIONBAR);
+                if (this.offers != null) {
+                    this.offers.removeIf(MerchantOffer::isOutOfStock);
+                    if (linkedPlayerUuid.equals(player.getUUID())) {
+                        offers = EndTraderUtil.createOffersFromLostLoot(linkedPlayerUuid, offers);
+                        if (offers.isEmpty()) {
+                            player.displayClientMessage(EndTraderMessage.NO_TRADES.getMessage(), ModConfigs.MESSAGES_TO_ACTIONBAR);
+                        } else {
+                            super.mobInteract(player, hand);
+                        }
                     } else {
-                        super.mobInteract(player, hand);
+                        player.displayClientMessage(EndTraderMessage.ONLY_TRADE_WITH.getMessage(linkedPlayerName), ModConfigs.MESSAGES_TO_ACTIONBAR);
                     }
-                } else {
-                    player.displayClientMessage(EndTraderMessage.ONLY_TRADE_WITH.getMessage(linkedPlayerName), ModConfigs.MESSAGES_TO_ACTIONBAR);
                 }
             } else {
                 player.displayClientMessage(EndTraderMessage.NO_TRADES.getMessage(), ModConfigs.MESSAGES_TO_ACTIONBAR);

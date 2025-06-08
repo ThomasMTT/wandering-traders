@@ -1,6 +1,7 @@
 package life.thoms.wandering_traders.fabric;
 
 import life.thoms.wandering_traders.WanderingTraders;
+import life.thoms.wandering_traders.fabric.config.ConfigHandlerFabric;
 import life.thoms.wandering_traders.fabric.event.EntityEventsFabric;
 import life.thoms.wandering_traders.fabric.event.PlayerEventsFabric;
 import life.thoms.wandering_traders.fabric.event.ServerEventsFabric;
@@ -12,6 +13,8 @@ public final class WanderingTradersFabric implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        ConfigHandlerFabric.CONFIG.load();
+        ConfigHandlerFabric.updateSharedConfigs();
         WanderingTraders.init();
         EntityEventsFabric.register();
         TraderEntitiesFabric.register();

@@ -11,9 +11,7 @@ public class ConfigEvents {
 
     @SubscribeEvent
     public static void ConfigReload(ModConfigEvent.Loading event) {
-
         ConfigHandlerNeoForge.updateSharedConfig();
-
     }
 
 }
