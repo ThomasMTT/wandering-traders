@@ -55,6 +55,7 @@ public class BookTraderUtil {
         // Apply random compatible enchantments (max 20 tries per enchantment (if reached returns the item as is)
         while (stack.getComponents().get(DataComponents.STORED_ENCHANTMENTS).size() < enchantments) {
             Enchantment enchantment = MerchantUtil.ENCHANTMENTS.get(random.nextInt(MerchantUtil.ENCHANTMENTS.size()));
+            if (enchantment.isCurse()) continue;
             stack.enchant(enchantment, RANDOM.nextInt(enchantment.getMaxLevel()));
         }
         return stack;
