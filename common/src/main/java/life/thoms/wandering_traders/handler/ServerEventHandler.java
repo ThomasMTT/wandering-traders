@@ -10,6 +10,8 @@ public class ServerEventHandler {
 
     public static void onServerStarted(MinecraftServer server) {
         if (ModConfigs.ENABLE_LOOT_RECOVERY) {
+            PlayerEndTraderData.PLAYER_END_TRADER_MAP.clear();
+            LostLootData.PLAYER_LOST_LOOT.clear();
             PlayerEndTraderData.createServerState(server);
             LostLootData.createServerState(server);
         }
