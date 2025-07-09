@@ -23,7 +23,7 @@ public class LostLootData extends SavedData {
 
     public static void createServerState(MinecraftServer server) {
         INSTANCE = server.overworld().getDataStorage().computeIfAbsent(
-                new Factory<>(LostLootData::create, LostLootData::load, DataFixTypes.LEVEL), WanderingTraders.MOD_ID);
+                new Factory<>(LostLootData::create, LostLootData::load, DataFixTypes.LEVEL), WanderingTraders.MOD_ID + "-lostloot");
         INSTANCE.setDirty();
     }
 

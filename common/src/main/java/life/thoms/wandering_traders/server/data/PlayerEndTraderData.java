@@ -20,7 +20,7 @@ public class PlayerEndTraderData extends SavedData {
     public static void createServerState(MinecraftServer server) {
         INSTANCE = server.overworld().getDataStorage().computeIfAbsent(
                 new Factory<>(PlayerEndTraderData::create, PlayerEndTraderData::load,
-                        DataFixTypes.LEVEL), WanderingTraders.MOD_ID);
+                        DataFixTypes.LEVEL), WanderingTraders.MOD_ID + "-endtraderdata");
         INSTANCE.setDirty();
     }
 
