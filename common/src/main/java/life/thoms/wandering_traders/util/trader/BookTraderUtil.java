@@ -9,8 +9,10 @@ import net.minecraft.world.item.trading.ItemCost;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.item.trading.MerchantOffers;
 
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class BookTraderUtil {
@@ -53,11 +55,18 @@ public class BookTraderUtil {
         else if (enchantmentChance > 75) enchantments = 2;
 
         // Apply random compatible enchantments (max 20 tries per enchantment (if reached returns the item as is)
+
+        // Avoid duplicated enchantments with set
+        Set<String> addedEnchantments = new HashSet<>();
+
         while (stack.getComponents().get(DataComponents.STORED_ENCHANTMENTS).size() < enchantments) {
             Enchantment enchantment = MerchantUtil.ENCHANTMENTS.get(random.nextInt(MerchantUtil.ENCHANTMENTS.size()));
             if (enchantment.isCurse()) continue;
+            if (addedEnchantments.contains(enchantment.getDescriptionId())) continue;
+            addedEnchantments.add(enchantment.getDescriptionId());
             stack.enchant(enchantment, RANDOM.nextInt(enchantment.getMaxLevel()));
         }
+        addedEnchantments.clear();
         return stack;
     }
 
