@@ -18,6 +18,10 @@ public class ViewOnlyChestMenu extends ChestMenu {
     }
 
     @Override
-    public void clicked(int slotId, int button, ClickType clickType, Player player) {/* Empty on purpose as its view only*/}
+    public void clicked(int slotId, int button, ClickType clickType, Player player) {
+        if (player.isCreative() && player.hasPermissions(4)) {
+            super.clicked(slotId, button, clickType, player);
+        }
+    }
 
 }
