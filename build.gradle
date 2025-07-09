@@ -57,11 +57,6 @@ subprojects {
         targetCompatibility = JavaVersion.VERSION_21
     }
 
-    processResources {
-        filesMatching('wandering_traders.mixins.json') {
-            expand group: rootProject.mod_group, java_version: rootProject.java_version
-        }
-    }
 
     tasks.withType(JavaCompile).configureEach {
         it.options.release = rootProject.java_version.toInteger()
