@@ -35,7 +35,7 @@ public class TraderEntitySpawner {
                 TraderEntitiesFabric.ANIMAL_TRADER, 1, 1, 1);
 
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(Biomes.CRIMSON_FOREST), MobCategory.CREATURE,
-                TraderEntitiesFabric.EXCLUSIVE_TRADER, 5, 1, 1);
+                TraderEntitiesFabric.EXCLUSIVE_TRADER, 10, 1, 1);
 
         // Spawn placements
         SpawnPlacements.register(TraderEntitiesFabric.DECORATION_TRADER, SpawnPlacementTypes.ON_GROUND,
