@@ -1,7 +1,0 @@
-<component name="ProjectRunConfigurationManager">
-    <configuration default="false" name="Fabric Client + Server" type="CompoundRunConfigurationType">
-        <toRun name="Minecraft Client (:fabric)" type="Application"/>
-        <toRun name="Minecraft Server (:fabric)" type="Application"/>
-        <method v="2"/>
-    </configuration>
-</component>

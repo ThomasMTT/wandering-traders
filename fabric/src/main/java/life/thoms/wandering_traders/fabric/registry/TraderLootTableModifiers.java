@@ -15,9 +15,9 @@ public class TraderLootTableModifiers {
     private static final ResourceLocation ENDERMAN_LOOT = new ResourceLocation("minecraft:entities/enderman");
 
     public static void register() {
-        LootTableEvents.MODIFY.register((resourceKey, builder, source) -> {
-            if (ModConfigs.ENABLE_END_BELL_DROP && ModConfigs.ENABLE_LOOT_RECOVERY) {
-                if (ENDERMAN_LOOT.equals(resourceKey.location())) {
+        LootTableEvents.MODIFY.register((resourceManager, lootDataManager, location, builder, source) -> {
+            if (ModConfigs.ENABLE_END_BELL_DROP && ModConfigs.ENABLE_LOOT_RECOVERY) { // TODO test
+                if (ENDERMAN_LOOT.equals(location)) {
                     LootPool.Builder poolBuilder = LootPool.lootPool()
                             .setRolls(ConstantValue.exactly(1f))
                             .conditionally(LootItemRandomChanceCondition.randomChance(0.03f).build())

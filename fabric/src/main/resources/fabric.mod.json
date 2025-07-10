@@ -12,7 +12,7 @@
     "sources": "${github_url}",
     "issues": "${github_url}/issues"
   },
-  "license": "${license}",
+  "license": "All Rights Reserved",
   "icon": "${logo}",
   "environment": "*",
   "entrypoints": {
@@ -23,14 +23,11 @@
       "${mod_group}.${mod_id}.fabric.${classname}FabricClient"
     ]
   },
-  "mixins": [
-    "${mod_id}.mixins.json"
-  ],
   "depends": {
-    "fabricloader": ">=${fabric_loader_version}",
-    "minecraft": "~${minecraft_version}",
+    "fabricloader": ">=0.16.14",
     "java": ">=${java_version}",
     "fabric-api": "*",
+    "minecraft": ">=1.20.1",
     "yet_another_config_lib_v3": ">=${yacl_version}"
   }
 }

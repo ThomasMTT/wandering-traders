@@ -1,7 +1,0 @@
-<component name="ProjectRunConfigurationManager">
-    <configuration default="false" name="NeoForge Client + Server" type="CompoundRunConfigurationType">
-        <toRun name="Minecraft Client (:neoforge)" type="Application"/>
-        <toRun name="Minecraft Server (:neoforge)" type="Application"/>
-        <method v="2"/>
-    </configuration>
-</component>

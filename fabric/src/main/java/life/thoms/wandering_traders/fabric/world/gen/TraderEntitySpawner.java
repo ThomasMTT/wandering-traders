@@ -6,7 +6,6 @@ import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -38,22 +37,22 @@ public class TraderEntitySpawner {
                 TraderEntitiesFabric.EXCLUSIVE_TRADER, 10, 1, 1);
 
         // Spawn placements
-        SpawnPlacements.register(TraderEntitiesFabric.DECORATION_TRADER, SpawnPlacementTypes.ON_GROUND,
+        SpawnPlacements.register(TraderEntitiesFabric.DECORATION_TRADER, SpawnPlacements.Type.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, DecorationTraderEntity::checkMobSpawnRules);
 
-        SpawnPlacements.register(TraderEntitiesFabric.BOOK_TRADER, SpawnPlacementTypes.ON_GROUND,
+        SpawnPlacements.register(TraderEntitiesFabric.BOOK_TRADER, SpawnPlacements.Type.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, BookTraderEntity::checkMobSpawnRules);
 
-        SpawnPlacements.register(TraderEntitiesFabric.FOREST_TRADER, SpawnPlacementTypes.ON_GROUND,
+        SpawnPlacements.register(TraderEntitiesFabric.FOREST_TRADER, SpawnPlacements.Type.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, ForestTraderEntity::checkMobSpawnRules);
 
-        SpawnPlacements.register(TraderEntitiesFabric.POTION_TRADER, SpawnPlacementTypes.ON_GROUND,
+        SpawnPlacements.register(TraderEntitiesFabric.POTION_TRADER, SpawnPlacements.Type.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, PotionTraderEntity::checkMobSpawnRules);
 
-        SpawnPlacements.register(TraderEntitiesFabric.ANIMAL_TRADER, SpawnPlacementTypes.ON_GROUND,
+        SpawnPlacements.register(TraderEntitiesFabric.ANIMAL_TRADER, SpawnPlacements.Type.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, AnimalTraderEntity::checkMobSpawnRules);
 
-        SpawnPlacements.register(TraderEntitiesFabric.EXCLUSIVE_TRADER, SpawnPlacementTypes.ON_GROUND,
+        SpawnPlacements.register(TraderEntitiesFabric.EXCLUSIVE_TRADER, SpawnPlacements.Type.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, ExclusiveTraderEntity::checkMobSpawnRules);
 
     }

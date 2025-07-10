@@ -1,65 +1,47 @@
 plugins {
-    id 'dev.architectury.loom' version '1.9-SNAPSHOT' apply false
-    id 'architectury-plugin' version '3.4-SNAPSHOT'
-    id 'com.github.johnrengelman.shadow' version '8.1.1' apply false
+    id "architectury-plugin" version "3.4-SNAPSHOT"
+    id "dev.architectury.loom" version "1.9-SNAPSHOT" apply false
     id 'java'
 }
 
 architectury {
-    minecraft = project.minecraft_version
+    minecraft = rootProject.minecraft_version
 }
 
 subprojects {
-    apply plugin: 'dev.architectury.loom'
-    apply plugin: 'architectury-plugin'
-
-    base {
-        // Set up a suffixed format for the mod jar names, e.g. `example-fabric`.
-        archivesName = "$rootProject.archives_name-$project.name"
-    }
+    apply plugin: "dev.architectury.loom"
 
     loom {
         silentMojangMappingsLicense()
     }
 
-    test {
-        // Enable support for Junit5 unit tests
-        useJUnitPlatform()
-
-        // Add  argument for test runs to avoid IllegalAccessException when using reflection
-        jvmArgs '--add-opens', 'java.base/java.lang=ALL-UNNAMED'
+    dependencies {
+        minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
+        mappings loom.layered() {
+            officialMojangMappings()
+            parchment("org.parchmentmc.data:parchment-${rootProject.minecraft_version}:$rootProject.parchment_version")
+        }
     }
+}
+
+allprojects {
+    apply plugin: "java"
+    apply plugin: "architectury-plugin"
+
+    archivesBaseName = rootProject.archives_base_name
+    version = rootProject.mod_version
+    group = rootProject.mod_group
 
     repositories {
         maven { url = "https://maven.parchmentmc.org/" }
     }
 
-    dependencies {
-        minecraft "net.minecraft:minecraft:$rootProject.minecraft_version"
-        mappings loom.layered() {
-            officialMojangMappings()
-            parchment("org.parchmentmc.data:parchment-${rootProject.minecraft_version}:$rootProject.parchment_version")
-        }
-
-        // Add testing support using fabric-junit
-        testImplementation "net.fabricmc:fabric-loader:$rootProject.fabric_loader_version"
-        testImplementation "net.fabricmc:fabric-loader-junit:${project.fabric_loader_version}"
-        testImplementation "org.mockito:mockito-core:1.+"
-    }
-
-    java {
-        // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
-        // if it is present.
-        // If you remove this line, sources will not be generated.
-        //withSourcesJar()
-
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
-    }
-
-
     tasks.withType(JavaCompile).configureEach {
+        it.options.encoding = "UTF-8"
         it.options.release = rootProject.java_version.toInteger()
     }
 
+    java {
+        withSourcesJar()
+    }
 }

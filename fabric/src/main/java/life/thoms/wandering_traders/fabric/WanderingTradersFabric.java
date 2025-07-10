@@ -9,7 +9,7 @@ import life.thoms.wandering_traders.fabric.registry.*;
 import life.thoms.wandering_traders.fabric.world.gen.TraderEntitySpawner;
 import net.fabricmc.api.ModInitializer;
 
-public final class WanderingTradersFabric implements ModInitializer {
+public class WanderingTradersFabric implements ModInitializer {
 
     @Override
     public void onInitialize() {
