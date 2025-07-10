@@ -15,7 +15,7 @@ public class ExclusiveTraderUtil {
         MerchantOffers offers = new MerchantOffers();
         offers.clear();
 
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 7; i++) {
             ItemStack stack = new ItemStack(MerchantUtil.EXCLUSIVE_ITEMS_LIST.get(
                     RANDOM.nextInt(MerchantUtil.EXCLUSIVE_ITEMS_LIST.size())));
 
