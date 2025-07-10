@@ -142,15 +142,10 @@ public class MerchantUtil {
         }
     }
 
-
-    public static MerchantOffer createOffer(Item lootBoxItem, int price, int maxUses) {
-        return createOffer(new ItemStack(lootBoxItem), price, maxUses);
-    }
-
-    public static MerchantOffer createOffer(ItemStack lootBoxItem, int price, int maxUses) {
+    public static MerchantOffer createOffer(ItemStack tradeItem, int price, int maxUses) {
         return new MerchantOffer(
                 new ItemCost(Items.EMERALD, price),
-                lootBoxItem,
+                tradeItem,
                 maxUses, 1, 1
         );
     }
