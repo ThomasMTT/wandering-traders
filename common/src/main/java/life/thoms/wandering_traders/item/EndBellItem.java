@@ -15,6 +15,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
 import net.minecraft.world.level.levelgen.Heightmap;
 import org.jetbrains.annotations.NotNull;
 import java.util.List;
@@ -42,19 +43,28 @@ public class EndBellItem extends Item {
         if (!PlayerEndTraderData.PLAYER_END_TRADER_MAP.containsKey(player.getUUID())) {
             ItemStack bellItem = player.getItemInHand(usedHand);
             if (!level.isClientSide) {
-                BlockPos playerPos = player.blockPosition();
-                BlockPos spawnPos = playerPos.relative(player.getDirection(), 2);
-                int spawnY = level.getHeight(Heightmap.Types.WORLD_SURFACE, (int) spawnPos.getX(), (int) spawnPos.getZ());
-                spawnPos = new BlockPos(spawnPos.getX(), spawnY, spawnPos.getZ());
 
-                if (!player.isCreative()) {
-                    bellItem.setCount(bellItem.getCount() - 1);
+
+                if (player.level().dimension().location().equals(BuiltinDimensionTypes.NETHER.location())) {
+                    player.displayClientMessage(EndTraderMessage.CANT_SPAWN_NETHER.getMessage(), ModConfigs.MESSAGES_TO_ACTIONBAR);
+                } else {
+                    BlockPos playerPos = player.blockPosition();
+                    BlockPos spawnPos = playerPos.relative(player.getDirection(), 2);
+                    int spawnY = level.getHeight(Heightmap.Types.WORLD_SURFACE, (int) spawnPos.getX(), (int) spawnPos.getZ());
+                    spawnPos = new BlockPos(spawnPos.getX(), spawnY, spawnPos.getZ());
+                    if (player.getY() >= spawnY) {
+                        if (!player.isCreative()) {
+                            bellItem.setCount(bellItem.getCount() - 1);
+                        }
+                        EndTraderEntity trader = new EndTraderEntity(ModRegistryAccess.ENTITY_ACCESS.get("end_trader"), level);
+                        trader.setPos(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
+                        level.addFreshEntity(trader);
+                        trader.addLinkedPlayer(player);
+                        player.displayClientMessage(EndTraderMessage.SUMMON_WITH_BELL.getMessage(), ModConfigs.MESSAGES_TO_ACTIONBAR);
+                    } else {
+                        player.displayClientMessage(EndTraderMessage.CANT_SEE_SKY.getMessage(), ModConfigs.MESSAGES_TO_ACTIONBAR);
+                    }
                 }
-                EndTraderEntity trader = new EndTraderEntity(ModRegistryAccess.ENTITY_ACCESS.get("end_trader"), level);
-                trader.setPos(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
-                level.addFreshEntity(trader);
-                trader.addLinkedPlayer(player);
-                player.displayClientMessage(EndTraderMessage.SUMMON_WITH_BELL.getMessage(), ModConfigs.MESSAGES_TO_ACTIONBAR);
             } else {
                 player.swing(usedHand);
                 player.playSound(SoundEvents.BELL_BLOCK);
