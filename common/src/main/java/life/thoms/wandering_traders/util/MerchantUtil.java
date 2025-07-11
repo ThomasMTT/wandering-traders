@@ -121,13 +121,8 @@ public class MerchantUtil {
         );
     }
 
-    public static void sortOffers(MerchantOffers offers, boolean reversed) {
-        int rev = reversed ? -1 : 1;
-        offers.sort((x, z) -> rev * Integer.compare(z.getCostA().getCount(), x.getCostA().getCount()));
-    }
-
     public static void sortOffers(MerchantOffers offers) {
-        sortOffers(offers, false);
+        offers.sort((x, z) -> -1 * Integer.compare(z.getCostA().getCount(), x.getCostA().getCount()));
     }
 
     public static void registerDecorativeItems() {

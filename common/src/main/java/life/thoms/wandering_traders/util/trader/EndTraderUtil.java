@@ -52,7 +52,6 @@ public class EndTraderUtil {
             }
         }
 
-        MerchantUtil.sortOffers(existingOffers);
         LostLootUtil.clearPlayerLoot(playerUUID);
         LostLootData.INSTANCE.setDirty();
         return existingOffers;
