@@ -20,7 +20,7 @@ public class AnimalTraderUtil {
         for (int i = 0; i < 10; i++) {
             offers.add(createOffer());
         }
-        MerchantUtil.sortOffers(offers, true);
+        MerchantUtil.sortOffers(offers);
         return offers;
     }
 

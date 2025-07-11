@@ -52,8 +52,6 @@ public class EndTraderUtil {
                 existingOffers.add(offer);
             }
         }
-
-        MerchantUtil.sortOffers(existingOffers);
         LostLootUtil.clearPlayerLoot(playerUUID);
         LostLootData.INSTANCE.setDirty();
         return existingOffers;
