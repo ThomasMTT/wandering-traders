@@ -52,7 +52,7 @@ public class EndBellItem extends Item {
                     BlockPos spawnPos = playerPos.relative(player.getDirection(), 2);
                     int spawnY = level.getHeight(Heightmap.Types.WORLD_SURFACE, (int) spawnPos.getX(), (int) spawnPos.getZ());
                     spawnPos = new BlockPos(spawnPos.getX(), spawnY, spawnPos.getZ());
-                    if (player.getY() >= spawnY) {
+                    if (player.getY() >= spawnY - 1) {
                         if (!player.isCreative()) {
                             bellItem.setCount(bellItem.getCount() - 1);
                         }
