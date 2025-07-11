@@ -4,6 +4,7 @@ import life.thoms.wandering_traders.config.ModConfigs;
 import life.thoms.wandering_traders.server.data.LostLootData;
 import life.thoms.wandering_traders.util.LootFilters;
 import life.thoms.wandering_traders.util.LostLootUtil;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.LivingEntity;
@@ -17,9 +18,25 @@ import java.util.List;
 public class PlayerEventHandler {
 
     public static boolean onPlayerDeath(LivingEntity livingEntity, DamageSource damageSource, float ignored) {
-        if (ModConfigs.ENABLE_LOOT_RECOVERY && livingEntity instanceof Player player
-                && !player.isCreative() && isPlayerFallingToVoid(player, damageSource)) {
-            handlePlayerLootOnDeath(player);
+        if (ModConfigs.ENABLE_LOOT_RECOVERY && livingEntity instanceof Player player && !player.isCreative()) {
+            if (isPlayerFallingToVoid(player, damageSource)) {
+                handlePlayerLootOnDeath(player);
+            } else {
+                // mark loot as from player so when it despawns its recoverable
+                List<ItemStack> itemList = new ArrayList<>();
+                itemList.addAll(player.getInventory().items);
+                itemList.addAll(player.getInventory().armor);
+                itemList.addAll(player.getInventory().offhand);
+                for (ItemStack stack : itemList) {
+                    if (LootFilters.isImportantLoot(stack)) {
+                        CompoundTag stackDataTag = new CompoundTag();
+                        CompoundTag itemTag = stack.getTag();
+                        if (itemTag != null) {
+                            itemTag.putUUID("stack_owner", player.getUUID());
+                        }
+                    }
+                }
+            }
         }
         return true;
     }
