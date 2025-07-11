@@ -4,11 +4,16 @@ import life.thoms.wandering_traders.config.ModConfigs;
 import life.thoms.wandering_traders.server.data.LostLootData;
 import life.thoms.wandering_traders.util.LootFilters;
 import life.thoms.wandering_traders.util.LostLootUtil;
+import net.minecraft.core.component.DataComponentPatch;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.component.TypedDataComponent;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.block.Blocks;
 
 import java.util.ArrayList;
@@ -17,9 +22,26 @@ import java.util.List;
 public class PlayerEventHandler {
 
     public static boolean onPlayerDeath(LivingEntity livingEntity, DamageSource damageSource, float ignored) {
-        if (ModConfigs.ENABLE_LOOT_RECOVERY && livingEntity instanceof Player player
-                && !player.isCreative() && isPlayerFallingToVoid(player, damageSource)) {
-            handlePlayerLootOnDeath(player);
+        if (ModConfigs.ENABLE_LOOT_RECOVERY && livingEntity instanceof Player player && !player.isCreative()) {
+            if (isPlayerFallingToVoid(player, damageSource)) {
+                handlePlayerLootOnDeath(player);
+            } else {
+                // mark loot as from player so when it despawns its recoverable
+                List<ItemStack> itemList = new ArrayList<>();
+                itemList.addAll(player.getInventory().items);
+                itemList.addAll(player.getInventory().armor);
+                itemList.addAll(player.getInventory().offhand);
+                for (ItemStack stack : itemList) {
+                    if (LootFilters.isImportantLoot(stack)) {
+                        CompoundTag stackDataTag = new CompoundTag();
+                        stackDataTag.putUUID("stack_owner", player.getUUID());
+                        TypedDataComponent<CustomData> comp =
+                                new TypedDataComponent<>(DataComponents.CUSTOM_DATA, CustomData.of(stackDataTag));
+                        DataComponentPatch patch = DataComponentPatch.builder().set(comp).build();
+                        stack.applyComponents(patch);
+                    }
+                }
+            }
         }
         return true;
     }
