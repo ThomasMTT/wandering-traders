@@ -17,7 +17,7 @@ public class DecorationTraderEntity extends AbstractTraderEntity {
 
     public static boolean checkMobSpawnRules(EntityType<? extends Mob> type, LevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random) {
         if (random.nextInt(10) > 8) {
-            AbstractTraderEntity.checkMobSpawnRules(type, level, spawnType, pos, random);
+            return AbstractTraderEntity.checkMobSpawnRules(type, level, spawnType, pos, random);
         }
         return false;
     }
