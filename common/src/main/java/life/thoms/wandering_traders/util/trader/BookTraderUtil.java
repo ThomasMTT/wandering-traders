@@ -34,9 +34,11 @@ public class BookTraderUtil {
         ItemStack enchantedBook = generateStackFromItem(RANDOM);
         ItemEnchantments enchantments = enchantedBook.getComponents().get(DataComponents.STORED_ENCHANTMENTS);
         AtomicInteger levels = new AtomicInteger();
-        enchantments.entrySet().forEach(entry -> {
-            levels.addAndGet(enchantments.getLevel(entry.getKey().value()));
-        });
+        if (enchantments != null) {
+            enchantments.entrySet().forEach(entry ->
+                levels.addAndGet(enchantments.getLevel(entry.getKey().value()))
+            );
+        }
         return new MerchantOffer(
                 new ItemCost(Items.EMERALD, enchantments.size() * 5 + levels.get() * 3),
                 Optional.of(new ItemCost(Items.BOOK)),
