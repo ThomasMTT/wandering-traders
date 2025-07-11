@@ -54,7 +54,7 @@ public class EndBellItem extends Item {
                     int spawnY = level.getHeight(Heightmap.Types.WORLD_SURFACE, (int) spawnPos.getX(), (int) spawnPos.getZ());
                     spawnPos = new BlockPos(spawnPos.getX(), spawnY, spawnPos.getZ());
 
-                    if (player.getY() >= spawnY) {
+                    if (player.getY() >= spawnY - 1) {
                         player.displayClientMessage(EndTraderMessage.CANT_SEE_SKY.getMessage(), ModConfigs.MESSAGES_TO_ACTIONBAR);
 
                         if (!player.isCreative()) {
