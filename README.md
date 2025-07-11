@@ -92,9 +92,6 @@ The mod includes a **/lostloot** command that allows players to manage their los
   - After the End Trader leaves, players can summon him again with another bell.
   - If a player attempts to use a bell while a trader is nearby, they will receive a notification indicating the presence of a trader and, if close enough, the coordinates of the trader.
 
-## Conclusion
-
-The Wandering Traders mod enhances the Minecraft experience by introducing unique trading opportunities and mechanics. Whether you're looking to recover lost items or acquire exclusive goods, this mod has something for every player. Enjoy your adventures with the Wandering Traders!
 ## License
 
 This mod is licensed under the LGPL. See the [LICENSE](LICENSE) file for details.
