@@ -2,7 +2,6 @@ package life.thoms.wandering_traders.util.trader;
 
 import life.thoms.wandering_traders.server.data.LostLootData;
 import life.thoms.wandering_traders.util.LostLootUtil;
-import life.thoms.wandering_traders.util.MerchantUtil;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;

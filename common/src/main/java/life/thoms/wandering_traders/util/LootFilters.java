@@ -1,6 +1,5 @@
 package life.thoms.wandering_traders.util;
 
-import net.minecraft.core.Holder;
 import net.minecraft.world.item.*;
 
 public class LootFilters {

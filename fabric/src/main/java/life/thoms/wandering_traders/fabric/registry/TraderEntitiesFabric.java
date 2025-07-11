@@ -2,9 +2,7 @@ package life.thoms.wandering_traders.fabric.registry;
 
 import life.thoms.wandering_traders.WanderingTraders;
 import life.thoms.wandering_traders.entity.*;
-import life.thoms.wandering_traders.item.EndBellItem;
 import life.thoms.wandering_traders.server.ModRegistryAccess;
-import life.thoms.wandering_traders.util.ConfigUtil;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;

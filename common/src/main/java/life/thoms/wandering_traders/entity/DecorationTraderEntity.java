@@ -9,8 +9,6 @@ import net.minecraft.world.entity.npc.WanderingTrader;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 
-import java.util.Random;
-
 public class DecorationTraderEntity extends AbstractTraderEntity {
 
 

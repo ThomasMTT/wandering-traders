@@ -1,15 +1,11 @@
 package life.thoms.wandering_traders.util.trader;
 
 import life.thoms.wandering_traders.util.MerchantUtil;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.item.trading.MerchantOffers;
-import net.minecraft.world.level.levelgen.SingleThreadedRandomSource;
-import net.minecraft.world.level.levelgen.XoroshiroRandomSource;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
