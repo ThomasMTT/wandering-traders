@@ -3,7 +3,6 @@ package life.thoms.wandering_traders.neoforge.registry;
 import life.thoms.wandering_traders.WanderingTraders;
 import life.thoms.wandering_traders.entity.*;
 import life.thoms.wandering_traders.server.ModRegistryAccess;
-import life.thoms.wandering_traders.util.ConfigUtil;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;

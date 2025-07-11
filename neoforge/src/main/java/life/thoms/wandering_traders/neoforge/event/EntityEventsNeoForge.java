@@ -3,7 +3,6 @@ package life.thoms.wandering_traders.neoforge.event;
 import life.thoms.wandering_traders.WanderingTraders;
 import life.thoms.wandering_traders.entity.*;
 import life.thoms.wandering_traders.handler.EntityEventHandler;
-import life.thoms.wandering_traders.item.EndBellItem;
 import life.thoms.wandering_traders.neoforge.registry.TraderEntitiesNeoForge;
 import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.level.levelgen.Heightmap;

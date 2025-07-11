@@ -6,7 +6,6 @@ import life.thoms.wandering_traders.neoforge.registry.TraderEntitiesNeoForge;
 import life.thoms.wandering_traders.neoforge.registry.TraderItemsNeoForge;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 
 @EventBusSubscriber(modid = WanderingTraders.MOD_ID)
