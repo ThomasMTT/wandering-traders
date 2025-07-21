@@ -43,7 +43,7 @@ public class EndBellItem extends Item {
             ItemStack bellItem = player.getItemInHand(usedHand);
             if (!level.isClientSide) {
 
-                if (player.level().dimension().location().equals(BuiltinDimensionTypes.NETHER.location())) {
+                if (player.level.dimension().location().equals(BuiltinDimensionTypes.NETHER.location())) {
                     player.displayClientMessage(EndTraderMessage.CANT_SPAWN_NETHER.getMessage(), ModConfigs.MESSAGES_TO_ACTIONBAR);
 
                 } else {

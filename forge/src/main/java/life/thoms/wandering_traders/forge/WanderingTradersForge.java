@@ -4,7 +4,6 @@ import life.thoms.wandering_traders.WanderingTraders;
 import life.thoms.wandering_traders.forge.config.ConfigHandlerForge;
 import life.thoms.wandering_traders.forge.event.EntityEventsForge;
 import life.thoms.wandering_traders.forge.loot.LootModifiers;
-import life.thoms.wandering_traders.forge.registry.TraderCreativeTabForge;
 import life.thoms.wandering_traders.forge.registry.TraderEntitiesForge;
 import life.thoms.wandering_traders.forge.registry.TraderItemsForge;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -24,7 +23,6 @@ public final class WanderingTradersForge {
         WanderingTraders.init();
         TraderEntitiesForge.register(eventBus);
         TraderItemsForge.register(eventBus);
-        TraderCreativeTabForge.register(eventBus);
         eventBus.addListener(EventPriority.NORMAL, EntityEventsForge::registerSpawnPlacements);
         eventBus.addListener(EventPriority.NORMAL, EntityEventsForge::registerAttributes);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigHandlerForge.build(), WanderingTraders.MOD_ID + ".toml");

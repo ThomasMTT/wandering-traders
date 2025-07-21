@@ -19,7 +19,7 @@ public class PlayerEventHandler {
 
     public static boolean onPlayerDeath(LivingEntity livingEntity, DamageSource damageSource, float ignored) {
         if (ModConfigs.ENABLE_LOOT_RECOVERY && livingEntity instanceof Player player && !player.isCreative()) {
-            if (isPlayerFallingToVoid(player, damageSource)) {
+            if (isPlayerFallingToVoid(player)) {
                 handlePlayerLootOnDeath(player);
             } else {
                 // mark loot as from player so when it despawns its recoverable
@@ -41,8 +41,8 @@ public class PlayerEventHandler {
         return true;
     }
 
-    private static boolean isPlayerFallingToVoid(Player player, DamageSource damageSource) {
-        return damageSource.is(DamageTypes.FELL_OUT_OF_WORLD) || isFallingToVoid(player);
+    private static boolean isPlayerFallingToVoid(Player player) {
+        return isFallingToVoid(player);
     }
 
     private static void handlePlayerLootOnDeath(Player player) {
@@ -53,7 +53,7 @@ public class PlayerEventHandler {
             LostLootUtil.removeOldEntries(playerLoot);
             LostLootData.PLAYER_LOST_LOOT.put(player.getUUID(), playerLoot);
 
-            if (player.level().getServer() != null) {
+            if (player.level.getServer() != null) {
                 LostLootData.INSTANCE.setDirty();
             }
         }
@@ -81,8 +81,8 @@ public class PlayerEventHandler {
     // Even if you don't die of falling to the void, if you have no blocks below, your items won't drop (this fixes it)
     private static boolean isFallingToVoid(Player player) {
         int playerHeight = (int) player.getY();
-        while (playerHeight > player.level().getMinBuildHeight()) {
-            if (!player.level().getBlockState(player.getOnPos().atY(playerHeight)).is(Blocks.AIR)) {
+        while (playerHeight > player.level.getMinBuildHeight()) {
+            if (!player.level.getBlockState(player.getOnPos().atY(playerHeight)).is(Blocks.AIR)) {
                 return false;
             }
             playerHeight -= 1;

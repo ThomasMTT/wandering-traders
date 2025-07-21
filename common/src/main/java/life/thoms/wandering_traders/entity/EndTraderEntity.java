@@ -128,7 +128,7 @@ public class EndTraderEntity extends AbstractTraderEntity {
             return handlePlayerDamage(source, player);
         }
 
-        if (source.is(DamageTypes.GENERIC_KILL)) {
+        if (source.is(DamageTypes.GENERIC)) {
             removeFromLinkMap();
             return super.hurt(source, getMaxHealth());
         }
@@ -162,7 +162,7 @@ public class EndTraderEntity extends AbstractTraderEntity {
     public void aiStep() {
         super.aiStep();
         if (isRemoved() && !isClientSide() && linkedPlayerUuid != null) {
-            Player player = level().getPlayerByUUID(linkedPlayerUuid);
+            Player player = level.getPlayerByUUID(linkedPlayerUuid);
             if (player != null) {
                 handleDespawn(player);
             }
@@ -222,7 +222,7 @@ public class EndTraderEntity extends AbstractTraderEntity {
     }
 
     public void goBackToTheEnd() {
-        if (!level().isClientSide()) {
+        if (!level.isClientSide()) {
             removeFromLinkMap();
             discard();
         } else {

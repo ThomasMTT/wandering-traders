@@ -29,7 +29,7 @@ public class ViewOnlySimpleContainer extends SimpleContainer {
         for (int i = 0; i < this.getContainerSize(); i++) {
             ItemStack itemStack = this.getItem(i);
             if (itemStack.isEmpty()) {
-                this.setItem(i, stack.copyAndClear());
+                this.setItem(i, stack.copy());
                 return;
             }
         }
